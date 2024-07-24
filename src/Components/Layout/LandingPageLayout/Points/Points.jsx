@@ -6,7 +6,7 @@ import VpnKeyIcon from "@mui/icons-material/VpnKey";
 
 const Points = () => {
   return (
-    <div className="flex justify-evenly pb-28 laptop:w-[50%]  m-auto">
+    <div className="flex justify-evenly pb-28 items-center flex-col lg:flex-row m-auto">
       <PointReuseable
         icon={<AccountBalanceIcon style={{ fontSize: 50 }} />}
         heading="Legal Company"

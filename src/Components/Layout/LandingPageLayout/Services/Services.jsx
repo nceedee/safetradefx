@@ -4,17 +4,17 @@ import { ServiceSteps } from "./ServiceSteps";
 
 const Services = () => {
   return (
-    <div className="text-center flex flex-col space-y-20 pt-20 ">
+    <div className="text-center flex flex-col space-y-7 lg:space-y-20 pt-20 ">
       <div className="flex flex-col justify-center items-center">
-        <h3 className="text-blue-700 font-bold text-2xl ">Services</h3>
-        <img src={underlineimg} alt="" className="w-[80px]" />
+        <h3 className="text-blue-700 font-bold text-1xl lg:text-2xl ">Services</h3>
+        <img src={underlineimg} alt="" className=" w-[50px] lg:w-[80px]" />
       </div>
-      <div className="w-[60%] m-auto">
-        <h1 className="text-black font-bold text-5xl ">
+      <div className="w-[90%] lg:w-[60%] m-auto">
+        <h1 className="text-black font-bold text-2xl lg:text-5xl ">
           Comprehensive services we{" "}
-          <span className="text-blue-700">provide</span> .
+          <span className="text-blue-700">provide</span>.
         </h1>
-        <p>
+        <p className="text-[12px] lg:text-[16px]">
           Robust, transparent benchmarks bridging the gap between traditional
           and digital asset investment.
         </p>

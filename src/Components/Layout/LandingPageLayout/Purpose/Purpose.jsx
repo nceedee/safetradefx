@@ -7,7 +7,7 @@ import StepContent from "@mui/material/StepContent";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import backgroundImage from '../../../../Assets/Images/womanlisten.jpeg'
+import backgroundImage from "../../../../Assets/Images/womanlisten.jpeg";
 
 const steps = [
   {
@@ -45,7 +45,7 @@ const steps = [
   },
 ];
 
-export const Purpose = ()=> {
+export const Purpose = () => {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
@@ -62,13 +62,12 @@ export const Purpose = ()=> {
 
   return (
     <div
-      className="relative bg-cover bg-center bg-no-repeat p-20   min-h-screen"
+      className="relative bg-cover bg-center bg-no-repeat p-4 pb-12 lg:pb-0 sm:p-6 lg:p-20 min-h-screen"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      <div className="absolute inset-0 bg-black opacity-70"></div>{" "}
-      {/* Black overlay with transparency */}
-      <div className="relative container mx-auto translate-y-6 px-4 py-8 bg-white bg-opacity-80">
-        <Box sx={{ maxWidth: 400 }}>
+      <div className="absolute inset-0 bg-black opacity-70"></div>
+      <div className="relative container mx-auto translate-y-6 px-2 sm:px-4 py-8 bg-white bg-opacity-80">
+        <Box sx={{ maxWidth: "100%" }}>
           <Stepper activeStep={activeStep} orientation="vertical">
             {steps.map((step, index) => (
               <Step key={step.label}>
@@ -82,13 +81,20 @@ export const Purpose = ()=> {
                   {step.label}
                 </StepLabel>
                 <StepContent>
-                  <Typography>{step.description}</Typography>
+                  <Typography
+                    variant="body2"
+                    className="sm:text-base md:text-lg"
+                  >
+                    {step.description}
+                  </Typography>
                   <Box sx={{ mb: 2 }}>
                     <div>
                       <Button
                         variant="contained"
                         onClick={handleNext}
                         sx={{ mt: 1, mr: 1 }}
+                        size="small"
+                        className="sm:text-sm md:text-base"
                       >
                         {index === steps.length - 1 ? "Finish" : "Continue"}
                       </Button>
@@ -96,6 +102,8 @@ export const Purpose = ()=> {
                         disabled={index === 0}
                         onClick={handleBack}
                         sx={{ mt: 1, mr: 1 }}
+                        size="small"
+                        className="sm:text-sm md:text-base"
                       >
                         Back
                       </Button>
@@ -107,10 +115,15 @@ export const Purpose = ()=> {
           </Stepper>
           {activeStep === steps.length && (
             <Paper square elevation={0} sx={{ p: 3 }}>
-              <Typography>
-                All steps completed - you&apos;re finished
+              <Typography variant="body2" className="sm:text-base md:text-lg">
+                All steps completed - you're finished
               </Typography>
-              <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
+              <Button
+                onClick={handleReset}
+                sx={{ mt: 1, mr: 1 }}
+                size="small"
+                className="sm:text-sm md:text-base"
+              >
                 Reset
               </Button>
             </Paper>
@@ -119,4 +132,4 @@ export const Purpose = ()=> {
       </div>
     </div>
   );
-}
+};

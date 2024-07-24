@@ -19,7 +19,7 @@ const steps = [
 
 export const ServiceSteps = () => {
   const [activeStep, setActiveStep] = React.useState(0);
-  const isSmallScreen = useMediaQuery("(max-width:600px)");
+  const isSmallScreen = useMediaQuery("(max-width:1024px)");
 
   const handleSliderChange = (event, newValue) => {
     setActiveStep(newValue);
@@ -40,8 +40,13 @@ export const ServiceSteps = () => {
   };
 
   return (
-    <Box className="w-[80%] m-auto p-4">
-      <Stepper activeStep={activeStep} alternativeLabel className="mb-4">
+    <Box className="w-full sm:w-[80%] m-auto p-2 sm:p-4">
+      <Stepper
+        activeStep={activeStep}
+        alternativeLabel={!isSmallScreen}
+        orientation={isSmallScreen ? "vertical" : "horizontal"}
+        className="mb-4"
+      >
         {steps.map((label, index) => (
           <Step key={index}>
             <StepLabel>{label}</StepLabel>
@@ -69,7 +74,13 @@ export const ServiceSteps = () => {
           }}
         />
       </Box>
-      <Typography className="mb-4 text-center">{steps[activeStep]}</Typography>
+      <Typography
+        className={`mb-4 text-center ${
+          isSmallScreen ? "text-sm" : "text-base"
+        }`}
+      >
+        {steps[activeStep]}
+      </Typography>
       <Box className="flex flex-col items-center">
         <Box className="flex flex-row w-full justify-between mb-2">
           <Button
@@ -77,10 +88,16 @@ export const ServiceSteps = () => {
             disabled={activeStep === 0}
             onClick={handleBack}
             className="mr-2"
+            size={isSmallScreen ? "small" : "medium"}
           >
             Back
           </Button>
-          <Button variant="contained" color="primary" onClick={handleNext}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleNext}
+            size={isSmallScreen ? "small" : "medium"}
+          >
             {activeStep === steps.length - 1 ? "Finish" : "Next"}
           </Button>
         </Box>
@@ -90,6 +107,7 @@ export const ServiceSteps = () => {
             variant="contained"
             color="secondary"
             className="mt-4"
+            size={isSmallScreen ? "small" : "medium"}
           >
             Reset
           </Button>
