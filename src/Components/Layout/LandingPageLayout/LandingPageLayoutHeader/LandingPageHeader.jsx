@@ -1,0 +1,45 @@
+import logo from "../../../../Assets/Images/logo.png";
+import backgroundVideo from "../../../../Assets/Videos/highrisebuilding.mp4";
+import LandingHeaderInfo from "./LandingHeaderInfo";
+
+const LandingPageHeader = () => {
+  return (
+    <div className="relative w-full h-screen overflow-hidden p-0 ">
+      <div className="bg-black text-white flex items-center  justify-around w-full fixed top-0 left-0 z-50">
+        <div className="w-[30%] p-0">
+          <ul className="flex justify-between p-0">
+            <li className="relative">About Us</li>
+            <li className="relative">Services</li>
+            <li className="relative">Plans</li>
+          </ul>
+        </div>
+
+        <div>
+          <img src={logo} alt="Logo" className="w-32 h-32" />
+        </div>
+
+        <div className="w-[30%] p-0">
+          <ul className="flex justify-between p-0">
+            <li className="relative">Support</li>
+            <li>Signup</li>
+            <li>Login</li>
+          </ul>
+        </div>
+      </div>
+
+      <video
+        className="absolute top-0 left-0 w-full h-full object-cover"
+        src={backgroundVideo}
+        autoPlay
+        loop
+        muted
+      />
+
+      <div className="flex items-end justify-center translate-y-[-30px]  w-full h-full absolute top-0 left-0 z-10">
+        <LandingHeaderInfo />
+      </div>
+    </div>
+  );
+};
+
+export default LandingPageHeader;
