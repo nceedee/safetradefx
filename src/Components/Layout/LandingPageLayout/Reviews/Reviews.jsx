@@ -18,7 +18,7 @@ const Reviews = () => {
               seeing the Safetrade Fx ad on Instagram and ever since it has been
               a wonderful experience with them.
             </p>
-            <h2>Van Hunter</h2>
+            <h2 className="font-bold text-2xl mt-4">Van Hunter</h2>
           </div>
         </div>
         <div className="w-[100%] lg:w-[30%] flex items-start">
@@ -29,7 +29,7 @@ const Reviews = () => {
               account. This is legit and safe. Great doing business with safe
               trade Fx.
             </p>
-            <p>Peter Smith</p>
+            <h2 className="font-bold text-2xl mt-4">Peter Smith</h2>
           </div>
         </div>
       </div>
