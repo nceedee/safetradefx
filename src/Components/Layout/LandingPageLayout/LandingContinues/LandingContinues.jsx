@@ -2,6 +2,9 @@ import React from "react";
 import Points from "../Points/Points";
 import { Purpose } from "../Purpose/Purpose";
 import Services from "../Services/Services";
+import RateDashboard from "../RateDashboard/RateDashboard";
+import SupportedPayment from "../SupportedPayment/SupportedPayment";
+import Footer from "../Footer/Footer";
 
 const LandingContinues = () => {
   return (
@@ -14,6 +17,16 @@ const LandingContinues = () => {
       </div>
       <div className="bg-white">
         <Services />
+      </div>
+
+      <div className="bg-white">
+        <SupportedPayment />
+      </div>
+      <div className="bg-white">
+        <RateDashboard />
+      </div>
+      <div className="bg-[#000624]">
+        <Footer />
       </div>
     </div>
   );
