@@ -5,6 +5,8 @@ import Services from "../Services/Services";
 import RateDashboard from "../RateDashboard/RateDashboard";
 import SupportedPayment from "../SupportedPayment/SupportedPayment";
 import Footer from "../Footer/Footer";
+import Steps from "../Steps/Steps";
+import Reviews from "../Reviews/Reviews";
 
 const LandingContinues = () => {
   return (
@@ -20,14 +22,23 @@ const LandingContinues = () => {
       </div>
 
       <div className="bg-white">
+        <Steps />
+      </div>
+
+      <div className="bg-white">
         <SupportedPayment />
+      </div>
+      <div className="bg-white">
+        <Reviews />
       </div>
       <div className="bg-white">
         <RateDashboard />
       </div>
       <div className="bg-[#000624] text-white">
         <Footer />
-        <p className="text-center pb-5">All right reversed 2024 &#169; safe trade fx</p>
+        <p className="text-center pb-5">
+          All right reversed 2024 &#169; safe trade fx
+        </p>
       </div>
     </div>
   );

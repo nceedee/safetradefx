@@ -42,7 +42,7 @@ const Footer = () => {
             />
             <div>
               <p>Send Us Email</p>
-              <a href="mailto:safetrustf@gmail.com"> info@safetrustfx.com</a>
+              <a href="mailto:safetrustf@gmail.com"> info@safetradefx.com</a>
             </div>
           </div>
         </div>

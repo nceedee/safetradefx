@@ -5,14 +5,14 @@ import doge from "../../../../Assets/Images/doge.png";
 
 const SupportedPayment = () => {
   return (
-    <div className="flex flex-col justify-center pt-20 border-t space-y-14 items-center">
-      <div className="w-[60%] text-center">
+    <div className="flex flex-col justify-center py-20 border-t space-y-14 items-center">
+      <div className="w-[90%] lg:w-[60%] text-center">
         <h1 className="font-bold text-2xl lg:text-4xl">
           Some Of Our Supported Payment Gateways
         </h1>
         <p>We are cryptocurrencies and other digital assets.</p>
       </div>
-      <div className="flex justify-around items-center text-center font-bold text-[12px] lg:text-2xl w-[60%]">
+      <div className="flex justify-around items-center text-center font-bold text-[12px] lg:text-2xl w-[90%] lg:w-[60%]">
         <div>
           <img
             src={btc}
