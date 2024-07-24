@@ -30,7 +30,7 @@ const Footer = () => {
             />
             <div>
               <p>Telephone</p>
-              <p></p>
+              <p>+44 7404 592348</p>
             </div>
           </div>
         </div>
@@ -54,7 +54,7 @@ const Footer = () => {
             />
             <div>
               <p>Address</p>
-              <p></p>
+              <p>UK, London.</p>
             </div>
           </div>
         </div>
