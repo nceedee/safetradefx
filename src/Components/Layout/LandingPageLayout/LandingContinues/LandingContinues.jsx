@@ -25,8 +25,9 @@ const LandingContinues = () => {
       <div className="bg-white">
         <RateDashboard />
       </div>
-      <div className="bg-[#000624]">
+      <div className="bg-[#000624] text-white">
         <Footer />
+        <p className="text-center pb-5">All right reversed 2024 &#169; safe trade fx</p>
       </div>
     </div>
   );
