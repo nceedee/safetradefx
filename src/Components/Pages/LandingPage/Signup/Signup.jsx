@@ -1,12 +1,22 @@
-import React from 'react'
-import { SignupLayout } from '../../../Layout/LandingPageLayout/SignupLayout/SignupLayout'
+import React from "react";
+import { SignupLayout } from "../../../Layout/LandingPageLayout/SignupLayout/SignupLayout";
+import Footer from "../../../Layout/LandingPageLayout/Footer/Footer";
 
 const Signup = () => {
   return (
     <div>
-      <SignupLayout/>
+      <div className="relative z-40">
+        <SignupLayout />
+      </div>
+      <div className="relative z-30 bg-white"></div>
+      <div className="bg-[#000624] text-white">
+        <Footer />
+        <p className="text-center pb-5">
+          All right reversed 2024 &#169; safe trade fx
+        </p>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;
