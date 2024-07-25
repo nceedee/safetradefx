@@ -7,8 +7,12 @@ import Support from "./Components/Pages/LandingPage/Support/Support";
 import Signup from "./Components/Pages/LandingPage/Signup/Signup";
 import Login from "./Components/Pages/LandingPage/Login/Login";
 import Services from "./Components/Pages/LandingPage/Service/Services";
+import Dashboard from "./Components/Pages/Dashboard/Dashboard"; 
+import { useAuth } from "./Components/Global/hook/useAuth";
 
 export default function App() {
+  const { RequireAuth } = useAuth();
+
   return (
     <Router>
       <div className="font-montserrat mx-auto">
@@ -20,6 +24,14 @@ export default function App() {
           <Route path="/support" element={<Support />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route
+            path="/dashboard"
+            element={
+              <RequireAuth>
+                <Dashboard />
+              </RequireAuth>
+            }
+          />
         </Routes>
       </div>
     </Router>

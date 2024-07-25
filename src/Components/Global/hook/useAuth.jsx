@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { useUser } from "../../../base/models/useUser";
-import { auth } from "../../../config/firebase";
-import { AuthContext } from "../../context/AuthContext";
+import { useUser } from "../../models/useUsers"; 
+import { auth } from "../../config/firebase"; 
+import { AuthContext } from "../../Context/AuthContext";
 
 export const useAuth = () => {
   const setUser = useUser((state) => state.setUser);
