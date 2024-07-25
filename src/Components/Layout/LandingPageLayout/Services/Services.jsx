@@ -2,7 +2,7 @@ import React from "react";
 import underlineimg from "../../../../Assets/Images/h6-sub-divider-img.png";
 import { ServiceSteps } from "./ServiceSteps";
 
-const Services = () => {
+const Service = () => {
   return (
     <div className="text-center flex flex-col space-y-7 lg:space-y-20 pt-20 ">
       <div className="flex flex-col justify-center items-center">
@@ -24,4 +24,4 @@ const Services = () => {
   );
 };
 
-export default Services;
+export default Service;
