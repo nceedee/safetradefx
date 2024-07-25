@@ -1,0 +1,1 @@
+export const API = "https://tanstack-fetch-default-rtdb.firebaseio.com/";
