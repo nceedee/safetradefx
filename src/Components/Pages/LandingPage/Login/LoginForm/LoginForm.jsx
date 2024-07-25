@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useLogin } from "../../../../Global/hook/useLogin"; 
+import { useLogin } from "../../../../Global/hook/useLogin";
 import Card from "../../../../Global/Card/Card";
 import { AlertError } from "../../../../Global/Alert/AlertError";
 
@@ -17,16 +17,16 @@ export const LoginForm = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
           <label className="font-bold text-black">Enter Email:</label>
           <input
-                      { ...register( "email", { required: true } ) }
-                      placeholder="Enter Email Here"
+            {...register("email", { required: true })}
+            placeholder="Enter Email Here"
             className="w-full rounded-lg border-b-2 border-b-[#ebebeb] text-black p-2 outline-none"
           />
           {errors.email && <AlertError>Please enter your email</AlertError>}
           <label className="mt-4 font-bold text-black">Enter Password:</label>
           <input
             {...register("password", { required: true })}
-                      type="password"
-                      placeholder="Enter Password Here"
+            type="password"
+            placeholder="Enter Password Here"
             className="w-full rounded-lg border-b-2 text-black border-b-[#ebebeb] p-2 outline-none"
           />
           {errors.password && (

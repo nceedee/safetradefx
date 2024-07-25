@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { useUser } from "../../models/useUsers"; 
-import { auth } from "../../config/firebase"; 
+import { useUser } from "../../models/useUsers";
+import { auth } from "../../config/firebase";
 import { AuthContext } from "../../Context/AuthContext";
 
 export const useAuth = () => {
@@ -37,7 +37,6 @@ export const useAuth = () => {
       }
     });
 
-    // Cleanup subscription on unmount
     return () => unsubscribe();
   }, [setUser]);
 

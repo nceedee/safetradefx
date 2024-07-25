@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext"; 
-import { auth } from "../../config/firebase";
+import { auth } from "../../config/firebase"; 
 
 export const useLogin = () => {
   const navigate = useNavigate();
@@ -33,7 +33,6 @@ export const useLogin = () => {
 
       dispatch({ type: "LOGIN", payload: user });
       navigate("/dashboard");
-      window.location.reload();
     } catch (error) {
       setMessage(error.message);
       setIsLoading(false);

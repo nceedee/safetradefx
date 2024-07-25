@@ -10,6 +10,9 @@ const AboutPageHeader = () => {
         <div className="w-[30%] p-0">
           <ul className="flex justify-between p-0">
             <li className="relative">
+              <Link to="/">Home</Link>
+            </li>
+            <li className="relative">
               <Link to="/about-us">About US</Link>
             </li>
             <li className="relative">

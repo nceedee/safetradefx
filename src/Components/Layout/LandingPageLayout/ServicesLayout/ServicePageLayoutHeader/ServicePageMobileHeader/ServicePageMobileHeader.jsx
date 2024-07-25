@@ -29,6 +29,11 @@ export const ServicePageMobileHeader = () => {
         <div className="bg-black text-white w-full h-full fixed top-20 left-0 z-50 flex flex-col items-center space-y-4 py-4">
           <ul className="flex flex-col items-center space-y-4">
             <li className="relative">
+              <Link to="/" onClick={toggleMenu}>
+                Home
+              </Link>
+            </li>
+            <li className="relative">
               <Link to="/about-us" onClick={toggleMenu}>
                 About Us
               </Link>
