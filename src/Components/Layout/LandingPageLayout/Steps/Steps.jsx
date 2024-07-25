@@ -3,6 +3,7 @@ import dividerimg from "../../../../Assets/Images/h6-sub-divider-img.png";
 import PersonIcon from "@mui/icons-material/Person";
 import LaunchIcon from "@mui/icons-material/Launch";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import { Link } from "react-router-dom";
 
 const Steps = () => {
   return (
@@ -47,7 +48,7 @@ const Steps = () => {
       </div>
       <div className="text-center ">
         <button className="bg-[#548539] font-bold text-white p-4 px-7 rounded-md mt-14">
-          Get Started Now!!
+          <Link to='/login'>Get Started Now!!</Link>
         </button>
       </div>
     </div>
