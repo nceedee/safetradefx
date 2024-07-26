@@ -37,6 +37,7 @@ export const useSignup = () => {
         email: userCredential.user.email || "",
         password: "", // Ensure sensitive data is not stored here
       };
+      navigate("/dashboard");
 
       if (auth.currentUser) {
         console.log("Updating profile...");
@@ -55,7 +56,6 @@ export const useSignup = () => {
       console.log("Dispatching login action...");
       dispatch({ type: "LOGIN", payload: user });
       console.log("Navigating to dashboard...");
-      navigate("/dashboard");
     } catch (error) {
       console.error("Signup error:", error);
       setIsError(error.message || "Signup failed. Please try again.");

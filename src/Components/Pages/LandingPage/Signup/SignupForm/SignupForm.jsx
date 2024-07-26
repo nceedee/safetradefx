@@ -4,6 +4,7 @@ import { AlertError } from "../../../../Global/Alert/AlertError";
 import { useSignup } from "../../../../Global/hook/useSignup";
 import MaxCard from "../../../../Global/Card/MaxCard/MaxCard";
 import Card from "../../../../Global/Card/Card";
+import LoadingModal  from "../../../../Global/LoadingModal/LoadingModal";
 
 export const SignUpForm = () => {
   const { handleSubmit, onSubmit, register, isError, isLoading } = useSignup();
@@ -40,9 +41,10 @@ export const SignUpForm = () => {
               type="submit"
               className={`${
                 isLoading ? "animate-pulse cursor-wait" : "cursor-pointer"
-              } mt-4 cursor-pointer rounded-lg bg-primary p-2 font-bold bg-blue-700 text-white outline-none`}
+              } mt-4 rounded-lg bg-primary p-2 font-bold bg-blue-700 text-white outline-none`}
               value={isLoading ? "Signing up..." : "Sign up"}
             />
+            {isLoading ? <LoadingModal/>: ""}
             <div className="mt-4 flex space-x-3 italic">
               <h1 className="font-bold text-black">Already have an account?</h1>
               <Link to="/login" className="text-black">

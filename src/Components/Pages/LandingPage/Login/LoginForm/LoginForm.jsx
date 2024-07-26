@@ -1,7 +1,9 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import { useLogin } from "../../../../Global/hook/useLogin";
 import Card from "../../../../Global/Card/Card";
 import { AlertError } from "../../../../Global/Alert/AlertError";
+import LoadingModal from "../../../../Global/LoadingModal/LoadingModal";
 
 export const LoginForm = () => {
   const { errors, handleSubmit, isLoading, onSubmit, register, message } =
@@ -33,12 +35,13 @@ export const LoginForm = () => {
             <AlertError>Please enter your password</AlertError>
           )}
           {message && <AlertError>{message}</AlertError>}
+          {isLoading && <LoadingModal />}
           <input
             type="submit"
             disabled={isLoading}
             className={`${
               isLoading ? "animate-pulse cursor-wait" : "cursor-pointer"
-            } mt-4 cursor-pointer rounded-lg bg-primary p-2 font-bold bg-blue-700 text-white outline-none`}
+            } mt-4 rounded-lg bg-primary p-2 font-bold bg-blue-700 text-white outline-none`}
             value={isLoading ? "Loading..." : "Log In"}
           />
           <div className="mt-4 flex space-x-3 italic">
