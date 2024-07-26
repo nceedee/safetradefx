@@ -7,15 +7,17 @@ import Support from "./Components/Pages/LandingPage/Support/Support";
 import Signup from "./Components/Pages/LandingPage/Signup/Signup";
 import Login from "./Components/Pages/LandingPage/Login/Login";
 import Services from "./Components/Pages/LandingPage/Service/Services";
-import Dashboard from "./Components/Pages/Dashboard/Dashboard"; 
+import Dashboard from "./Components/Pages/Dashboard/Dashboard";
 import { useAuth } from "./Components/Global/hook/useAuth";
+import TranslatorComponent from "./Components/Global/Translator/TranslatorComponent";
 
 export default function App() {
   const { RequireAuth } = useAuth();
 
   return (
     <Router>
-      <div className="font-montserrat mx-auto">
+      <div>
+        <TranslatorComponent className="font-montserrat mx-auto" />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/about-us" element={<About />} />

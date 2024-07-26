@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import logo from '../../../../../../Assets/Images/logo.png'
+import logo from "../../../../../../Assets/Images/logo.png";
 import { Menu, X } from "react-feather"; // Assuming react-feather for icons
 import AboutHeaderInfo from "../AboutHeaderInfo";
-import backgroundVideo from '../../../../../../Assets/Videos/buildingtwo.mp4'
+import backgroundVideo from "../../../../../../Assets/Images/bg.png";
 
 export const AboutPageMobileHeader = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -67,12 +67,9 @@ export const AboutPageMobileHeader = () => {
         </div>
       )}
 
-      <video
+      <img
         className="absolute top-0 left-0 w-full h-full object-cover"
         src={backgroundVideo}
-        autoPlay
-        loop
-        muted
       />
       <div className="flex items-end justify-center translate-y-[-30px] w-full h-full absolute top-0 left-0 z-10">
         <AboutHeaderInfo />

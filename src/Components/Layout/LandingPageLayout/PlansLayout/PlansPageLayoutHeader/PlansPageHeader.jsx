@@ -1,5 +1,5 @@
-import logo from '../../../../../Assets/Images/logo.png'
-import backgroundVideo from '../../../../../Assets/Videos/plans.mp4'
+import logo from "../../../../../Assets/Images/logo.png";
+import backgroundVideo from "../../../../../Assets/Images/bg.png";
 import { Link } from "react-router-dom";
 import PLansHeaderInfo from "./PLansHeaderInfo";
 
@@ -42,12 +42,9 @@ const PlansPageHeader = () => {
         </div>
       </div>
 
-      <video
+      <img
         className="absolute top-0 left-0 w-full h-full object-cover"
         src={backgroundVideo}
-        autoPlay
-        loop
-        muted
       />
 
       <div className="flex items-end justify-center translate-y-[-30px]  w-full h-full absolute top-0 left-0 z-10">
