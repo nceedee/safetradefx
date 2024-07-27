@@ -23,7 +23,7 @@ const Plans = () => {
       <div className="bg-[#000624] text-white">
         <Footer />
         <p className="text-center pb-5">
-          All right reversed 2024 &#169; safe trade fx
+          All right reserved 2024 &#169; safe trade fx
         </p>
       </div>
     </div>

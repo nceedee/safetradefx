@@ -10,7 +10,7 @@ const Footer = () => {
       <div className="w-[80%] lg:w-[20%]">
         <img src={logo} alt="" className="w-48 lg:w-32 m-auto" />
         <p>
-          We The Moonshots Fx Team Generates Superior and sustainable
+          We The Safe Trade Fx Team Generates Superior and sustainable
           performance for our Stakeholders, Investors and Business partner’s.
         </p>
       </div>

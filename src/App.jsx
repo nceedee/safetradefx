@@ -1,4 +1,3 @@
-// src/App.jsx
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -16,9 +15,11 @@ import Login from "./Components/Pages/LandingPage/Login/Login";
 import Services from "./Components/Pages/LandingPage/Service/Services";
 import Dashboard from "./Components/Pages/Dashboard/Dashboard";
 import { useAuth } from "./Components/Global/hook/useAuth";
-import TranslatorComponent from "./Components/Global/Translator/TranslatorComponent";
 import LoadingModal from "./Components/Global/LoadingModal/LoadingModal";
-import { LoadingProvider, useLoading } from "./Components/Context/LoadingContext";
+import {
+  LoadingProvider,
+  useLoading,
+} from "./Components/Context/LoadingContext";
 
 const AppContent = () => {
   const { RequireAuth } = useAuth();
@@ -28,20 +29,13 @@ const AppContent = () => {
 
   React.useEffect(() => {
     if (navigationType === "PUSH") {
-      setIsLoading(true);
-      // Simulate loading delay for demonstration purposes
-      const timer = setTimeout(() => {
-        setIsLoading(false);
-      }, 1000); // Adjust the delay as needed
-
-      return () => clearTimeout(timer);
+      window.location.reload();
     }
-  }, [location, navigationType, setIsLoading]);
+  }, [location, navigationType]);
 
   return (
     <>
       {isLoading && <LoadingModal />}
-      <TranslatorComponent className="font-montserrat mx-auto" />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/about-us" element={<About />} />

@@ -1,12 +1,83 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import logo from '../../../../../../Assets/Images/logo.png'
+import logo from "../../../../../../Assets/Images/logo.png";
 import { Menu, X } from "react-feather"; // Assuming react-feather for icons
-import AboutHeaderInfo from "../PLansHeaderInfo";
-import backgroundVideo from '../../../../../../Assets/Images/plansbg.jpeg'
+import backgroundVideo from "../../../../../../Assets/Images/plansbg.jpeg";
+import PlansHeaderInfo from "../PLansHeaderInfo";
 
 export const PlansPageMobileHeader = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const loadGoogleTranslate = () => {
+      if (!document.querySelector("#google-translate-script")) {
+        const googleTranslateScript = document.createElement("script");
+        googleTranslateScript.id = "google-translate-script";
+        googleTranslateScript.src =
+          "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+        document.body.appendChild(googleTranslateScript);
+      }
+
+      window.googleTranslateElementInit = () => {
+        if (!document.querySelector(".goog-te-combo")) {
+          new window.google.translate.TranslateElement(
+            {
+              pageLanguage: "en",
+              includedLanguages: "en,es,fr,de,it,ja,zh-CN,ar,pt,ru,ko,hi",
+              layout:
+                window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+              autoDisplay: false,
+            },
+            "google_translate_element"
+          );
+        }
+      };
+    };
+
+    loadGoogleTranslate();
+  }, []);
+
+  useEffect(() => {
+    const applyStoredLanguage = () => {
+      const storedLanguage = localStorage.getItem("selectedLanguage");
+      if (storedLanguage) {
+        const intervalId = setInterval(() => {
+          const selectElem = document.querySelector(".goog-te-combo");
+          if (selectElem) {
+            selectElem.value = storedLanguage;
+            selectElem.dispatchEvent(new Event("change"));
+            clearInterval(intervalId);
+          }
+        }, 1000);
+      }
+    };
+
+    applyStoredLanguage();
+
+    const intervalId = setInterval(() => {
+      const selectElem = document.querySelector(".goog-te-combo");
+      if (selectElem) {
+        selectElem.addEventListener("change", () => {
+          localStorage.setItem("selectedLanguage", selectElem.value);
+        });
+        clearInterval(intervalId);
+      }
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const combo = document.querySelector(".goog-te-combo");
+      if (combo) {
+        combo.className =
+          "goog-te-combo bg-white border border-gray-300 rounded-md px-4 py-2 text-base text-gray-700 outline-none cursor-pointer transition-all duration-300 ease-in-out";
+        clearInterval(intervalId);
+      }
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -63,6 +134,10 @@ export const PlansPageMobileHeader = () => {
                 Login
               </Link>
             </li>
+            <li
+              id="google_translate_element"
+              className="relative h-10 p-0 flex mt-4 items-center"
+            ></li>
           </ul>
         </div>
       )}
@@ -70,10 +145,9 @@ export const PlansPageMobileHeader = () => {
       <img
         className="absolute top-0 left-0 w-full h-full object-cover"
         src={backgroundVideo}
-        
       />
       <div className="flex items-end justify-center translate-y-[-30px] w-full h-full absolute top-0 left-0 z-10">
-        <AboutHeaderInfo />
+        <PlansHeaderInfo />
       </div>
     </div>
   );
