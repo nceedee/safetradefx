@@ -1,5 +1,5 @@
 import logo from "../../../../../Assets/Images/logo.png";
-import backgroundVideo from "../../../../../Assets/Images/bg.png";
+import backgroundVideo from "../../../../../Assets/Images/plansbg.jpeg";
 import { Link } from "react-router-dom";
 import PLansHeaderInfo from "./PLansHeaderInfo";
 

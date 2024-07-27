@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import logo from '../../../../../../Assets/Images/logo.png'
 import { Menu, X } from "react-feather"; // Assuming react-feather for icons
 import AboutHeaderInfo from "../PLansHeaderInfo";
-import backgroundVideo from '../../../../../../Assets/Images/bg.png'
+import backgroundVideo from '../../../../../../Assets/Images/plansbg.jpeg'
 
 export const PlansPageMobileHeader = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -14,7 +14,7 @@ export const PlansPageMobileHeader = () => {
 
   return (
     <div className="relative w-full h-screen overflow-hidden p-0">
-      <div className="bg-black text-white flex items-center justify-between w-full fixed top-0 left-0 z-50 w-full px-8">
+      <div className="bg-black text-white flex items-center justify-between fixed top-0 left-0 z-50 w-full px-8">
         <div>
           <Link to="/">
             <img src={logo} alt="Logo" className="w-20 h-20" />

@@ -1,5 +1,5 @@
 import logo from "../../../../Assets/Images/logo.png";
-import backgroundVideo from "../../../../Assets/Videos/highrisebuilding.mp4";
+import backgroundVideo from "../../../../Assets/Images/homebg.jpeg";
 import { Link } from "react-router-dom";
 import LandingHeaderInfo from "./LandingHeaderInfo";
 
@@ -42,12 +42,9 @@ const LandingPageHeader = () => {
         </div>
       </div>
 
-      <video
+      <img
         className="absolute top-0 left-0 w-full h-full object-cover"
         src={backgroundVideo}
-        autoPlay
-        loop
-        muted
       />
 
       <div className="flex items-end justify-center translate-y-[-30px]  w-full h-full absolute top-0 left-0 z-10">
