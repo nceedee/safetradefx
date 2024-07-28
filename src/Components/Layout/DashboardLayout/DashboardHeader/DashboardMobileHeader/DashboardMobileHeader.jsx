@@ -126,8 +126,11 @@ const DashboardMobileHeader = ({ routerName }) => {
       </div>
 
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
-        <div className="relative w-64 bg-[#0f143a] text-white">
-          <div className="absolute left-[50px] top-0 bottom-0 w-[1px] bg-white"></div>
+        <div className="relative w-64 h-full bg-[#0f143a] text-white">
+          <div
+            className="absolute left-[50px] top-0 bottom-0 w-[1px] bg-white"
+            style={{ height: "100%" }}
+          ></div>
           <List>
             {menuItems.map((item) => (
               <ListItem
