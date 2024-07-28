@@ -126,12 +126,20 @@ const DashboardMobileHeader = ({ routerName }) => {
       </div>
 
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
+        <div className="flex justify-around m-4">
+          <button className="p-2 w-24 rounded-sm bg-[#609c46] text-white">
+            Deposit
+          </button>
+          <button className="p-2 w-24 rounded-sm bg-[#202b5d] text-white">
+            Invest
+          </button>
+        </div>
         <div className="relative w-64 h-full bg-[#0f143a] text-white">
           <div
             className="absolute left-[50px] top-0 bottom-0 w-[1px] bg-white"
             style={{ height: "100%" }}
           ></div>
-          <List>
+          <List className="max-h-full overflow-y-auto">
             {menuItems.map((item) => (
               <ListItem
                 button
