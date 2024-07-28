@@ -1,5 +1,4 @@
 import {
- 
   Dashboard as DashboardIcon,
   Add as AddIcon,
   History as HistoryIcon,
@@ -8,6 +7,11 @@ import {
   Support as SupportIcon,
 } from "@mui/icons-material";
 import MovingIcon from "@mui/icons-material/Moving";
+import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
+import PaymentsIcon from "@mui/icons-material/Payments";
+import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
+import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
+import MoveUpIcon from "@mui/icons-material/MoveUp";
 
 export const menuItems = [
   { text: "Dashboard", icon: <DashboardIcon />, path: "/dashboard" },
@@ -15,11 +19,19 @@ export const menuItems = [
   { text: "Badges", icon: <StarIcon />, path: "/badges" },
   { text: "Fund History", icon: <HistoryIcon />, path: "/fund-history" },
   { text: "Invest History", icon: <HistoryIcon />, path: "/invest-history" },
-  { text: "My Referral", icon: <StarIcon />, path: "/my-referral" },
-  { text: "Payout", icon: <PaymentIcon />, path: "/payout" },
+  { text: "My Referral", icon: <EmojiPeopleIcon />, path: "/my-referral" },
+  { text: "Payout", icon: <PaymentsIcon />, path: "/payout" },
   { text: "Payout History", icon: <HistoryIcon />, path: "/payout-history" },
-  { text: "Referral Bonus", icon: <StarIcon />, path: "/referral-bonus" },
-  { text: "Support Ticket", icon: <SupportIcon />, path: "/support-ticket" },
-  { text: "Transaction", icon: <HistoryIcon />, path: "/transaction" },
+  {
+    text: "Referral Bonus",
+    icon: <CardGiftcardIcon />,
+    path: "/referral-bonus",
+  },
+  {
+    text: "Support Ticket",
+    icon: <ConfirmationNumberIcon />,
+    path: "/support-ticket",
+  },
+  { text: "Transaction", icon: <MoveUpIcon />, path: "/transaction" },
   { text: "Transfer", icon: <MovingIcon />, path: "/transfer" },
 ];
