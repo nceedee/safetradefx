@@ -1,9 +1,12 @@
 import React from 'react'
+import DashboardLayout from '../../Layout/DashboardLayout/DashboardLayout'
 
 const Dashboard = () => {
   return (
     <div>
-      hello. this is dashboard
+      <DashboardLayout routerName="Dashboard">
+        dashboard
+      </DashboardLayout>
     </div>
   )
 }

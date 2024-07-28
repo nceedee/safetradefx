@@ -1,9 +1,8 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../Context/AuthContext"; 
+import { AuthContext } from "../../Context/AuthContext";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../config/firebase";
 
@@ -35,9 +34,10 @@ export const useSignup = () => {
         id: userId,
         name: formData.name,
         email: userCredential.user.email || "",
-        password: "", // Ensure sensitive data is not stored here
       };
-      navigate("/dashboard");
+
+      // Save user details to local storage
+      localStorage.setItem("user", JSON.stringify(user));
 
       if (auth.currentUser) {
         console.log("Updating profile...");
@@ -56,6 +56,7 @@ export const useSignup = () => {
       console.log("Dispatching login action...");
       dispatch({ type: "LOGIN", payload: user });
       console.log("Navigating to dashboard...");
+      navigate("/dashboard");
     } catch (error) {
       console.error("Signup error:", error);
       setIsError(error.message || "Signup failed. Please try again.");
@@ -64,5 +65,5 @@ export const useSignup = () => {
     }
   };
 
-  return { handleSubmit, onSubmit, register, isError, isLoading };
+  return { handleSubmit, onSubmit, register, isError, isLoading, errors };
 };

@@ -20,6 +20,17 @@ import {
   LoadingProvider,
   useLoading,
 } from "./Components/Context/LoadingContext";
+import AddFund from "./Components/Pages/Dashboard/AddFund";
+import Badges from "./Components/Pages/Dashboard/Badges";
+import FundHistory from "./Components/Pages/Dashboard/FundHistory";
+import InvestHistory from "./Components/Pages/Dashboard/InvestHistory";
+import MyReferral from "./Components/Pages/Dashboard/MyReferral";
+import Payout from "./Components/Pages/Dashboard/Payout";
+import PayoutHistory from "./Components/Pages/Dashboard/PayoutHistory";
+import ReferralBonus from "./Components/Pages/Dashboard/ReferralBonus";
+import SupportTicket from "./Components/Pages/Dashboard/SupportTicket";
+import Transaction from "./Components/Pages/Dashboard/Transaction";
+import Transfer from "./Components/Pages/Dashboard/Transfer";
 
 const AppContent = () => {
   const { RequireAuth } = useAuth();
@@ -49,6 +60,96 @@ const AppContent = () => {
           element={
             <RequireAuth>
               <Dashboard />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/add-fund"
+          element={
+            <RequireAuth>
+              <AddFund />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/badges"
+          element={
+            <RequireAuth>
+              <Badges />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/fund-history"
+          element={
+            <RequireAuth>
+              <FundHistory />
+            </RequireAuth>
+          }
+        />
+
+        <Route
+          path="/invest-history"
+          element={
+            <RequireAuth>
+              <InvestHistory />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/my-referral"
+          element={
+            <RequireAuth>
+              <MyReferral />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/payout"
+          element={
+            <RequireAuth>
+              <Payout />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/payout-history"
+          element={
+            <RequireAuth>
+              <PayoutHistory />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/referral-bonus"
+          element={
+            <RequireAuth>
+              <ReferralBonus />
+            </RequireAuth>
+          }
+        />
+
+        <Route
+          path="/support-ticket"
+          element={
+            <RequireAuth>
+              <SupportTicket />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/transaction"
+          element={
+            <RequireAuth>
+              <Transaction />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/transfer"
+          element={
+            <RequireAuth>
+              <Transfer />
             </RequireAuth>
           }
         />
