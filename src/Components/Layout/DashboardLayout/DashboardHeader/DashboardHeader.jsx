@@ -1,17 +1,45 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Avatar, Badge, Modal, Box, Button } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import SmartphoneIcon from "@mui/icons-material/Smartphone";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import logo from "../../../../Assets/Images/logo.png";
-import { Link } from "react-router-dom";
-import { Avatar, Badge } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import logo from "../../../../Assets/Images/logo.png";
+import { AuthContext } from "../../../Context/AuthContext";
+import { auth } from "../../../config/firebase";
+import MenuListComposition from "../MenuListComposition/MenuListComposition"; 
 
 const DashboardHeader = ({ routerName }) => {
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+  const { dispatch } = useContext(AuthContext);
+
+  const handleLogoutClick = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleAgree = async () => {
+    setShowModal(false);
+    dispatch({ type: "LOGOUT" });
+
+    try {
+      await auth.signOut();
+      localStorage.setItem("loggedIn", "false");
+      navigate("/login");
+    } catch (error) {
+      console.error("Failed to sign out:", error);
+    }
+  };
+
   function stringToColor(string) {
     let hash = 0;
     let i;
@@ -128,10 +156,7 @@ const DashboardHeader = ({ routerName }) => {
                 className="hover:animate-bounce"
               />
             </Badge>
-            <Avatar
-              {...stringAvatar(userName)}
-              sx={{ textTransform: "uppercase", backgroundColor: "#609c46" }}
-            />
+            <MenuListComposition onLogoutClick={handleLogoutClick} />
           </div>
         </div>
 
@@ -143,6 +168,38 @@ const DashboardHeader = ({ routerName }) => {
           <p>{routerName}</p>
         </div>
 
+        <Modal open={showModal} onClose={handleCloseModal}>
+          <Box
+            sx={{
+              backgroundColor: "rgba(0, 0, 0, 0.8)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100vh",
+            }}
+          >
+            <Box
+              sx={{
+                backgroundColor: "black",
+                color: "white",
+                padding: "20px",
+                borderRadius: "10px",
+                textAlign: "center",
+              }}
+            >
+              <h2>Confirm Logout</h2>
+              <p>Are you sure you want to log out?</p>
+              <Box sx={{ display: "flex", justifyContent: "space-around" }}>
+                <Button variant="contained" onClick={handleAgree}>
+                  Yes
+                </Button>
+                <Button variant="contained" onClick={handleCloseModal}>
+                  No
+                </Button>
+              </Box>
+            </Box>
+          </Box>
+        </Modal>
       </div>
     </div>
   );

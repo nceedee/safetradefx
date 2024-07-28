@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Avatar,
   Badge,
@@ -8,6 +8,9 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Modal,
+  Box,
+  Button,
 } from "@mui/material";
 import {
   Email as EmailIcon,
@@ -23,14 +26,57 @@ import {
 } from "@mui/icons-material";
 import logo from "../../../../../Assets/Images/logo.png";
 import { menuItems } from "../menuLink";
+import MenuListComposition from "../../MenuListComposition/MenuListComposition";
+import { useSignOut } from "../../../../Global/hook/useSignOut";
+import { AuthContext } from "../../../../Context/AuthContext";
+import { auth } from "../../../../config/firebase";
 
 const DashboardMobileHeader = ({ routerName }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { dispatch } = useContext(AuthContext);
 
   const toggleDrawer = (open) => () => {
     setDrawerOpen(open);
   };
+
+  const handleLogoutClick = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleAgree = async () => {
+    setShowModal(false);
+    dispatch({ type: "LOGOUT" });
+
+    try {
+      await auth.signOut();
+      localStorage.setItem("loggedIn", "false");
+      navigate("/login");
+    } catch (error) {
+      console.error("Failed to sign out:", error);
+    }
+  };
+
+  function stringAvatar(name) {
+    const nameArray = name.split(" ");
+    const initials =
+      nameArray.length > 1
+        ? `${nameArray[0][0]}${nameArray[1][0]}`
+        : nameArray[0][0];
+
+    return {
+      sx: {
+        bgcolor: stringToColor(name),
+      },
+      children: initials,
+    };
+  }
 
   function stringToColor(string) {
     let hash = 0;
@@ -48,21 +94,6 @@ const DashboardMobileHeader = ({ routerName }) => {
     }
 
     return color;
-  }
-
-  function stringAvatar(name) {
-    const nameArray = name.split(" ");
-    const initials =
-      nameArray.length > 1
-        ? `${nameArray[0][0]}${nameArray[1][0]}`
-        : nameArray[0][0];
-
-    return {
-      sx: {
-        bgcolor: "#609c46",
-      },
-      children: initials,
-    };
   }
 
   // Retrieve user details from local storage
@@ -111,10 +142,7 @@ const DashboardMobileHeader = ({ routerName }) => {
               className="hover:animate-bounce"
             />
           </Badge>
-          <Avatar
-            {...stringAvatar(userName)}
-            sx={{ textTransform: "uppercase", backgroundColor: "#609c46" }}
-          />
+          <MenuListComposition onLogoutClick={handleLogoutClick} />
         </div>
       </div>
       <div className="flex p-2 bg-[#0f143a] text-white space-x-2">
@@ -139,7 +167,7 @@ const DashboardMobileHeader = ({ routerName }) => {
             className="absolute left-[50px] top-0 bottom-0 w-[1px] bg-white"
             style={{ height: "100%" }}
           ></div>
-          <List className="max-h-full overflow-y-auto">
+          <List>
             {menuItems.map((item) => (
               <ListItem
                 button
@@ -168,12 +196,45 @@ const DashboardMobileHeader = ({ routerName }) => {
                         : "text-white",
                   })}
                 </ListItemIcon>
-                <ListItemText primary={item.text} className="text-white" />
+                <ListItemText primary={item.text} />
               </ListItem>
             ))}
           </List>
         </div>
       </Drawer>
+
+      <Modal open={showModal} onClose={handleCloseModal}>
+        <Box
+          sx={{
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          <Box
+            sx={{
+              backgroundColor: "black",
+              color: "white",
+              padding: "20px",
+              borderRadius: "10px",
+              textAlign: "center",
+            }}
+          >
+            <h2>Confirm Logout</h2>
+            <p>Are you sure you want to log out?</p>
+            <Box sx={{ display: "flex", justifyContent: "space-around" }}>
+              <Button variant="contained" onClick={handleAgree}>
+                Yes
+              </Button>
+              <Button variant="contained" onClick={handleCloseModal}>
+                No
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      </Modal>
     </div>
   );
 };

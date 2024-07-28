@@ -8,18 +8,16 @@ export const useAuth = () => {
   const setUser = useUser((state) => state.setUser);
   const { currentUser } = useContext(AuthContext);
 
-  const isUserLoggedIn = !!localStorage.getItem("loggedIn");
+  const isUserLoggedIn = !!currentUser;
 
   const RequireAuth = ({ children }) => {
-    return currentUser || isUserLoggedIn ? children : <Navigate to="/login" />;
+    return isUserLoggedIn ? children : <Navigate to="/login" />;
   };
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((responseUser) => {
       if (responseUser) {
-        const displayName = responseUser.displayName;
-        const uid = responseUser.uid;
-        const reloadUserInfo = responseUser.reloadUserInfo;
+        const { displayName, uid, reloadUserInfo } = responseUser;
 
         const user = {
           uid,
@@ -34,6 +32,9 @@ export const useAuth = () => {
 
         localStorage.setItem("loggedIn", "true");
         setUser(user);
+      } else {
+        localStorage.setItem("loggedIn", "false");
+        setUser(null);
       }
     });
 

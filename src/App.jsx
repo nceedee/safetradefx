@@ -34,7 +34,7 @@ import Transfer from "./Components/Pages/Dashboard/Transfer";
 
 const AppContent = () => {
   const { RequireAuth } = useAuth();
-  const { isLoading, setIsLoading } = useLoading();
+  const { isLoading } = useLoading();
   const location = useLocation();
   const navigationType = useNavigationType();
 
@@ -87,7 +87,6 @@ const AppContent = () => {
             </RequireAuth>
           }
         />
-
         <Route
           path="/invest-history"
           element={
@@ -128,7 +127,6 @@ const AppContent = () => {
             </RequireAuth>
           }
         />
-
         <Route
           path="/support-ticket"
           element={
