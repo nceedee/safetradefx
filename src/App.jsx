@@ -45,7 +45,7 @@ const AppContent = () => {
   }, [location, navigationType]);
 
   return (
-    <>
+    <div className="font-montserrat">
       {isLoading && <LoadingModal />}
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -152,7 +152,7 @@ const AppContent = () => {
           }
         />
       </Routes>
-    </>
+    </div>
   );
 };
 

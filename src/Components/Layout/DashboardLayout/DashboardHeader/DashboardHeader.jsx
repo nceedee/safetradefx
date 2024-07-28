@@ -160,7 +160,7 @@ const DashboardHeader = ({ routerName }) => {
           </div>
         </div>
 
-        <div className="flex p-2 space-x-2">
+        <div className="flex p-2 space-x-2 bg-[#070b28]">
           <p>
             <Link to="/">Home</Link>
           </p>
