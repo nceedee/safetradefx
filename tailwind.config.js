@@ -7,7 +7,7 @@ module.exports = {
         montserrat: ["Montserrat", "sans-serif"],
       },
       screens: {
-        "sm-991": "991px", // Custom breakpoint for 991px
+        "sm-991": "1366px", // Custom breakpoint for 991px
       },
     },
   },

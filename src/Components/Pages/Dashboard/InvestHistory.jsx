@@ -6,7 +6,7 @@ const InvestHistory = () => {
   return (
     <div>
       <DashboardLayout routerName="Invest History">
-        <div className="bg-[#0f143a] text-white p-6">
+        <div className="w-full md:w-1/4 lg:block hidden">
           <SideBar />
         </div>
       </DashboardLayout>

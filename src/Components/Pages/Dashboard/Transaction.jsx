@@ -6,7 +6,7 @@ const Transaction = () => {
   return (
     <div>
       <DashboardLayout routerName="Transaction">
-        <div className="bg-[#0f143a] text-white p-6">
+        <div className="w-full md:w-1/4 lg:block hidden">
           <SideBar />
         </div>
       </DashboardLayout>
