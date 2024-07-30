@@ -8,7 +8,7 @@ const DashboardLayout = ({ routerName, children }) => {
   const isDesktop = useMediaQuery("(min-width:911px)");
 
   return (
-    <div>
+    <div className="bg-[#0f143a] h-[100vh]">
       {isDesktop ? (
         <DashboardHeader routerName={routerName} />
       ) : (

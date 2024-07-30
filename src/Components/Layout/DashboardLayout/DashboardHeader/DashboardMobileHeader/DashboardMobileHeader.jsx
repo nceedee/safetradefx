@@ -101,7 +101,7 @@ const DashboardMobileHeader = ({ routerName }) => {
   const userName = user ? user.name : "";
 
   return (
-    <div>
+    <div className="bg-[#0f143a]">
       <div className="bg-[#0f143a] text-[12px] flex items-center justify-between p-2 text-white">
         <div>
           <div>

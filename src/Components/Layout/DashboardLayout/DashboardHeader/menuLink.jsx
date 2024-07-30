@@ -27,11 +27,7 @@ export const menuItems = [
     icon: <CardGiftcardIcon />,
     path: "/referral-bonus",
   },
-  {
-    text: "Support Ticket",
-    icon: <ConfirmationNumberIcon />,
-    path: "/support-ticket",
-  },
+  
   { text: "Transaction", icon: <MoveUpIcon />, path: "/transaction" },
   { text: "Transfer", icon: <MovingIcon />, path: "/transfer" },
 ];

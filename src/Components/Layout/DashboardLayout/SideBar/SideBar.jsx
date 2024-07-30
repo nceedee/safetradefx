@@ -27,7 +27,7 @@ const SideBar = () => {
           </button>
         </div>
       </div>
-      <div className="mt-4">
+      <div className="mt-4  ">
         {menuItems.map((val, key) => (
           <Link
             key={key}

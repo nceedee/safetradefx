@@ -28,7 +28,6 @@ import MyReferral from "./Components/Pages/Dashboard/MyReferral";
 import Payout from "./Components/Pages/Dashboard/Payout";
 import PayoutHistory from "./Components/Pages/Dashboard/PayoutHistory";
 import ReferralBonus from "./Components/Pages/Dashboard/ReferralBonus";
-import SupportTicket from "./Components/Pages/Dashboard/SupportTicket";
 import Transaction from "./Components/Pages/Dashboard/Transaction";
 import Transfer from "./Components/Pages/Dashboard/Transfer";
 
@@ -127,14 +126,7 @@ const AppContent = () => {
             </RequireAuth>
           }
         />
-        <Route
-          path="/support-ticket"
-          element={
-            <RequireAuth>
-              <SupportTicket />
-            </RequireAuth>
-          }
-        />
+        
         <Route
           path="/transaction"
           element={
