@@ -48,7 +48,7 @@ const Dashboard = () => {
               <div className="flex-1 h-[300px] w-[100%] md:h-[300px]">
                 <DashboardChart />
               </div>
-              <div className="flex-1 h-[300px] w-[100%] md:h-[300px] flex md:flex-row">
+              <div className="flex-1 h-[300px] w-[100%] md:h-[auto] flex md:flex-row">
                 <RoundedChart />
               </div>
             </div>

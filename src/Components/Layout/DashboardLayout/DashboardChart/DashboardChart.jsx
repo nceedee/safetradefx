@@ -36,11 +36,13 @@ export default function DashboardChart() {
         xAxis={[{ data: chartData.xAxis.data }]}
         series={[{ data: chartData.series[0].data, area: true }]}
         width={isSmallScreen ? 300 : 500}
-        height={isSmallScreen ? 200 : 300}
+        height={ isSmallScreen ? 200 : 300 }
+        margin={isSmallScreen ? "auto" : ''}
         sx={{
           ".MuiLineChart-root": {
             color: "white",
             width: isSmallScreen ? "100%" : "auto",
+
           },
           ".MuiAxis-root": {
             ".MuiAxisTick-root": {
