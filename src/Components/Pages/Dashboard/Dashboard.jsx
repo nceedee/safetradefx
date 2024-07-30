@@ -9,6 +9,9 @@ import PriceCheckIcon from "@mui/icons-material/PriceCheck";
 import DashboardChart from "../../Layout/DashboardLayout/DashboardChart/DashboardChart";
 import RoundedChart from "../../Layout/DashboardLayout/DashboardChart/RoundedChart";
 import AccountStatistics from "../../Layout/DashboardLayout/AccountStatistics/AccountStatistics";
+import ReferralLink from "../../Layout/DashboardLayout/ReferralLink/ReferralLink";
+import { FaFileContract } from "react-icons/fa";
+import BalanceCardTwo from "../../Global/BalanceCard/BalanceCardTwo";
 
 const Dashboard = () => {
   return (
@@ -53,7 +56,16 @@ const Dashboard = () => {
                 <RoundedChart />
               </div>
             </div>
-            <AccountStatistics/>
+            <AccountStatistics />
+            <div className="w-full mt-4 flex flex-wrap gap-4">
+              <ReferralLink />
+              <BalanceCardTwo
+                icon={<FaFileContract className="text-7xl" />}
+                text="The last Referral Bonus"
+                amount="$0"
+                className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] "
+              />
+            </div>
           </div>
         </div>
       </div>
