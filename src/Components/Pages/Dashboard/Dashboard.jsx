@@ -8,6 +8,7 @@ import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import PriceCheckIcon from "@mui/icons-material/PriceCheck";
 import DashboardChart from "../../Layout/DashboardLayout/DashboardChart/DashboardChart";
 import RoundedChart from "../../Layout/DashboardLayout/DashboardChart/RoundedChart";
+import AccountStatistics from "../../Layout/DashboardLayout/AccountStatistics/AccountStatistics";
 
 const Dashboard = () => {
   return (
@@ -52,6 +53,7 @@ const Dashboard = () => {
                 <RoundedChart />
               </div>
             </div>
+            <AccountStatistics/>
           </div>
         </div>
       </div>
