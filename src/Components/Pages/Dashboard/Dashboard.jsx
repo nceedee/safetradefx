@@ -51,10 +51,10 @@ const Dashboard = () => {
               />
             </div>
             <div className="flex flex-col md:flex-row flex-wrap space-y-4 md:space-y-0 md:space-x-4 mt-4">
-              <div className="flex-1 h-[300px] w-[100%] md:h-[300px]">
+              <div className="flex-1 h-auto w-[100%] ">
                 <DashboardChart />
               </div>
-              <div className="flex-1 h-[300px] w-[100%] md:h-[auto] flex md:flex-row">
+              <div className="flex-1 h-auto w-[100%]  flex md:flex-row">
                 <RoundedChart />
               </div>
             </div>
@@ -65,7 +65,7 @@ const Dashboard = () => {
                 icon={<FaFileContract className="text-7xl" />}
                 text="The last Referral Bonus"
                 amount={`$${balanceContext.totalReferralBonus}.00`}
-                className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] "
+                className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px]"
               />
             </div>
           </div>

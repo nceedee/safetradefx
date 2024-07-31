@@ -7,7 +7,7 @@ export default function RoundedChart() {
   return (
     <Box
       className="p-4 bg-[#202b5d] rounded-md text-white"
-      sx={{ width: "100%", height: "100%" }}
+      sx={{ width: "100%", height: "auto" }}
     >
       <Stack
         direction={{ xs: "column", md: "row" }}
