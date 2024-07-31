@@ -30,6 +30,7 @@ import PayoutHistory from "./Components/Pages/Dashboard/PayoutHistory";
 import ReferralBonus from "./Components/Pages/Dashboard/ReferralBonus";
 import Transaction from "./Components/Pages/Dashboard/Transaction";
 import Transfer from "./Components/Pages/Dashboard/Transfer";
+import PlansDashboard from "./Components/Pages/Dashboard/PlansDashboard/PlansDashboard";
 
 const AppContent = () => {
   const { RequireAuth } = useAuth();
@@ -119,6 +120,14 @@ const AppContent = () => {
           }
         />
         <Route
+          path="/plan"
+          element={
+            <RequireAuth>
+              <PlansDashboard />
+            </RequireAuth>
+          }
+        />
+        <Route
           path="/referral-bonus"
           element={
             <RequireAuth>
@@ -126,7 +135,7 @@ const AppContent = () => {
             </RequireAuth>
           }
         />
-        
+
         <Route
           path="/transaction"
           element={

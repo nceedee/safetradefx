@@ -20,10 +20,10 @@ const SideBar = () => {
         </div>
         <div className="flex flex-col space-y-2 mt-4">
           <button className="bg-[#609c46] text-white w-full rounded-sm p-2">
-            Deposit
+            <Link to="/add-fund">Deposit</Link>
           </button>
           <button className="bg-[#202b5d] text-white w-full rounded-sm p-2">
-            Invest
+            <Link to="/plan">Invest</Link>
           </button>
         </div>
       </div>
