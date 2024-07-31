@@ -156,10 +156,10 @@ const DashboardMobileHeader = ({ routerName }) => {
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
         <div className="flex justify-around m-4">
           <button className="p-2 w-24 rounded-sm bg-[#609c46] text-white">
-            Deposit
+            <Link to="/add-fund">Deposit</Link>
           </button>
           <button className="p-2 w-24 rounded-sm bg-[#202b5d] text-white">
-            Invest
+            <Link to="/plan">Invest</Link>
           </button>
         </div>
         <div className="relative w-64 h-full bg-[#0f143a] text-white">
