@@ -12,13 +12,14 @@ const PayoutHistory = () => {
             <div className="w-full md:w-1/4 lg:block hidden">
               <SideBar />
             </div>
-            <div className="w-full flex flex-wrap gap-4">
+            <div className="w-full flex flex-wrap gap-4 items-center">
               <InvestCard
                 name="STARTER PLAN"
                 from="50"
                 to="999"
                 percent="5%"
                 hours="20"
+                className="bg-[#202b5d] "
               />
               <InvestCard
                 name="MINI PLAN"
@@ -26,6 +27,7 @@ const PayoutHistory = () => {
                 to="1500"
                 percent="7.3%"
                 hours="24"
+                className="bg-[#202b5d] "
               />
               <InvestCard
                 name="PROFESSIONAL PLAN"
@@ -33,6 +35,7 @@ const PayoutHistory = () => {
                 to="3000"
                 percent="9.99%"
                 hours="40"
+                className="bg-[#202b5d] "
               />
               <InvestCard
                 name="PROMO PLAN"
@@ -40,6 +43,7 @@ const PayoutHistory = () => {
                 to="9000"
                 percent="9%"
                 hours="10"
+                className="bg-[#202b5d] "
               />
             </div>
           </div>

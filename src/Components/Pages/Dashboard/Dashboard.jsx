@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import DashboardLayout from "../../Layout/DashboardLayout/DashboardLayout";
 import SideBar from "../../Layout/DashboardLayout/SideBar/SideBar";
 import BalanceCard from "../../Global/BalanceCard/BalanceCard";
@@ -12,8 +12,10 @@ import AccountStatistics from "../../Layout/DashboardLayout/AccountStatistics/Ac
 import ReferralLink from "../../Layout/DashboardLayout/ReferralLink/ReferralLink";
 import { FaFileContract } from "react-icons/fa";
 import BalanceCardTwo from "../../Global/BalanceCard/BalanceCardTwo";
+import BalanceContext from "../../Context/BalanceContext";
 
 const Dashboard = () => {
+  const balanceContext = useContext(BalanceContext);
   return (
     <DashboardLayout routerName="Dashboard">
       <div className="bg-[#0f143a]">
@@ -24,25 +26,25 @@ const Dashboard = () => {
           <div className="w-full">
             <div className="w-full flex flex-wrap gap-4">
               <BalanceCard
-                amount="$2.00"
+                amount={`$${balanceContext.mainBalance}.00`}
                 icon={<AccountBalanceWalletIcon sx={{ fontSize: 50 }} />}
                 text="Interest Balance"
                 className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
               />
               <BalanceCard
-                amount="$0.00"
+                amount={`$${balanceContext.interestBalance}.00`}
                 icon={<MonetizationOnIcon sx={{ fontSize: 50 }} />}
-                text="Monetary Balance"
+                text="Interest Balance"
                 className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
               />
               <BalanceCard
-                amount="$0.00"
+                amount={`$${balanceContext.totalDeposit}.00`}
                 icon={<LocalAtmIcon sx={{ fontSize: 50 }} />}
                 text="Total Deposit"
                 className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
               />
               <BalanceCard
-                amount="$0.00"
+                amount={`$${balanceContext.totalEarn}.00`}
                 icon={<PriceCheckIcon sx={{ fontSize: 50 }} />}
                 text="Total Earn"
                 className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
@@ -62,7 +64,7 @@ const Dashboard = () => {
               <BalanceCardTwo
                 icon={<FaFileContract className="text-7xl" />}
                 text="The last Referral Bonus"
-                amount="$0"
+                amount={`$${balanceContext.totalReferralBonus}.00`}
                 className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] "
               />
             </div>

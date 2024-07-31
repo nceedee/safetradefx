@@ -1,8 +1,10 @@
 import React from "react";
 
-const InvestCard = ({ name, from, to, percent, hours }) => {
-  return (
-    <div className="p-6 flex flex-col space-y-4 items-center lg:m-0 m-auto bg-[#202b5d] rounded-md">
+const InvestCard = ({ name, from, to, percent, hours ,className}) => {
+    return (
+    <div
+      className={`p-6 flex flex-col space-y-4 items-center lg:m-0 m-auto rounded-md ${className}`}
+    >
       <h1 className="font-bold text-3xl">{name}</h1>
       <h1 className="text-3xl text-gray-300">
         ${from} - ${to}

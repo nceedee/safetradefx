@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { menuItems } from "../DashboardHeader/menuLink";
+import BalanceContext from "../../../Context/BalanceContext";
 
-const SideBar = () => {
+const SideBar = () =>
+{
+  const balanceContext = useContext(BalanceContext)
   return (
     <div className="border border-gray-300 px-6 py-8 w-full md:w-[300px] rounded-lg bg-[#202b5d] text-white">
       <div className="p-4 flex flex-col space-y-4">
@@ -12,11 +15,11 @@ const SideBar = () => {
         </div>
         <div className="flex justify-between items-center">
           <p>Main Balance</p>
-          <p>$2.00</p>
+          <p>{`$${balanceContext.mainBalance}.00`}</p>
         </div>
         <div className="flex justify-between items-center">
           <p>Interest Balance</p>
-          <p>$0.00</p>
+          <p>{`$${balanceContext.interestBalance}.00`}</p>
         </div>
         <div className="flex flex-col space-y-2 mt-4">
           <button className="bg-[#609c46] text-white w-full rounded-sm p-2">
