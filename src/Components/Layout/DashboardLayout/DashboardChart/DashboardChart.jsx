@@ -57,7 +57,7 @@ export default function DashboardChart() {
     return (
       <div className="bg-[#202b5d] rounded-md text-white  w-full flex justify-center items-center">
         <SkeletonUi
-          width={isSmallScreen ? "100%" : 500}
+          width={isSmallScreen ? "100%" : "100%"}
           height={isSmallScreen ? 200 : 300}
         />
       </div>
