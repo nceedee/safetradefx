@@ -1,6 +1,5 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState } from "react";
 
-// Define the context with the necessary values and state setters
 const BalanceContext = createContext({
   mainBalance: 2,
   interestBalance: 0,
@@ -27,18 +26,8 @@ export const BalanceContextProvider = ({ children }) => {
   const [totalEarn, setTotalEarn] = useState(0);
   const [totalInvest, setTotalInvest] = useState(0);
   const [totalPayout, setTotalPayout] = useState(0);
-  const [totalTicket, setTotalTicket] = useState(0);
   const [totalReferralBonus, setTotalReferralBonus] = useState(0);
-
-  // This effect can be used to initialize data if needed, for now, it's just an example
-  useEffect(() => {
-    // Example effect to update balances or fetch initial data if required
-    const fetchData = async () => {
-      // Fetch data and set initial states here
-    };
-
-    fetchData();
-  }, []);
+  const [totalTicket, setTotalTicket] = useState(0);
 
   return (
     <BalanceContext.Provider
@@ -51,7 +40,6 @@ export const BalanceContextProvider = ({ children }) => {
         totalPayout,
         totalReferralBonus,
         totalTicket,
-        setTotalTicket,
         setMainBalance,
         setInterestBalance,
         setTotalDeposit,
@@ -59,6 +47,7 @@ export const BalanceContextProvider = ({ children }) => {
         setTotalInvest,
         setTotalPayout,
         setTotalReferralBonus,
+        setTotalTicket,
       }}
     >
       {children}
@@ -67,3 +56,4 @@ export const BalanceContextProvider = ({ children }) => {
 };
 
 export default BalanceContext;
+  

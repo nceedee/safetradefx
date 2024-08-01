@@ -2,10 +2,17 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { menuItems } from "../DashboardHeader/menuLink";
 import BalanceContext from "../../../Context/BalanceContext";
+import useUpdateMainBalance from "../../../Global/hook/useUpdateMainBalance";
+import { uid } from "../../../stores/stores";
+import useUpdateInterestBalance from "../../../Global/hook/useUpdateInterestBalance";
 
-const SideBar = () =>
-{
-  const balanceContext = useContext(BalanceContext)
+const SideBar = () => {
+  const balanceContext = useContext(BalanceContext);
+  const { currentBalance, loading } = useUpdateMainBalance(uid.id);
+  const { interestCurrentBalance, InterestLoading } = useUpdateInterestBalance(
+    uid.id
+  );
+
   return (
     <div className="border border-gray-300 px-6 py-8 w-full md:w-[300px] rounded-lg bg-[#202b5d] text-white">
       <div className="p-4 flex flex-col space-y-4">
@@ -15,11 +22,17 @@ const SideBar = () =>
         </div>
         <div className="flex justify-between items-center">
           <p>Main Balance</p>
-          <p>{`$${balanceContext.mainBalance}.00`}</p>
+          <p>{`$${
+            currentBalance.toLocaleString() !== null ? currentBalance.toLocaleString() : "loading..."
+          }.00`}</p>
         </div>
         <div className="flex justify-between items-center">
           <p>Interest Balance</p>
-          <p>{`$${balanceContext.interestBalance}.00`}</p>
+          <p>{`$${
+            interestCurrentBalance.toLocaleString() !== null
+              ? interestCurrentBalance.toLocaleString()
+              : "loading..."
+          }.00`}</p>
         </div>
         <div className="flex flex-col space-y-2 mt-4">
           <button className="bg-[#609c46] text-white w-full rounded-sm p-2">

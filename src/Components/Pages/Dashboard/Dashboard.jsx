@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
+import { uid } from "../../stores/stores";
 import DashboardLayout from "../../Layout/DashboardLayout/DashboardLayout";
 import SideBar from "../../Layout/DashboardLayout/SideBar/SideBar";
 import BalanceCard from "../../Global/BalanceCard/BalanceCard";
@@ -13,9 +14,21 @@ import ReferralLink from "../../Layout/DashboardLayout/ReferralLink/ReferralLink
 import { FaFileContract } from "react-icons/fa";
 import BalanceCardTwo from "../../Global/BalanceCard/BalanceCardTwo";
 import BalanceContext from "../../Context/BalanceContext";
+import useUpdateMainBalance from "../../Global/hook/useUpdateMainBalance";
+import useUpdateInterestBalance from "../../Global/hook/useUpdateInterestBalance";
+import useUpdateTotalDeposit from "../../Global/hook/useUpdateTotalDeposit";
+import useUpdateTotalEarn from "../../Global/hook/useUpdateTotalEarn";
 
 const Dashboard = () => {
-  const balanceContext = useContext(BalanceContext);
+  const { currentBalance, loading } = useUpdateMainBalance(uid.id);
+  const { currentBalance: earncurrentBalance } = useUpdateTotalEarn(uid.id);
+  const { currentBalance: depositCurrentBalance, loading: depostLoading } =
+    useUpdateTotalDeposit(uid.id);
+  useUpdateMainBalance(uid.id);
+  const { interestCurrentBalance, InterestLoading } = useUpdateInterestBalance(
+    uid.id
+  );
+
   return (
     <DashboardLayout routerName="Dashboard">
       <div className="bg-[#0f143a]">
@@ -26,47 +39,65 @@ const Dashboard = () => {
           <div className="w-full">
             <div className="w-full flex flex-wrap gap-4">
               <BalanceCard
-                amount={`$${balanceContext.mainBalance}.00`}
+                amount={`$${
+                  currentBalance.toLocaleString() !== null
+                    ? currentBalance.toLocaleString()
+                    : "loading..."
+                }.00`}
                 icon={<AccountBalanceWalletIcon sx={{ fontSize: 50 }} />}
-                text="Interest Balance"
+                text="Main Balance"
                 className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
               />
-              <BalanceCard
-                amount={`$${balanceContext.interestBalance}.00`}
-                icon={<MonetizationOnIcon sx={{ fontSize: 50 }} />}
-                text="Interest Balance"
-                className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
-              />
-              <BalanceCard
-                amount={`$${balanceContext.totalDeposit}.00`}
-                icon={<LocalAtmIcon sx={{ fontSize: 50 }} />}
-                text="Total Deposit"
-                className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
-              />
-              <BalanceCard
-                amount={`$${balanceContext.totalEarn}.00`}
-                icon={<PriceCheckIcon sx={{ fontSize: 50 }} />}
-                text="Total Earn"
-                className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
-              />
-            </div>
-            <div className="flex flex-col md:flex-row flex-wrap space-y-4 md:space-y-0 md:space-x-4 mt-4">
-              <div className="flex-1 h-auto w-[100%] ">
-                <DashboardChart />
-              </div>
-              <div className="flex-1 h-auto w-[100%]  flex md:flex-row">
-                <RoundedChart />
-              </div>
-            </div>
-            <AccountStatistics />
-            <div className="w-full mt-4 flex flex-wrap gap-4">
-              <ReferralLink />
-              <BalanceCardTwo
-                icon={<FaFileContract className="text-7xl" />}
-                text="The last Referral Bonus"
-                amount={`$${balanceContext.totalReferralBonus}.00`}
-                className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px]"
-              />
+              <BalanceContext.Consumer>
+                {({
+                  interestBalance,
+                  totalDeposit,
+                  totalEarn,
+                  totalReferralBonus,
+                }) => (
+                  <>
+                    <BalanceCard
+                      amount={`$${
+                        interestCurrentBalance.toLocaleString() !== null
+                          ? interestCurrentBalance.toLocaleString()
+                          : "loading..."
+                      }.00`}
+                      icon={<MonetizationOnIcon sx={{ fontSize: 50 }} />}
+                      text="Interest Balance"
+                      className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
+                    />
+                    <BalanceCard
+                      amount={`$${
+                        depositCurrentBalance.toLocaleString() !== null
+                          ? depositCurrentBalance.toLocaleString()
+                          : "loading..."
+                      }.00`}
+                      icon={<LocalAtmIcon sx={{ fontSize: 50 }} />}
+                      text="Total Deposit"
+                      className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
+                    />
+                    <BalanceCard
+                      amount={`$${
+                        earncurrentBalance.toLocaleString() !== null
+                          ? earncurrentBalance.toLocaleString()
+                          : "loading..."
+                      }.00`}
+                      icon={<PriceCheckIcon sx={{ fontSize: 50 }} />}
+                      text="Total Earn"
+                      className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
+                    />
+                    <div className="flex flex-col md:flex-row flex-wrap space-y-4 md:space-y-0 md:space-x-4 mt-4">
+                      <div className="flex-1 h-auto w-[100%]">
+                        <DashboardChart />
+                      </div>
+                      <div className="flex-1 h-auto w-[100%]  flex md:flex-row">
+                        <RoundedChart />
+                      </div>
+                    </div>
+                    <AccountStatistics />
+                  </>
+                )}
+              </BalanceContext.Consumer>
             </div>
           </div>
         </div>

@@ -25,7 +25,6 @@ import Badges from "./Components/Pages/Dashboard/Badges";
 import FundHistory from "./Components/Pages/Dashboard/FundHistory";
 import InvestHistory from "./Components/Pages/Dashboard/InvestHistory";
 import MyReferral from "./Components/Pages/Dashboard/MyReferral";
-import Payout from "./Components/Pages/Dashboard/Payout";
 import PayoutHistory from "./Components/Pages/Dashboard/PayoutHistory";
 import ReferralBonus from "./Components/Pages/Dashboard/ReferralBonus";
 import Transaction from "./Components/Pages/Dashboard/Transaction";
@@ -103,14 +102,7 @@ const AppContent = () => {
             </RequireAuth>
           }
         />
-        <Route
-          path="/payout"
-          element={
-            <RequireAuth>
-              <Payout />
-            </RequireAuth>
-          }
-        />
+        
         <Route
           path="/payout-history"
           element={

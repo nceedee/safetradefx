@@ -19,8 +19,6 @@ export const menuItems = [
   { text: "Badges", icon: <StarIcon />, path: "/badges" },
   { text: "Fund History", icon: <HistoryIcon />, path: "/fund-history" },
   { text: "Invest History", icon: <HistoryIcon />, path: "/invest-history" },
-  { text: "My Referral", icon: <EmojiPeopleIcon />, path: "/my-referral" },
-  { text: "Payout", icon: <PaymentsIcon />, path: "/payout" },
   { text: "Payout History", icon: <HistoryIcon />, path: "/payout-history" },
   {
     text: "Referral Bonus",
