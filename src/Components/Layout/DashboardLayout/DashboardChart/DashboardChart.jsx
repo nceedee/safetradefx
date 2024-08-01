@@ -43,7 +43,7 @@ export default function DashboardChart() {
   if (loading) {
     // Display skeleton while loading
     return (
-      <div className="bg-[#202b5d] rounded-md text-white  w-full md:h-[300px] flex justify-center items-center">
+      <div className="bg-[#202b5d] rounded-md text-white  w-full  flex justify-center items-center">
         <SkeletonUi
           width={isSmallScreen ? "100%" : 500}
           height={isSmallScreen ? 200 : 300}
@@ -55,7 +55,7 @@ export default function DashboardChart() {
   if (cryptoData.length === 0) {
     // Display a message or another skeleton when there's no data
     return (
-      <div className="bg-[#202b5d] rounded-md text-white md:h-[300px] w-full flex justify-center items-center">
+      <div className="bg-[#202b5d] rounded-md text-white  w-full flex justify-center items-center">
         <SkeletonUi
           width={isSmallScreen ? "100%" : 500}
           height={isSmallScreen ? 200 : 300}
