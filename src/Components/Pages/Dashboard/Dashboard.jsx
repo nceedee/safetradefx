@@ -86,14 +86,9 @@ const Dashboard = () => {
                       text="Total Earn"
                       className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
                     />
-                    <div className="flex flex-col md:flex-row flex-wrap space-y-4 md:space-y-0 md:space-x-4 mt-4">
-                      <div className="flex-1 h-auto w-[100%]">
-                        <DashboardChart />
-                      </div>
-                      <div className="flex-1 h-auto w-[100%]  flex md:flex-row">
-                        <RoundedChart />
-                      </div>
-                    </div>
+                    <DashboardChart />
+                    <RoundedChart />
+
                     <AccountStatistics />
                   </>
                 )}
