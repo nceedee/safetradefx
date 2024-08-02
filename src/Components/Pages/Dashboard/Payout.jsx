@@ -4,6 +4,9 @@ import SideBar from "../../Layout/DashboardLayout/SideBar/SideBar";
 import CoinCard from "../../Global/CoinCard/CoinCard";
 import btc from "../../../Assets/Images/btc.png";
 import img4 from "../../../Assets/Images/img4.png";
+import img3 from "../../../Assets/Images/img3.png";
+import img2 from "../../../Assets/Images/img2.png";
+import img6 from "../../../Assets/Images/img6.png";
 import FormModal from "../../Global/FormModal/FormModal";
 
 const Payout = () => {
@@ -30,6 +33,9 @@ const Payout = () => {
             <div className="w-full flex flex-wrap gap-4">
               <CoinCard img={btc} onClick={() => handleOpenModal("BTC")} />
               <CoinCard img={img4} onClick={() => handleOpenModal("ETH")} />
+              <CoinCard img={img3} onClick={() => handleOpenModal("DOGE")} />
+              <CoinCard img={img2} onClick={() => handleOpenModal("USDT")} />
+              <CoinCard img={img6} onClick={() => handleOpenModal("TRX")} />
             </div>
           </div>
         </div>

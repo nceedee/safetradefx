@@ -76,7 +76,7 @@ const FormModal = ({ open, handleClose, coinType }) => {
       aria-labelledby="modal-title"
       aria-describedby="modal-description"
     >
-      <Box className="bg-[#202b5d] p-6 rounded-md w-1/3 m-auto mt-24">
+      <Box className="bg-[#202b5d] p-6 rounded-md w-[100%] lg:w-1/3 m-auto mt-24">
         <h2 className="text-white text-xl mb-4">{coinType} Withdrawal</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <TextField
