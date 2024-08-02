@@ -1,17 +1,36 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { menuItems } from "../DashboardHeader/menuLink";
 import BalanceContext from "../../../Context/BalanceContext";
 import useUpdateMainBalance from "../../../Global/hook/useUpdateMainBalance";
 import { uid } from "../../../stores/stores";
 import useUpdateInterestBalance from "../../../Global/hook/useUpdateInterestBalance";
+import useUpdateTotalEarn from "../../../Global/hook/useUpdateTotalEarn";
 
 const SideBar = () => {
-  const balanceContext = useContext(BalanceContext);
+  const balanceContext = useContext( BalanceContext );
+    const { currentBalance: earncurrentBalance } = useUpdateTotalEarn(uid.id);
+
   const { currentBalance, loading } = useUpdateMainBalance(uid.id);
   const { interestCurrentBalance, InterestLoading } = useUpdateInterestBalance(
     uid.id
   );
+
+  const [localEarnAmount, setLocalEarnAmount] = useState(null);
+
+  useEffect(() => {
+    // Fetch data from local storage and parse it
+    const storedData = localStorage.getItem("investmentData");
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      setLocalEarnAmount(parsedData.amount); // Assuming 'amount' is the field you need
+    }
+  }, []);
+
+  // Use local storage amount if available, otherwise use the fetched balance
+  const earnAmount =
+    localEarnAmount !== null ? localEarnAmount : earncurrentBalance;
+
 
   return (
     <div className="border border-gray-300 px-6 py-8 w-full md:w-[300px] rounded-lg bg-[#202b5d] text-white">
@@ -23,15 +42,15 @@ const SideBar = () => {
         <div className="flex justify-between items-center">
           <p>Main Balance</p>
           <p>{`$${
-            currentBalance.toLocaleString() !== null ? currentBalance.toLocaleString() : "loading..."
+            currentBalance.toLocaleString() !== null
+              ? currentBalance.toLocaleString()
+              : "loading..."
           }.00`}</p>
         </div>
         <div className="flex justify-between items-center">
           <p>Interest Balance</p>
           <p>{`$${
-            interestCurrentBalance.toLocaleString() !== null
-              ? interestCurrentBalance.toLocaleString()
-              : "loading..."
+            earnAmount !== null ? earnAmount.toLocaleString() : "loading..."
           }.00`}</p>
         </div>
         <div className="flex flex-col space-y-2 mt-4">

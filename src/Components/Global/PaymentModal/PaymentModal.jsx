@@ -1,13 +1,48 @@
 import { useState } from "react";
+import emailjs from "emailjs-com";
 
 export const PaymentModal = ({ coin, onClose, onConfirm }) => {
   const [step, setStep] = useState(1);
   const [amount, setAmount] = useState("");
 
+  const chargePercentage = 5; // 5% charge
+  const charge = (amount * chargePercentage) / 100;
+  const totalPayment = parseFloat(amount) + charge;
+
   const handleNextStep = () => {
     if (step === 1 && amount) {
       setStep(2);
     }
+  };
+
+  const handleConfirmPayment = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const emailParams = {
+      user_name: user.name,
+      user_email: user.email,
+      user_id: user.id,
+      coin_name: coin.name,
+      amount,
+      charge: charge.toFixed(2),
+      total_payment: totalPayment.toFixed(2),
+      coin_address: coin.address,
+    };
+
+    emailjs
+      .send(
+        "safetradefx", // Replace with your EmailJS service ID
+        "safetradefx_template", // Replace with your EmailJS template ID
+        emailParams,
+        "6_kKoseNaTUNdJbv3" // Replace with your EmailJS user ID
+      )
+      .then((response) => {
+        console.log("Email sent successfully!", response.status, response.text);
+      })
+      .catch((error) => {
+        console.error("Failed to send email.", error);
+      });
+
+    onConfirm(totalPayment);
   };
 
   return (
@@ -42,11 +77,17 @@ export const PaymentModal = ({ coin, onClose, onConfirm }) => {
             <p className="mb-2">
               Amount: {amount} {coin.name}
             </p>
+            <p className="mb-2">
+              Charges: {charge.toFixed(2)} {coin.name}
+            </p>
+            <p className="mb-4">
+              Total Payment: {totalPayment.toFixed(2)} {coin.name}
+            </p>
             <p>Send payment to this address:</p>
             <p className="font-mono mt-2 mb-4">{coin.address}</p>
             <button
               className="bg-green-500 p-3 rounded-lg text-white w-full mb-4"
-              onClick={onConfirm}
+              onClick={handleConfirmPayment}
             >
               Confirm Payment
             </button>

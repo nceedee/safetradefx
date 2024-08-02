@@ -8,17 +8,44 @@ const useUpdateTotalDeposit = (uid) => {
   const fetchCurrentBalance = async (uid) => {
     setLoading(true);
     try {
-      const response = await axios.get(
+      // Fetch balance from userbalance endpoint
+      const userBalanceResponse = await axios.get(
+        `https://tanstack-fetch-default-rtdb.firebaseio.com/userbalance/${uid}.json`
+      );
+
+      // Calculate total user balance
+      let userBalance = 0;
+      if (userBalanceResponse.data) {
+        const transactions = Object.values(userBalanceResponse.data);
+        userBalance = transactions.reduce(
+          (acc, transaction) => acc + transaction.amount,
+          0
+        );
+      }
+
+      // Fetch balance from totalDeposit endpoint
+      const totalDepositResponse = await axios.get(
         `https://tanstack-fetch-default-rtdb.firebaseio.com/totalDeposit/${uid}.json`
       );
 
-      if (response.data) {
-        const transactions = Object.values(response.data);
-        const latestTransaction = transactions[transactions.length - 1];
-        setCurrentBalance(latestTransaction.amount || 0);
-      } else {
-        setCurrentBalance(0);
+      let totalDeposit = 0;
+      if (totalDepositResponse.data) {
+        const transactions = Object.values(totalDepositResponse.data);
+        totalDeposit = transactions.reduce(
+          (acc, transaction) => acc + transaction.amount,
+          0
+        );
       }
+
+      // Get the amount from local storage
+      const investmentData =
+        JSON.parse(localStorage.getItem("investmentData")) || {};
+      const localStorageAmount = investmentData.amount || 0;
+
+      // Combine all amounts
+      const combinedBalance = userBalance + totalDeposit + localStorageAmount;
+
+      setCurrentBalance(combinedBalance);
     } catch (error) {
       console.error("Error fetching balance:", error);
       setCurrentBalance(null); // Handle error state if necessary
@@ -33,7 +60,7 @@ const useUpdateTotalDeposit = (uid) => {
     }
   }, [uid]);
 
-  return { currentBalance , loading };
+  return { currentBalance, loading };
 };
 
 export default useUpdateTotalDeposit;

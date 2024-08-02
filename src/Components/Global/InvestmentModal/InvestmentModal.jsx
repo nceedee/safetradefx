@@ -1,39 +1,70 @@
-import React, { useState, useContext } from "react";
-import BalanceContext from "../../Context/BalanceContext";
+import React, { useState, useEffect } from "react";
+import useUpdateMainBalance from "../hook/useUpdateMainBalance";
+import useUpdateInterestBalance from "../hook/useUpdateInterestBalance";
+import { uid } from "../../stores/stores";
 
-const InvestmentModal = ({ isOpen, onClose }) => {
-  const {
-    mainBalance,
-    interestBalance,
-    setMainBalance,
-    setInterestBalance,
-    totalInvest,
-    setTotalInvest,
-  } = useContext(BalanceContext);
+const InvestmentModal = ({ isOpen, onClose, investmentPlan }) => {
+  const { currentBalance } = useUpdateMainBalance(uid.id);
+  const { interestCurrentBalance } = useUpdateInterestBalance(uid.id);
 
-  const [selectedWallet, setSelectedWallet] = useState("main");
+  const [selectedWallet, setSelectedWallet] = useState("amount");
   const [amountToInvest, setAmountToInvest] = useState("");
+  const [currentBalanceState, setCurrentBalanceState] = useState(null);
+
+  useEffect(() => {
+    if (selectedWallet === "amount") {
+      setCurrentBalanceState(currentBalance);
+    } else if (selectedWallet === "interest") {
+      setCurrentBalanceState(interestCurrentBalance);
+    }
+  }, [selectedWallet, currentBalance, interestCurrentBalance]);
+
+  useEffect(() => {
+    const investmentData =
+      JSON.parse(localStorage.getItem("investmentData")) || {};
+    if (investmentData[selectedWallet]) {
+      setAmountToInvest(investmentData[selectedWallet].toString());
+    }
+  }, [selectedWallet]);
 
   const handleInvest = () => {
     const amount = parseFloat(amountToInvest);
 
-    if (selectedWallet === "main") {
-      if (mainBalance >= amount) {
-        setMainBalance(mainBalance - amount);
-        setTotalInvest(totalInvest + amount);
-        alert("Investment successful from main balance");
-      } else {
-        alert("Insufficient main balance");
-      }
-    } else if (selectedWallet === "interest") {
-      if (interestBalance >= amount) {
-        setInterestBalance(interestBalance - amount);
-        setTotalInvest(totalInvest + amount);
-        alert("Investment successful from interest balance");
-      } else {
-        alert("Insufficient interest balance");
-      }
+    if (isNaN(amount) || amount <= 0) {
+      alert("Please enter a valid amount");
+      return;
     }
+
+    // Check if amount is within the investment plan range
+    if (amount < investmentPlan.min || amount > investmentPlan.max) {
+      alert(
+        `Investment amount must be between $${investmentPlan.min} and $${investmentPlan.max}`
+      );
+      return;
+    }
+
+    // Check if current balance is sufficient
+    if (currentBalanceState < amount) {
+      alert(`Insufficient ${selectedWallet} balance`);
+      return;
+    }
+
+    // Retrieve existing investment data from local storage
+    const investmentData =
+      JSON.parse(localStorage.getItem("investmentData")) || {};
+
+    // Update investment amount
+    if (investmentData[selectedWallet]) {
+      investmentData[selectedWallet] += amount;
+    } else {
+      investmentData[selectedWallet] = amount;
+    }
+
+    // Save updated investment data back to local storage
+    localStorage.setItem("investmentData", JSON.stringify(investmentData));
+
+    alert(`Investment of $${amount} successful from ${selectedWallet} balance`);
+
     onClose();
   };
 
@@ -50,9 +81,17 @@ const InvestmentModal = ({ isOpen, onClose }) => {
           value={selectedWallet}
           onChange={(e) => setSelectedWallet(e.target.value)}
         >
-          <option value="main">Main Balance - ${mainBalance}</option>
+          <option value="main">
+            Main Balance -{" "}
+            {currentBalance !== null
+              ? `$${currentBalance.toLocaleString()}.00`
+              : "loading..."}
+          </option>
           <option value="interest">
-            Interest Balance - ${interestBalance}
+            Interest Balance -{" "}
+            {interestCurrentBalance !== null
+              ? `$${interestCurrentBalance.toLocaleString()}.00`
+              : "loading..."}
           </option>
         </select>
         <input
@@ -63,6 +102,7 @@ const InvestmentModal = ({ isOpen, onClose }) => {
           onChange={(e) => setAmountToInvest(e.target.value)}
         />
         <button
+          id="investButton"
           className="bg-[#609c46] text-white p-3 rounded-md w-full mb-2"
           onClick={handleInvest}
         >

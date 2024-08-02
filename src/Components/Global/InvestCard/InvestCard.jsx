@@ -3,8 +3,10 @@ import InvestmentModal from "../InvestmentModal/InvestmentModal";
 
 const InvestCard = ({ name, from, to, percent, hours, className }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(null);
 
-  const handleInvestNowClick = () => {
+  const handleInvestClick = (plan) => {
+    setSelectedPlan(plan);
     setIsModalOpen(true);
   };
 
@@ -38,14 +40,17 @@ const InvestCard = ({ name, from, to, percent, hours, className }) => {
       </div>
       <button
         className="border-[1px] p-3 rounded-[30px] hover:bg-white hover:text-black hover:animate-pulse"
-        onClick={handleInvestNowClick}
+        onClick={() => handleInvestClick({ name, from, to, percent, hours })}
       >
         Invest Now
       </button>
-      <InvestmentModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+      {selectedPlan && (
+        <InvestmentModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          investmentPlan={selectedPlan}
+        />
+      )}
     </div>
   );
 };

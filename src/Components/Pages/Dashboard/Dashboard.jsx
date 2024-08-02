@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { uid } from "../../stores/stores";
 import DashboardLayout from "../../Layout/DashboardLayout/DashboardLayout";
 import SideBar from "../../Layout/DashboardLayout/SideBar/SideBar";
@@ -10,24 +10,34 @@ import PriceCheckIcon from "@mui/icons-material/PriceCheck";
 import DashboardChart from "../../Layout/DashboardLayout/DashboardChart/DashboardChart";
 import RoundedChart from "../../Layout/DashboardLayout/DashboardChart/RoundedChart";
 import AccountStatistics from "../../Layout/DashboardLayout/AccountStatistics/AccountStatistics";
-import ReferralLink from "../../Layout/DashboardLayout/ReferralLink/ReferralLink";
-import { FaFileContract } from "react-icons/fa";
-import BalanceCardTwo from "../../Global/BalanceCard/BalanceCardTwo";
-import BalanceContext from "../../Context/BalanceContext";
 import useUpdateMainBalance from "../../Global/hook/useUpdateMainBalance";
 import useUpdateInterestBalance from "../../Global/hook/useUpdateInterestBalance";
 import useUpdateTotalDeposit from "../../Global/hook/useUpdateTotalDeposit";
 import useUpdateTotalEarn from "../../Global/hook/useUpdateTotalEarn";
 
 const Dashboard = () => {
-  const { currentBalance, loading } = useUpdateMainBalance(uid.id);
+  const { currentBalance } = useUpdateMainBalance(uid.id);
   const { currentBalance: earncurrentBalance } = useUpdateTotalEarn(uid.id);
-  const { currentBalance: depositCurrentBalance, loading: depostLoading } =
-    useUpdateTotalDeposit(uid.id);
-  useUpdateMainBalance(uid.id);
-  const { interestCurrentBalance, InterestLoading } = useUpdateInterestBalance(
+  const { currentBalance: depositCurrentBalance } = useUpdateTotalDeposit(
     uid.id
   );
+  const { interestCurrentBalance } = useUpdateInterestBalance(uid.id);
+
+  // State for local storage data
+  const [localEarnAmount, setLocalEarnAmount] = useState(null);
+
+  useEffect(() => {
+    // Fetch data from local storage and parse it
+    const storedData = localStorage.getItem("investmentData");
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      setLocalEarnAmount(parsedData.amount); // Assuming 'amount' is the field you need
+    }
+  }, []);
+
+  // Use local storage amount if available, otherwise use the fetched balance
+  const earnAmount =
+    localEarnAmount !== null ? localEarnAmount : earncurrentBalance;
 
   return (
     <DashboardLayout routerName="Dashboard">
@@ -40,7 +50,7 @@ const Dashboard = () => {
             <div className="w-full flex flex-wrap gap-4">
               <BalanceCard
                 amount={`$${
-                  currentBalance.toLocaleString() !== null
+                  currentBalance !== null
                     ? currentBalance.toLocaleString()
                     : "loading..."
                 }.00`}
@@ -48,51 +58,39 @@ const Dashboard = () => {
                 text="Main Balance"
                 className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
               />
-              <BalanceContext.Consumer>
-                {({
-                  interestBalance,
-                  totalDeposit,
-                  totalEarn,
-                  totalReferralBonus,
-                }) => (
-                  <>
-                    <BalanceCard
-                      amount={`$${
-                        interestCurrentBalance.toLocaleString() !== null
-                          ? interestCurrentBalance.toLocaleString()
-                          : "loading..."
-                      }.00`}
-                      icon={<MonetizationOnIcon sx={{ fontSize: 50 }} />}
-                      text="Interest Balance"
-                      className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
-                    />
-                    <BalanceCard
-                      amount={`$${
-                        depositCurrentBalance.toLocaleString() !== null
-                          ? depositCurrentBalance.toLocaleString()
-                          : "loading..."
-                      }.00`}
-                      icon={<LocalAtmIcon sx={{ fontSize: 50 }} />}
-                      text="Total Deposit"
-                      className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
-                    />
-                    <BalanceCard
-                      amount={`$${
-                        earncurrentBalance.toLocaleString() !== null
-                          ? earncurrentBalance.toLocaleString()
-                          : "loading..."
-                      }.00`}
-                      icon={<PriceCheckIcon sx={{ fontSize: 50 }} />}
-                      text="Total Earn"
-                      className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
-                    />
-                    <DashboardChart />
-                    <RoundedChart />
-
-                    <AccountStatistics />
-                  </>
-                )}
-              </BalanceContext.Consumer>
+              <BalanceCard
+                amount={`$${
+                  earnAmount !== null
+                    ? earnAmount.toLocaleString()
+                    : "loading..."
+                }.00`}
+                icon={<MonetizationOnIcon sx={{ fontSize: 50 }} />}
+                text="Interest Balance"
+                className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
+              />
+              <BalanceCard
+                amount={`$${
+                  depositCurrentBalance !== null
+                    ? depositCurrentBalance.toLocaleString()
+                    : "loading..."
+                }.00`}
+                icon={<LocalAtmIcon sx={{ fontSize: 50 }} />}
+                text="Total Deposit"
+                className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
+              />
+              <BalanceCard
+                amount={`$${
+                  earnAmount !== null
+                    ? earnAmount.toLocaleString()
+                    : "loading..."
+                }.00`}
+                icon={<PriceCheckIcon sx={{ fontSize: 50 }} />}
+                text="Total Earn"
+                className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
+              />
+              <DashboardChart />
+              <RoundedChart />
+              <AccountStatistics />
             </div>
           </div>
         </div>
