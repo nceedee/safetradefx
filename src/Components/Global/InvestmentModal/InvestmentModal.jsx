@@ -24,20 +24,9 @@ const InvestmentModal = ({ isOpen, onClose, investmentPlan }) => {
         let totalAmount = 0;
         let topUpCount = 0;
 
-        for (const wallet in parsedData) {
-          const investments = parsedData[wallet];
-          if (investments) {
-            count += investments.length;
-            totalAmount += investments.reduce(
-              (sum, investment) => sum + investment.amount,
-              0
-            );
-            topUpCount += investments.reduce(
-              (sum, investment) => sum + investment.topUps,
-              0
-            );
-          }
-        }
+        count += parsedData.topUps || 0;
+        totalAmount += parsedData.amount || 0;
+        topUpCount += parsedData.topUps || 0;
 
         setInvestmentCount(count);
         setTotalInvested(totalAmount);
@@ -85,13 +74,12 @@ const InvestmentModal = ({ isOpen, onClose, investmentPlan }) => {
     };
 
     setInvestmentData((prevData) => {
-      const updatedData = { ...prevData };
-      if (updatedData[selectedWallet]) {
-        const existingInvestment = updatedData[selectedWallet];
-        existingInvestment.amount += amount;
-        existingInvestment.topUps += 1;
+      let updatedData = { ...prevData };
+      if (updatedData.amount) {
+        updatedData.amount += amount;
+        updatedData.topUps += 1;
       } else {
-        updatedData[selectedWallet] = newInvestment;
+        updatedData = newInvestment;
       }
 
       setInvestmentCount((prevCount) => prevCount + 1);
@@ -122,15 +110,12 @@ const InvestmentModal = ({ isOpen, onClose, investmentPlan }) => {
       setInvestmentData((prevData) => {
         const updatedData = { ...prevData };
 
-        for (const wallet in updatedData) {
-          const investment = updatedData[wallet];
-          if (investment) {
-            const { amount, startTime, percentage } = investment;
-            const timeElapsed = (new Date() - new Date(startTime)) / 3600000;
-            const interest = (amount * percentage * timeElapsed) / 100;
-            investment.amount += interest;
-            investment.startTime = new Date().toISOString();
-          }
+        if (updatedData.amount) {
+          const { amount, startTime, percentage } = updatedData;
+          const timeElapsed = (new Date() - new Date(startTime)) / 3600000;
+          const interest = (amount * percentage * timeElapsed) / 100;
+          updatedData.amount += interest;
+          updatedData.startTime = new Date().toISOString();
         }
 
         return updatedData;

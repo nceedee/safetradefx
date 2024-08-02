@@ -19,7 +19,7 @@ const AccountStatistics = () => {
     if (storedData) {
       const parsedData = JSON.parse(storedData);
       if (parsedData && parsedData.amount) {
-        setLocalEarnAmount(parsedData.amount.topUps || 0); // Assuming 'amount.topUps' is the field you need
+        setLocalEarnAmount(parsedData.topUps || 0); // Assuming 'amount.topUps' is the field you need
       }
     }
   }, []);
@@ -31,7 +31,7 @@ const AccountStatistics = () => {
       <div className="w-full flex flex-wrap gap-4">
         <BalanceCard
           icon={<GiCash className="text-6xl" />}
-          amount={`$${localEarnAmount}`}
+          amount={`${localEarnAmount}`}
           text="Total Invest"
           className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
         />

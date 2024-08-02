@@ -23,7 +23,7 @@ const SideBar = () => {
     const storedData = localStorage.getItem("investmentData");
     if (storedData) {
       const parsedData = JSON.parse(storedData);
-      setLocalEarnAmount(parsedData.amount.amount); // Assuming 'amount' is the field you need
+      setLocalEarnAmount(parsedData.amount); // Assuming 'amount' is the field you need
     }
   }, []);
 
