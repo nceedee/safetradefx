@@ -1,32 +1,57 @@
 import React, { useState, useEffect } from "react";
 import useUpdateMainBalance from "../hook/useUpdateMainBalance";
-import useUpdateInterestBalance from "../hook/useUpdateInterestBalance";
 import { uid } from "../../stores/stores";
 
 const InvestmentModal = ({ isOpen, onClose, investmentPlan }) => {
-  const { currentBalance } = useUpdateMainBalance(uid.id);
-  const { interestCurrentBalance } = useUpdateInterestBalance(uid.id);
-
   const [selectedWallet, setSelectedWallet] = useState("amount");
   const [amountToInvest, setAmountToInvest] = useState("");
-  const [currentBalanceState, setCurrentBalanceState] = useState(null);
+  const [investmentData, setInvestmentData] = useState({});
+  const [investmentCount, setInvestmentCount] = useState(0);
+  const [totalInvested, setTotalInvested] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
 
+  const { currentBalance } = useUpdateMainBalance(uid.id);
+
+  // Load investment data and count from localStorage
   useEffect(() => {
-    if (selectedWallet === "amount") {
-      setCurrentBalanceState(currentBalance);
-    } else if (selectedWallet === "interest") {
-      setCurrentBalanceState(interestCurrentBalance);
-    }
-  }, [selectedWallet, currentBalance, interestCurrentBalance]);
+    try {
+      const data = JSON.parse(localStorage.getItem("investmentData")) || {};
+      setInvestmentData(data);
 
+      let count = 0;
+      let totalAmount = 0;
+      let topUpCount = 0;
+
+      for (const wallet in data) {
+        const investments = data[wallet];
+        if (investments) {
+          count += investments.length;
+          totalAmount += investments.reduce(
+            (sum, investment) => sum + investment.amount,
+            0
+          );
+          topUpCount += investments.reduce(
+            (sum, investment) => sum + investment.topUps,
+            0
+          );
+        }
+      }
+
+      setInvestmentCount(count);
+      setTotalInvested(totalAmount);
+      setTotalCount(topUpCount);
+    } catch (e) {
+      console.error("Error loading investment data:", e);
+      localStorage.setItem("investmentData", JSON.stringify({}));
+    }
+  }, []);
+
+  // Save investment data and count to localStorage
   useEffect(() => {
-    const investmentData =
-      JSON.parse(localStorage.getItem("investmentData")) || {};
-    if (investmentData[selectedWallet]) {
-      setAmountToInvest(investmentData[selectedWallet].toString());
-    }
-  }, [selectedWallet]);
+    localStorage.setItem("investmentData", JSON.stringify(investmentData));
+  }, [investmentData]);
 
+  // Handle investment confirmation
   const handleInvest = () => {
     const amount = parseFloat(amountToInvest);
 
@@ -35,7 +60,6 @@ const InvestmentModal = ({ isOpen, onClose, investmentPlan }) => {
       return;
     }
 
-    // Check if amount is within the investment plan range
     if (amount < investmentPlan.min || amount > investmentPlan.max) {
       alert(
         `Investment amount must be between $${investmentPlan.min} and $${investmentPlan.max}`
@@ -43,29 +67,78 @@ const InvestmentModal = ({ isOpen, onClose, investmentPlan }) => {
       return;
     }
 
-    // Check if current balance is sufficient
-    if (currentBalanceState < amount) {
+    const currentBalance = getCurrentBalance(selectedWallet);
+
+    if (currentBalance < amount) {
       alert(`Insufficient ${selectedWallet} balance`);
       return;
     }
 
-    // Retrieve existing investment data from local storage
-    const investmentData =
-      JSON.parse(localStorage.getItem("investmentData")) || {};
+    const newInvestment = {
+      amount,
+      startTime: new Date().toISOString(),
+      percentage: investmentPlan.percentage,
+      plan: investmentPlan.name,
+      topUps: 1, // Initial top-up count
+    };
 
-    // Update investment amount
-    if (investmentData[selectedWallet]) {
-      investmentData[selectedWallet] += amount;
-    } else {
-      investmentData[selectedWallet] = amount;
-    }
+    setInvestmentData((prevData) => {
+      const updatedData = { ...prevData };
+      if (updatedData[selectedWallet]) {
+        const existingInvestment = updatedData[selectedWallet];
+        existingInvestment.amount += amount;
+        existingInvestment.topUps += 1; // Increment top-up count
+      } else {
+        updatedData[selectedWallet] = newInvestment;
+      }
 
-    // Save updated investment data back to local storage
-    localStorage.setItem("investmentData", JSON.stringify(investmentData));
+      // Update the total count and total invested amount
+      setInvestmentCount((prevCount) => prevCount + 1);
+      setTotalInvested((prevTotal) => prevTotal + amount);
+      setTotalCount((prevCount) => prevCount + 1);
+
+      return updatedData;
+    });
 
     alert(`Investment of $${amount} successful from ${selectedWallet} balance`);
-
     onClose();
+  };
+
+  // Helper function to get current balance (mocked)
+  const getCurrentBalance = (wallet) => {
+    return wallet === "amount" ? currentBalance : 500; // Replace with actual balance fetching logic
+  };
+
+  // Calculate and update investments periodically
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      calculateInvestmentReturns();
+    }, 60000); // Calculate every minute
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const calculateInvestmentReturns = () => {
+    try {
+      setInvestmentData((prevData) => {
+        const updatedData = { ...prevData };
+
+        for (const wallet in updatedData) {
+          const investment = updatedData[wallet];
+          if (investment) {
+            const { amount, startTime, percentage } = investment;
+            const timeElapsed = (new Date() - new Date(startTime)) / 3600000; // Time in hours
+            const interest = (amount * percentage * timeElapsed) / 100;
+            investment.amount += interest;
+            investment.startTime = new Date().toISOString();
+          }
+        }
+
+        return updatedData;
+      });
+    } catch (e) {
+      console.error("Error calculating investment returns:", e);
+    }
   };
 
   if (!isOpen) return null;
@@ -81,17 +154,8 @@ const InvestmentModal = ({ isOpen, onClose, investmentPlan }) => {
           value={selectedWallet}
           onChange={(e) => setSelectedWallet(e.target.value)}
         >
-          <option value="main">
-            Main Balance -{" "}
-            {currentBalance !== null
-              ? `$${currentBalance.toLocaleString()}.00`
-              : "loading..."}
-          </option>
-          <option value="interest">
-            Interest Balance -{" "}
-            {interestCurrentBalance !== null
-              ? `$${interestCurrentBalance.toLocaleString()}.00`
-              : "loading..."}
+          <option value="amount">
+            Main Balance (${currentBalance.toLocaleString()})
           </option>
         </select>
         <input
@@ -102,7 +166,6 @@ const InvestmentModal = ({ isOpen, onClose, investmentPlan }) => {
           onChange={(e) => setAmountToInvest(e.target.value)}
         />
         <button
-          id="investButton"
           className="bg-[#609c46] text-white p-3 rounded-md w-full mb-2"
           onClick={handleInvest}
         >
@@ -114,6 +177,11 @@ const InvestmentModal = ({ isOpen, onClose, investmentPlan }) => {
         >
           Cancel
         </button>
+        <div className="mt-4 text-white">
+          <h3>Total Investments: {investmentCount}</h3>
+          <h3>Total Invested Amount: ${totalInvested.toFixed(2)}</h3>
+          <h3>Total Top-ups: {totalCount}</h3>
+        </div>
       </div>
     </div>
   );

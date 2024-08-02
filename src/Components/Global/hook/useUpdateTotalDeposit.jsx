@@ -17,10 +17,7 @@ const useUpdateTotalDeposit = (uid) => {
       let userBalance = 0;
       if (userBalanceResponse.data) {
         const transactions = Object.values(userBalanceResponse.data);
-        userBalance = transactions.reduce(
-          (acc, transaction) => acc + transaction.amount,
-          0
-        );
+        userBalance = transactions.reduce((acc, transaction) => acc + transaction.amount, 0);
       }
 
       // Fetch balance from totalDeposit endpoint
@@ -31,16 +28,12 @@ const useUpdateTotalDeposit = (uid) => {
       let totalDeposit = 0;
       if (totalDepositResponse.data) {
         const transactions = Object.values(totalDepositResponse.data);
-        totalDeposit = transactions.reduce(
-          (acc, transaction) => acc + transaction.amount,
-          0
-        );
+        totalDeposit = transactions.reduce((acc, transaction) => acc + transaction.amount, 0);
       }
 
       // Get the amount from local storage
-      const investmentData =
-        JSON.parse(localStorage.getItem("investmentData")) || {};
-      const localStorageAmount = investmentData.amount || 0;
+      const investmentData = JSON.parse(localStorage.getItem("investmentData")) || {};
+      const localStorageAmount = investmentData.amount.amount || 0;
 
       // Combine all amounts
       const combinedBalance = userBalance + totalDeposit + localStorageAmount;
