@@ -4,7 +4,7 @@ import homevideo from '../../../../Assets/Videos/homevideo.mp4'
 const VideoSide = () => {
   return (
     <div className="w-[90%] flex m-auto p-0 mt-10 lg:mt-0 lg:p-12">
-      <video className=" object-cover w-[80%] m-auto rounded-lg" controls src={homevideo} />
+      <video className=" object-cover w-[90%] m-auto rounded-lg" controls src={homevideo} />
     </div>
   );
 }
