@@ -8,8 +8,9 @@ import StockCard from "../../Global/StockCard/StockCard";
 import img1 from "../../../Assets/Images/Img11.jpg";
 import img2 from "../../../Assets/Images/Img33.jpg";
 import img3 from "../../../Assets/Images/Img22.jpg";
-import homeVideo from "../../../Assets/Videos/homevideo.mp4";
 import InvestCardTwo from "../../Global/InvestCard/InvestCardTwo";
+import RateDashboard from "./RateDashboard/RateDashboard";
+import VideoSide from "./VideoSide/VideoSide";
 
 const LandingPageLayout = () => {
   return (
@@ -47,15 +48,12 @@ const LandingPageLayout = () => {
         </div>
 
         <div className="mt-10">
-          <div className="p-4 lg:w-[70%] w-[95%] m-auto  ">
-            <video controls className="rounded-md">
-              <source src={homeVideo} />
-            </video>
-          </div>
+          <VideoSide />
           <div>
             <WhoWeAre/>
           </div>
           <NewToTrading />
+          <RateDashboard/>
           <TransactionTable />
           <Link
             to="/signup"
