@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const NewToTrading = () => {
     return (
-      <div className="bg-[#383e54] lg:translate-y-52 translate-y-4 lg:w-[70%] w-[95%] m-auto p-8 rounded-md text-white">
+      <div className="bg-[#383e54]  lg:w-[70%] w-[80%] m-auto p-8 rounded-md text-white">
         <h1 className="font-bold text-3xl">New to Trading?</h1>
         <p className="w-[80%] mt-2">
           Discover AM Trading™: Get help from our carefully picked experts to
