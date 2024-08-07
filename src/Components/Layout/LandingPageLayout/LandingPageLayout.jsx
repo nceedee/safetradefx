@@ -2,6 +2,7 @@ import React from "react";
 import LandingPageHeader from "./LandingPageLayoutHeader/LandingPageHeader";
 import NewToTrading from "./NewToTrading/NewToTrading";
 import TransactionTable from "./TransactionTable/TransactionTable";
+import WhoWeAre from "./WhoWeAre/WhoWeAre";
 import { Link } from "react-router-dom";
 import StockCard from "../../Global/StockCard/StockCard";
 import img1 from "../../../Assets/Images/Img11.jpg";
@@ -50,6 +51,9 @@ const LandingPageLayout = () => {
             <video controls className="rounded-md">
               <source src={homeVideo} />
             </video>
+          </div>
+          <div>
+            <WhoWeAre/>
           </div>
           <NewToTrading />
           <TransactionTable />
