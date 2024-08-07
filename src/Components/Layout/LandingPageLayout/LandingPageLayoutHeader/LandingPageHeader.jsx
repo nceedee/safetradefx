@@ -28,7 +28,7 @@ const LandingPageHeader = () => {
 
   return (
     <div
-      className="relative w-full lg:h-[100vh] h-[300vh] p-0"
+      className="relative w-full lg:h-[100vh] p-0"
       style={{
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundVideo})`,
         backgroundRepeat: "no-repeat",
