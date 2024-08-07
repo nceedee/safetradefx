@@ -1,130 +1,87 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import logo from "../../../../Assets/Images/logo.png";
-import backgroundVideo from "../../../../Assets/Images/homebg.jpeg";
+import backgroundVideo from "../../../../Assets/Images/header2.jpg";
+import img1 from "../../../../Assets/Images/Img11.jpg";
+import img2 from "../../../../Assets/Images/Img22.jpg";
+import img3 from "../../../../Assets/Images/Img33.jpg";
 import { Link } from "react-router-dom";
-import LandingHeaderInfo from "./LandingHeaderInfo";
+import StockCard from "../../../Global/StockCard/StockCard";
 
 const LandingPageHeader = () => {
-  useEffect(() => {
-    const loadGoogleTranslate = () => {
-      if (!document.querySelector("#google-translate-script")) {
-        const googleTranslateScript = document.createElement("script");
-        googleTranslateScript.id = "google-translate-script";
-        googleTranslateScript.src =
-          "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-        document.body.appendChild(googleTranslateScript);
-      }
-
-      window.googleTranslateElementInit = () => {
-        if (!document.querySelector(".goog-te-combo")) {
-          new window.google.translate.TranslateElement(
-            {
-              pageLanguage: "en",
-              includedLanguages: "en,es,fr,de,it,ja,zh-CN,ar,pt,ru,ko,hi",
-              layout:
-                window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-              autoDisplay: false,
-            },
-            "google_translate_element"
-          );
-        }
-      };
-    };
-
-    loadGoogleTranslate();
-  }, []);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const applyStoredLanguage = () => {
-      const storedLanguage = localStorage.getItem("selectedLanguage");
-      if (storedLanguage) {
-        const intervalId = setInterval(() => {
-          const selectElem = document.querySelector(".goog-te-combo");
-          if (selectElem) {
-            selectElem.value = storedLanguage;
-            selectElem.dispatchEvent(new Event("change"));
-            clearInterval(intervalId);
-          }
-        }, 1000);
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
       }
     };
 
-    applyStoredLanguage();
+    window.addEventListener("scroll", handleScroll);
 
-    const intervalId = setInterval(() => {
-      const selectElem = document.querySelector(".goog-te-combo");
-      if (selectElem) {
-        selectElem.addEventListener("change", () => {
-          localStorage.setItem("selectedLanguage", selectElem.value);
-        });
-        clearInterval(intervalId);
-      }
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      const combo = document.querySelector(".goog-te-combo");
-      if (combo) {
-        combo.className =
-          "goog-te-combo bg-white border border-gray-300 rounded-md px-4 py-2 text-base text-gray-700 outline-none cursor-pointer transition-all duration-300 ease-in-out";
-        clearInterval(intervalId);
-      }
-    }, 1000);
-    return () => clearInterval(intervalId);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden p-0">
-      <div className="bg-black text-white flex items-center justify-around w-full fixed top-0 left-0 z-50 p-4">
-        <div className="w-[30%] p-0">
-          <ul className="flex justify-between p-0">
-            <li className="relative">
-              <Link to="/about-us">About US</Link>
-            </li>
-            <li className="relative">
-              <Link to="/services">Services</Link>
-            </li>
-            <li className="relative">
-              <Link to="/plans">Plans</Link>
-            </li>
-          </ul>
-        </div>
-
+    <div
+      className="relative w-full lg:h-[100vh] h-[300vh] p-0"
+      style={{
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundVideo})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+      }}
+    >
+      <div
+        className={`fixed top-0 left-0 w-full flex z-50 items-center justify-between p-4 transition-colors duration-300 ${
+          isScrolled ? "bg-white opacity-[.9]" : "bg-transparent"
+        }`}
+      >
         <div>
           <Link to="/">
-            <img src={logo} alt="Logo" className="w-32 h-32" />
+            <img src={logo} alt="Logo" className="w-16 h-16 sm:w-20 sm:h-20" />
           </Link>
         </div>
 
-        <div className="w-[30%] p-0">
-          <ul className="flex justify-between p-0">
-            <li className="relative">
-              <Link to="/support">Support</Link>
-            </li>
-            <li className="relative">
-              <Link to="/signup">Signup</Link>
-            </li>
-            <li className="relative">
-              <Link to="/login">Login</Link>
-            </li>
-            <li
-              id="google_translate_element"
-              className="relative h-10 p-0 flex items-center"
-            ></li>
-          </ul>
-        </div>
+        <Link to="/signup">
+          <button className="bg-green-700 text-white py-2 px-4 rounded-sm">
+            Open account
+          </button>
+        </Link>
       </div>
-
-      <img
-        className="absolute top-0 left-0 w-full h-full object-cover"
-        src={backgroundVideo}
-      />
-
-      <div className="flex items-end justify-center translate-y-[-30px] w-full h-full absolute top-0 left-0 z-10">
-        <LandingHeaderInfo />
+      <div className="pt-20 flex absolute top-0 left-0 flex-col justify-center items-center h-full w-full text-white z-10 px-4">
+        <div className="w-full sm:w-[75%] md:w-[50%] text-center">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold">
+            Trade Stocks, Forex, Options and Crypto
+          </h1>
+          <p className="text-lg sm:text-xl md:text-2xl mt-4">
+            Join millions who have already discovered smarter investing in
+            multiple types of assets. Choose an investment product to
+          </p>
+        </div>
+        <div className="flex flex-col md:flex-row gap-4 md:gap-6 mt-8">
+          <StockCard
+            head="Stocks & ETFs"
+            text="20% commission means there’ll be markup on stocks & ETFs – no matter how much you invest"
+            btn="Invest In Stocks"
+            image={img1}
+          />
+          <StockCard
+            head="Crypto"
+            text="Buy, sell and store Bitcoin and other leading cryptos with ease"
+            btn="Buy Crypto"
+            image={img3}
+          />
+          <StockCard
+            head="CFD Trading"
+            text="Go long or short on FX from just 1 pip. Trade commodities and indices with flexible leverage."
+            btn="Trade Now"
+            image={img2}
+          />
+        </div>
       </div>
     </div>
   );

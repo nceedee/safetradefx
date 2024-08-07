@@ -68,13 +68,13 @@ const WhoWeAre = () => {
         <img
           src={h6phone1}
           alt=""
-          className="absolute w-[150px] lg:w-fit right-0 translate-x-20 z-50 animate-bounce"
+          className="absolute w-[150px] lg:w-fit right-0 translate-x-20  animate-bounce"
         />
         <img src={safetradefx} alt="" className="w-[100%]" />
         <img
           src={h6phone2}
           alt=""
-          className="absolute w-[150px] lg:w-fit  z-50 bottom-0 animate-bounce"
+          className="absolute w-[150px] lg:w-fit   bottom-0 animate-bounce"
         />
       </div>
     </div>
