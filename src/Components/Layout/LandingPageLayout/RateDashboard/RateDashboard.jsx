@@ -2,7 +2,7 @@ import React from "react";
 
 const RateDashboard = () => {
   return (
-    <div>
+    <div className="bg-white p-6">
       <div className="m-auto py-16 scrollbar-hidden border-t ">
         <iframe
           className="w-[80%] m-auto scrollbar-hidden h-[100vh] text-white"

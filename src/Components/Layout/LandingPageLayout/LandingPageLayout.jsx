@@ -13,6 +13,7 @@ import RateDashboard from "./RateDashboard/RateDashboard";
 import VideoSide from "./VideoSide/VideoSide";
 import StockCommision from "./StockCommision/StockCommision";
 import MeetOurClient from "./MeetOurClient/MeetOurClient";
+import HavingDifficulties from "./HavingDifficulties/HavingDifficulties";
 
 const LandingPageLayout = () => {
   return (
@@ -57,41 +58,45 @@ const LandingPageLayout = () => {
           <NewToTrading />
           <RateDashboard />
           <TransactionTable />
-          <Link
-            to="/plan"
-            className="w-full lg:w-[70%] justify-center m-auto flex flex-wrap gap-4"
-          >
-            <InvestCardTwo
-              name="STARTER PLAN"
-              from="50"
-              to="999"
-              percent="5%"
-              hours="20"
-            />
-            <InvestCardTwo
-              name="MINI PLAN"
-              from="250"
-              to="1500"
-              percent="7.3%"
-              hours="24"
-            />
-            <InvestCardTwo
-              name="PROFESSIONAL PLAN"
-              from="1500"
-              to="3000"
-              percent="9.99%"
-              hours="40"
-            />
-            <InvestCardTwo
-              name="PROMO PLAN"
-              from="3000"
-              to="9000"
-              percent="9%"
-              hours="10"
-            />
-          </Link>
+          <div className="bg-blue-100 p-6 pb-16">
+            <Link
+              to="/plan"
+              className="w-full lg:w-[70%] justify-center m-auto flex flex-wrap gap-4"
+            >
+              <InvestCardTwo
+                name="STARTER PLAN"
+                from="50"
+                to="999"
+                percent="5%"
+                hours="20"
+              />
+              <InvestCardTwo
+                name="MINI PLAN"
+                from="250"
+                to="1500"
+                percent="7.3%"
+                hours="24"
+              />
+              <InvestCardTwo
+                name="PROFESSIONAL PLAN"
+                from="1500"
+                to="3000"
+                percent="9.99%"
+                hours="40"
+              />
+              <InvestCardTwo
+                name="PROMO PLAN"
+                from="3000"
+                to="9000"
+                percent="9%"
+                hours="10"
+              />
+            </Link>
+          </div>
+
           <StockCommision />
-          <MeetOurClient/>
+          <MeetOurClient />
+          <HavingDifficulties />
         </div>
       </div>
     </div>

@@ -30,37 +30,41 @@ const transactions = [
 
 const TransactionTable = () => {
   return (
-    <div className="container mx-auto p-1 lg:p-4 lg:w-[70%] w-[95%] m-auto">
-      <h1 className="text-4xl font-bold text-center mb-8">PAYOUT</h1>
-      <div className="overflow-x-auto p-1  lg:p-4 rounded-lg shadow-lg">
-        <h2 className="text-[20px] lg:text-2xl bg-blue-900 text-white font-bold text-center py-4 rounded-t-lg w-full">
-          Deposit and withdrawals history
-        </h2>
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-200">
-            <thead>
-              <tr className="bg-blue-900 text-white">
-                <th className="py-4 px-6 border-b border-gray-200">DATE</th>
-                <th className="py-4 px-6 border-b border-gray-200">BTC</th>
-                <th className="py-4 px-6 border-b border-gray-200">ADDRESS</th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.map((transaction, index) => (
-                <tr key={index} className="text-center">
-                  <td className="py-4 px-6 border-b border-gray-200">
-                    {transaction.date}
-                  </td>
-                  <td className="py-4 px-6 border-b border-gray-200">
-                    {transaction.btc}
-                  </td>
-                  <td className="py-4 px-6 border-b border-gray-200 break-all">
-                    {transaction.address}
-                  </td>
+    <div className="bg-blue-100 p-6">
+      <div className="container mx-auto p-1 lg:p-4 lg:w-[70%] w-[95%] m-auto">
+        <h1 className="text-4xl font-bold text-center mb-8">PAYOUT</h1>
+        <div className="overflow-x-auto p-1  lg:p-4 rounded-lg shadow-lg">
+          <h2 className="text-[20px] lg:text-2xl bg-blue-900 text-white font-bold text-center py-4 rounded-t-lg w-full">
+            Deposit and withdrawals history
+          </h2>
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-white border border-gray-200">
+              <thead>
+                <tr className="bg-blue-900 text-white">
+                  <th className="py-4 px-6 border-b border-gray-200">DATE</th>
+                  <th className="py-4 px-6 border-b border-gray-200">BTC</th>
+                  <th className="py-4 px-6 border-b border-gray-200">
+                    ADDRESS
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {transactions.map((transaction, index) => (
+                  <tr key={index} className="text-center">
+                    <td className="py-4 px-6 border-b border-gray-200">
+                      {transaction.date}
+                    </td>
+                    <td className="py-4 px-6 border-b border-gray-200">
+                      {transaction.btc}
+                    </td>
+                    <td className="py-4 px-6 border-b border-gray-200 break-all">
+                      {transaction.address}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
