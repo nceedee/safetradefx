@@ -13,7 +13,7 @@ export const SignUpForm = () => {
     <div className="flex h-full w-full flex-col items-center justify-center bg-secondary">
       <h1 className="text-center font-bold text-2xl m-4">Safe Trade FX</h1>
       <MaxCard>
-        <Card className="m-auto w-[100%] shadow-xl border-[1px] lg:w-[50%]">
+        <Card className="m-auto w-[100%] shadow-xl border-[1px] lg:w-[50%] bg-blue-100">
           <h1 className="text-center text-xl font-bold">SignUp</h1>
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
             <label className="font-bold text-black">Enter Username:</label>
@@ -44,7 +44,7 @@ export const SignUpForm = () => {
               } mt-4 rounded-lg bg-primary p-2 font-bold bg-blue-700 text-white outline-none`}
               value={isLoading ? "Signing up..." : "Sign up"}
             />
-            {isLoading ? <LoadingModal/>: ""}
+            {isLoading ? <LoadingModal /> : ""}
             <div className="mt-4 flex space-x-3 italic">
               <h1 className="font-bold text-black">Already have an account?</h1>
               <Link to="/login" className="text-black">

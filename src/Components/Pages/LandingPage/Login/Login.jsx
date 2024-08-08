@@ -1,13 +1,18 @@
 import React from "react";
-import { LoginLayout } from "../../../Layout/LandingPageLayout/LoginLayout/LoginLayout";
-import Footer from "../../../Layout/LandingPageLayout/Footer/Footer";
 import { LoginForm } from "./LoginForm/LoginForm";
+import logo from "../../../../Assets/Images/logo.png";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
-      <div className="bg-blue-100 h-[100vh]">
-        <LoginForm />
+    <div className="pb-6">
+      <div>
+        <Link to="/" className="m-auto">
+          <img src={logo} alt="" className="m-auto w-72" />
+        </Link>
       </div>
+      <LoginForm />
+    </div>
   );
 };
 

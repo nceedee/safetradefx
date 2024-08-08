@@ -14,7 +14,7 @@ export const LoginForm = () => {
       <h1 className="text-center text-black font-bold text-2xl m-4">
         Safe Trade FX
       </h1>
-      <Card className="m-auto sm:w-[100%] shadow-xl border-[1px] md:w-[50%]">
+      <Card className="m-auto sm:w-[100%] shadow-xl border-[1px] md:w-[50%] bg-blue-100">
         <h1 className="text-center text-xl text-black font-bold">Login</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
           <label className="font-bold text-black">Enter Email:</label>
