@@ -11,6 +11,7 @@ import img3 from "../../../Assets/Images/Img22.jpg";
 import InvestCardTwo from "../../Global/InvestCard/InvestCardTwo";
 import RateDashboard from "./RateDashboard/RateDashboard";
 import VideoSide from "./VideoSide/VideoSide";
+import StockCommision from "./StockCommision/StockCommision";
 
 const LandingPageLayout = () => {
   return (
@@ -50,10 +51,10 @@ const LandingPageLayout = () => {
         <div className="mt-10">
           <VideoSide />
           <div>
-            <WhoWeAre/>
+            <WhoWeAre />
           </div>
           <NewToTrading />
-          <RateDashboard/>
+          <RateDashboard />
           <TransactionTable />
           <Link
             to="/plan"
@@ -88,6 +89,7 @@ const LandingPageLayout = () => {
               hours="10"
             />
           </Link>
+          <StockCommision />
         </div>
       </div>
     </div>
