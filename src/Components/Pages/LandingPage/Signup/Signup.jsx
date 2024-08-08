@@ -6,18 +6,10 @@ import { SignUpForm } from "./SignupForm/SignupForm";
 const Signup = () => {
   return (
     <div>
-      <div className="relative z-40">
-        <SignupLayout />
-      </div>
-      <div className="relative z-30 bg-white">
+      <div className="relative z-30 bg-blue-100">
         <SignUpForm />
       </div>
-      <div className="bg-[#000624] text-white">
-        <Footer />
-        <p className="text-center pb-5">
-          All right reserved 2024 &#169; safe trade fx
-        </p>
-      </div>
+     
     </div>
   );
 };

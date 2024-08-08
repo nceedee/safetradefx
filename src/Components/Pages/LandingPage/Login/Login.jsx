@@ -6,17 +6,8 @@ import { LoginForm } from "./LoginForm/LoginForm";
 const Login = () => {
   return (
     <div>
-      <div className="relative z-40">
-        <LoginLayout />
-      </div>
-      <div className="relative z-30 bg-white">
+      <div className="relative z-30 bg-blue-100">
         <LoginForm />
-      </div>
-      <div className="bg-[#000624] text-white">
-        <Footer />
-        <p className="text-center pb-5">
-          All right reserved 2024 &#169; safe trade fx
-        </p>
       </div>
     </div>
   );
