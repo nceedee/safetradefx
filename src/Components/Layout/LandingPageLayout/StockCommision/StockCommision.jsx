@@ -25,14 +25,14 @@ const StockCommision = () => {
             <div className="rounded-full border-r-4 p-8 border-red-500">
               <FaRegFileAlt className="text-8xl" />
             </div>
-            <h1 className="text-4xl mt-4">Regulated</h1>
+            <h1 className="text-4xl mt-4 text-blue-900">Regulated</h1>
             <p>Our company is regulated by the FCA and CySec</p>
           </div>
           <div className="flex flex-col items-center">
             <div className="rounded-full border-r-4 p-8 border-red-500">
               <TbCloudComputing className="text-8xl" />
             </div>
-            <h1 className="text-4xl mt-4">Swift & Reliable</h1>
+            <h1 className="text-4xl mt-4 text-blue-900">Swift & Reliable</h1>
             <p>
               Our API and trading equiptments are fast, reliable and easy to use
               accros multiple platforms
@@ -42,7 +42,7 @@ const StockCommision = () => {
             <div className="rounded-full border-r-4 p-8 border-red-500">
               <SiGnuprivacyguard className="text-8xl" />
             </div>
-            <h1 className="text-4xl mt-4">Privacy</h1>
+            <h1 className="text-4xl mt-4 text-blue-900">Privacy</h1>
             <p>We will never share your private data without your permission</p>
           </div>
         </div>

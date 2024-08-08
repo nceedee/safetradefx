@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import logo from "../../../../Assets/Images/logo.png";
-import backgroundVideo from "../../../../Assets/Images/header2.jpg";
-
+import backgroundVideo from "../../../../Assets/Images/heade.jpeg";
+  
 import { Link } from "react-router-dom";
 
 const LandingPageHeader = () => {

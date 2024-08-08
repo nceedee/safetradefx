@@ -12,6 +12,7 @@ import InvestCardTwo from "../../Global/InvestCard/InvestCardTwo";
 import RateDashboard from "./RateDashboard/RateDashboard";
 import VideoSide from "./VideoSide/VideoSide";
 import StockCommision from "./StockCommision/StockCommision";
+import MeetOurClient from "./MeetOurClient/MeetOurClient";
 
 const LandingPageLayout = () => {
   return (
@@ -90,6 +91,7 @@ const LandingPageLayout = () => {
             />
           </Link>
           <StockCommision />
+          <MeetOurClient/>
         </div>
       </div>
     </div>
