@@ -12,16 +12,13 @@ import RoundedChart from "../../Layout/DashboardLayout/DashboardChart/RoundedCha
 import AccountStatistics from "../../Layout/DashboardLayout/AccountStatistics/AccountStatistics";
 import useUpdateMainBalance from "../../Global/hook/useUpdateMainBalance";
 import useUpdateInterestBalance from "../../Global/hook/useUpdateInterestBalance";
-import useUpdateTotalDeposit from "../../Global/hook/useUpdateTotalDeposit";
 import useUpdateTotalEarn from "../../Global/hook/useUpdateTotalEarn";
 
 const Dashboard = () => {
   const { currentBalance } = useUpdateMainBalance(uid.id);
   const { currentBalance: earncurrentBalance } = useUpdateTotalEarn(uid.id);
-  const { currentBalance: depositCurrentBalance } = useUpdateTotalDeposit(
-    uid.id
-  );
-  const { interestCurrentBalance } = useUpdateInterestBalance(uid.id);
+  const { interestCurrentBalance } = useUpdateInterestBalance( uid.id );
+
 
   // State for local storage data
   const [localEarnAmount, setLocalEarnAmount] = useState(null);
@@ -60,8 +57,8 @@ const Dashboard = () => {
               />
               <BalanceCard
                 amount={`$${
-                  earnAmount !== null
-                    ? earnAmount.toLocaleString()
+                  interestCurrentBalance !== null
+                    ? interestCurrentBalance.toLocaleString()
                     : "loading..."
                 }.00`}
                 icon={<MonetizationOnIcon sx={{ fontSize: 50 }} />}
@@ -70,8 +67,8 @@ const Dashboard = () => {
               />
               <BalanceCard
                 amount={`$${
-                  depositCurrentBalance !== null
-                    ? depositCurrentBalance.toLocaleString()
+                  currentBalance !== null
+                    ? currentBalance.toLocaleString()
                     : "loading..."
                 }.00`}
                 icon={<LocalAtmIcon sx={{ fontSize: 50 }} />}

@@ -50,7 +50,9 @@ const SideBar = () => {
         <div className="flex justify-between items-center">
           <p>Interest Balance</p>
           <p>{`$${
-            earnAmount !== null ? earnAmount.toLocaleString() : "loading..."
+            interestCurrentBalance.toLocaleString() !== null
+              ? interestCurrentBalance.toLocaleString()
+              : "loading..."
           }.00`}</p>
         </div>
         <div className="flex flex-col space-y-2 mt-4">

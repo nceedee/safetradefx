@@ -4,7 +4,7 @@ import { AlertError } from "../../../../Global/Alert/AlertError";
 import { useSignup } from "../../../../Global/hook/useSignup";
 import MaxCard from "../../../../Global/Card/MaxCard/MaxCard";
 import Card from "../../../../Global/Card/Card";
-import LoadingModal  from "../../../../Global/LoadingModal/LoadingModal";
+import LoadingModal from "../../../../Global/LoadingModal/LoadingModal";
 
 export const SignUpForm = () => {
   const { handleSubmit, onSubmit, register, isError, isLoading } = useSignup();
