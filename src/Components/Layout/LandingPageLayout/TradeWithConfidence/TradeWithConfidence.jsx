@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const TradeWithConfidence = () => {
   return (
     <div className="bg-white p-6">
-      <div className="w-[95%] lg:w-[70%] m-auto h-[200px] flex items-center">
+      <div className="w-[95%] lg:w-[70%] m-auto py-10">
         <div className="justify-center items-center text-center space-y-5">
           <div className="flex flex-col space-y-4">
             <h1 className="text-4xl">

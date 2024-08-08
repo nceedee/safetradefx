@@ -4,7 +4,7 @@ import { HiOutlineMailOpen } from "react-icons/hi";
 
 const HavingDifficulties = () => {
   return (
-    <div className=" text-gray-700 bg-blue-100 flex items-center py-14 h-[600px]">
+    <div className=" text-gray-700 bg-blue-100 flex items-center py-14 h-[670px]">
       <div className="w-[95%] lg:w-[70%]  m-auto">
         <div className="text-center">
           <h1 className="text-4xl">Having an difficulty?</h1>
