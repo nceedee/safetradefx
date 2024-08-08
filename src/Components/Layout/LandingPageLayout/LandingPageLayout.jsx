@@ -15,6 +15,7 @@ import StockCommision from "./StockCommision/StockCommision";
 import MeetOurClient from "./MeetOurClient/MeetOurClient";
 import HavingDifficulties from "./HavingDifficulties/HavingDifficulties";
 import TradeWithConfidence from "./TradeWithConfidence/TradeWithConfidence";
+import Footer from "./Footer/Footer";
 
 const LandingPageLayout = () => {
   return (
@@ -101,6 +102,7 @@ const LandingPageLayout = () => {
           <TradeWithConfidence/>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

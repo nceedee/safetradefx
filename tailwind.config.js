@@ -5,10 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],
-      },
-      screens: {
-        "sm-991": "1366px", // Custom breakpoint for 991px
-      },
+      }
     },
   },
   plugins: [],
