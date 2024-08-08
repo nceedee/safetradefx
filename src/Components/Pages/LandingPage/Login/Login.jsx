@@ -5,11 +5,9 @@ import { LoginForm } from "./LoginForm/LoginForm";
 
 const Login = () => {
   return (
-    <div>
-      <div className="relative z-30 bg-blue-100">
+      <div className="bg-blue-100 h-[100vh]">
         <LoginForm />
       </div>
-    </div>
   );
 };
 
