@@ -14,6 +14,7 @@ import VideoSide from "./VideoSide/VideoSide";
 import StockCommision from "./StockCommision/StockCommision";
 import MeetOurClient from "./MeetOurClient/MeetOurClient";
 import HavingDifficulties from "./HavingDifficulties/HavingDifficulties";
+import TradeWithConfidence from "./TradeWithConfidence/TradeWithConfidence";
 
 const LandingPageLayout = () => {
   return (
@@ -97,6 +98,7 @@ const LandingPageLayout = () => {
           <StockCommision />
           <MeetOurClient />
           <HavingDifficulties />
+          <TradeWithConfidence/>
         </div>
       </div>
     </div>
