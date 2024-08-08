@@ -33,7 +33,7 @@ const LandingPageHeader = () => {
       }}
     >
       <div
-        className={`fixed top-0 left-0 w-full flex z-50 items-center justify-between p-4 transition-colors duration-300 ${
+        className={`fixed top-0 left-0 w-full flex z-50 items-center lg:justify-around justify-between p-4 transition-colors duration-300 ${
           isScrolled ? "bg-white opacity-[.9]" : "bg-transparent"
         }`}
       >

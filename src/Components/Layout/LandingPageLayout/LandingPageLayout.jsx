@@ -56,7 +56,7 @@ const LandingPageLayout = () => {
           <RateDashboard/>
           <TransactionTable />
           <Link
-            to="/signup"
+            to="/plan"
             className="w-full lg:w-[70%] justify-center m-auto flex flex-wrap gap-4"
           >
             <InvestCardTwo

@@ -12,7 +12,7 @@ const InvestCardTwo = ({ name, from, to, percent, hours, className }) => {
 
   return (
     <div
-      className={`p-6 flex flex-col space-y-4 items-center lg:m-0 m-auto rounded-md lg:w-[300px] translate-y-6 w-[85%] shadow-md `}
+      className={`p-6 flex flex-col space-y-4 items-center lg:m-0 bg-white m-auto rounded-md hover:shadow-2xl lg:w-[300px] translate-y-6 w-[85%] shadow-md `}
     >
       <h1 className="font-bold text-3xl text-black">{name}</h1>
       <h1 className="text-3xl text-gray-300">

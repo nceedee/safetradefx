@@ -1,10 +1,11 @@
 import React from "react";
 import LandingPageLayout from "../../Layout/LandingPageLayout/LandingPageLayout";
+import paper from '../../../Assets/Images/paper.jpg'
 
 const LandingPage = () => {
   return (
-    <div >
-      <div >
+    <div style={{ backgroundImage: `url(${paper})`, backgroundRepeat: 'no-repeat' ,backgroundSize: 'cover' }}>
+      <div>
         <LandingPageLayout />
       </div>
     </div>
