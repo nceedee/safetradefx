@@ -5,12 +5,9 @@ import { SignUpForm } from "./SignupForm/SignupForm";
 
 const Signup = () => {
   return (
-    <div>
-      <div className="relative z-30 bg-blue-100">
+      <div className="bg-blue-100 h-[100vh]">
         <SignUpForm />
       </div>
-     
-    </div>
   );
 };
 
