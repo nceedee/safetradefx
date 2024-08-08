@@ -4,7 +4,7 @@ import paper from '../../../Assets/Images/paper.jpg'
 
 const LandingPage = () => {
   return (
-    <div style={{ backgroundImage: `url(${paper})`, backgroundRepeat: 'no-repeat' ,backgroundSize: 'cover' }}>
+    <div style={{ backgroundImage: `url(${paper})`, backgroundRepeat: 'no-repeat' ,backgroundSize: 'cover', overflow: 'hidden' }}>
       <div>
         <LandingPageLayout />
       </div>
