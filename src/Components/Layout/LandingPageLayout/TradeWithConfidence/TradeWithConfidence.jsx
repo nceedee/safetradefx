@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 const TradeWithConfidence = () => {
   return (
     <div className="bg-white p-6">
-      <div className="w-[95%] lg:w-[70%] m-auto py-10">
+      <div className="w-[70%] lg:w-[70%] m-auto py-10">
         <div className="justify-center items-center text-center space-y-5">
           <div className="flex flex-col space-y-4">
             <h1 className="text-4xl">
-              Trade with confidence. Trade with Fusionxace.
+              Trade with confidence. Trade with Safe Trade FX.
             </h1>
             <p>
               Join thousands of people who choose to trade with us, enjoying

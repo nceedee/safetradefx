@@ -16,10 +16,11 @@ import MeetOurClient from "./MeetOurClient/MeetOurClient";
 import HavingDifficulties from "./HavingDifficulties/HavingDifficulties";
 import TradeWithConfidence from "./TradeWithConfidence/TradeWithConfidence";
 import Footer from "./Footer/Footer";
+import planVideo from "../../../Assets/Videos/plansvideo.mp4";
 
 const LandingPageLayout = () => {
   return (
-    <div>
+    <div className="relative">
       <LandingPageHeader />
       <div className="-translate-y-72 flex flex-col items-center">
         <div className="w-full sm:w-[75%] text-white md:w-[50%] ">
@@ -99,10 +100,15 @@ const LandingPageLayout = () => {
           <StockCommision />
           <MeetOurClient />
           <HavingDifficulties />
-          <TradeWithConfidence/>
+          <TradeWithConfidence />
+          <div className="w-[70%] m-auto  h-0">
+            <video controls className=" rounded-lg">
+              <source src={planVideo} />
+            </video>
+          </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

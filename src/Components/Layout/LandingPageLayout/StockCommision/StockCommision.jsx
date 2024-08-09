@@ -6,7 +6,7 @@ import { SiGnuprivacyguard } from "react-icons/si";
 const StockCommision = () => {
   return (
     <div className="bg-white p-6 translate-y-16">
-      <div className="w-[95%] lg:w-[70%] m-auto mt-28 text-gray-800 flex flex-col space-y-28">
+      <div className="w-[70%] lg:w-[70%] m-auto mt-28 text-gray-800 flex flex-col space-y-28">
         <div>
           <h1 className="text-4xl">100% stocks, 20% commission</h1>
           <p>

@@ -67,7 +67,7 @@ const MeetOurClient = () => {
         backgroundSize: "cover",
       }}
     >
-      <div className="lg:w-[80%] w-[95%] m-auto">
+      <div className="lg:w-[80%] w-[70%] m-auto">
         <div className="text-center">
           <h1 className="text-3xl font-bold">Meet Our Clients</h1>
           <p>
