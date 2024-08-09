@@ -101,7 +101,7 @@ const LandingPageLayout = () => {
           <MeetOurClient />
           <HavingDifficulties />
           <TradeWithConfidence />
-          <div className="w-[70%] m-auto  h-0">
+          <div className="w-[70%] m-auto  h-0 lg:h-auto">
             <video controls className=" rounded-lg">
               <source src={planVideo} />
             </video>
