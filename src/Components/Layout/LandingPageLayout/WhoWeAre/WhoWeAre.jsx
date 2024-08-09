@@ -8,7 +8,7 @@ import h6phone2 from "../../../../Assets/Images/h6-phone-app3.png";
 const WhoWeAre = () => {
   return (
     <div className="bg-blue-100 p-6">
-      <div className="flex lg:flex-row lg:justify-evenly p-6 lg:p-0 flex-col-reverse m-auto pt-[100px] lg:pt-[200px] w-[80%] ">
+      <div className="flex lg:flex-row lg:justify-evenly p-6 lg:p-0 flex-col-reverse m-auto pt-[100px] lg:pt-[200px] w-[90%] ">
         <div className="w-[100%] lg:w-[40%] flex space-y-3 flex-col">
           <div>
             <h4 className="text-blue-800 text-[15px] lg:text-2xl font-bold">

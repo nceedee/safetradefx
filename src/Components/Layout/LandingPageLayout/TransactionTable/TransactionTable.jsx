@@ -31,7 +31,7 @@ const transactions = [
 const TransactionTable = () => {
   return (
     <div className="bg-blue-100 p-6">
-      <div className="container mx-auto p-1 lg:p-4 lg:w-[70%] w-[70%] m-auto">
+      <div className="container mx-auto p-1 lg:p-4 lg:w-[70%] w-[90%] m-auto">
         <h1 className="text-4xl font-bold text-center mb-8">PAYOUT</h1>
         <div className="overflow-x-auto p-1  lg:p-4 rounded-lg shadow-lg">
           <h2 className="text-[20px] lg:text-2xl bg-blue-900 text-white font-bold text-center py-4 rounded-t-lg w-full">
