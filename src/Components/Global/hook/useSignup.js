@@ -57,6 +57,10 @@ export const useSignup = () => {
       dispatch({ type: "LOGIN", payload: user });
       console.log("Navigating to dashboard...");
       navigate("/dashboard");
+
+      // Reload the window after navigation
+      window.location.reload();
+
     } catch (error) {
       console.error("Signup error:", error);
       setIsError(error.message || "Signup failed. Please try again.");
