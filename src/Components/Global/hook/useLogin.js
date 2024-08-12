@@ -33,6 +33,10 @@ export const useLogin = () => {
 
       dispatch({ type: "LOGIN", payload: user });
       navigate("/dashboard");
+      
+      // Refresh the browser to ensure the dashboard loads properly
+      window.location.reload();
+      
     } catch (error) {
       setMessage(error.message);
       setIsLoading(false);
