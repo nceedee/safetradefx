@@ -1,8 +1,9 @@
+// useSignup.js
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../Context/AuthContext";
+import AuthContext from "../../Context/AuthContext";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../config/firebase";
 
@@ -31,6 +32,7 @@ export const useSignup = () => {
         email: userCredential.user.email || "",
       };
 
+      // Save user details to local storage
       localStorage.setItem("user", JSON.stringify(user));
 
       if (auth.currentUser) {
