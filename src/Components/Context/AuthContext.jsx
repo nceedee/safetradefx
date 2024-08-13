@@ -1,6 +1,5 @@
-import { createContext, useReducer, useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../config/firebase";
+// AuthContext.js
+import { createContext, useReducer } from "react";
 
 const AuthContext = createContext();
 
@@ -23,18 +22,6 @@ const authReducer = (state, action) => {
 
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, { user: null });
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        dispatch({ type: "LOGIN", payload: { id: user.uid, email: user.email, name: user.displayName } });
-      } else {
-        dispatch({ type: "LOGOUT" });
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
 
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
