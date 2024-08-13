@@ -1,3 +1,4 @@
+// LoginForm.js
 import React from "react";
 import { Link } from "react-router-dom";
 import { useLogin } from "../../../../Global/hook/useLogin";
@@ -6,11 +7,14 @@ import { AlertError } from "../../../../Global/Alert/AlertError";
 import LoadingModal from "../../../../Global/LoadingModal/LoadingModal";
 
 export const LoginForm = () => {
-  const { errors, handleSubmit, isLoading, onSubmit, register, message } = useLogin();
+  const { errors, handleSubmit, isLoading, onSubmit, register, message } =
+    useLogin();
 
   return (
     <div className="flex flex-col h-full w-full items-center justify-center bg-secondary">
-      <h1 className="text-center text-black font-bold text-2xl m-4">Safe Trade FX</h1>
+      <h1 className="text-center text-black font-bold text-2xl m-4">
+        Safe Trade FX
+      </h1>
       <Card className="m-auto sm:w-[100%] shadow-xl border-[1px] md:w-[50%] bg-blue-100">
         <h1 className="text-center text-xl text-black font-bold">Login</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
@@ -28,7 +32,9 @@ export const LoginForm = () => {
             placeholder="Enter Password Here"
             className="w-full rounded-lg border-b-2 text-black border-b-[#ebebeb] p-2 outline-none"
           />
-          {errors.password && <AlertError>Please enter your password</AlertError>}
+          {errors.password && (
+            <AlertError>Please enter your password</AlertError>
+          )}
           {message && <AlertError>{message}</AlertError>}
           {isLoading && <LoadingModal />}
           <input
@@ -41,7 +47,9 @@ export const LoginForm = () => {
           />
           <div className="mt-4 flex space-x-3 italic">
             <h1 className="font-bold text-black">Don't have an account?</h1>
-            <Link to="/signup" className="text-black">Sign Up</Link>
+            <Link to="/signup" className="text-black">
+              Sign Up
+            </Link>
           </div>
         </form>
       </Card>
