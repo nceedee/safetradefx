@@ -3,15 +3,11 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext"; 
-import { auth } from "../../config/firebase"; 
+import { auth } from "../../config/firebase"
 
 export const useLogin = () => {
   const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { dispatch } = useContext(AuthContext);
@@ -28,7 +24,6 @@ export const useLogin = () => {
         id: userCredential.user.uid,
         name: userCredential.user.displayName || "",
         email: userCredential.user.email || "",
-        password: "", // Typically you wouldn't include the password in the user object
       };
 
       dispatch({ type: "LOGIN", payload: user });
