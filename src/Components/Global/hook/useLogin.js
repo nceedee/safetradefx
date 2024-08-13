@@ -1,8 +1,9 @@
+// useLogin.js
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../Context/AuthContext";
+import AuthContext from "../../Context/AuthContext";
 import { auth } from "../../config/firebase";
 
 export const useLogin = () => {
@@ -15,7 +16,11 @@ export const useLogin = () => {
   const onSubmit = async (data) => {
     try {
       setIsLoading(true);
-      const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
       const user = {
         id: userCredential.user.uid,
         name: userCredential.user.displayName || "",
