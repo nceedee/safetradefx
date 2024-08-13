@@ -1,46 +1,46 @@
-import React, { createContext, useEffect, useReducer } from "react";
+import { createContext, useReducer, useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../config/firebase";
 
-// Define the initial state
-const userString = localStorage.getItem("user");
-const initialUser = userString ? JSON.parse(userString) : null;
+const AuthContext = createContext();
 
-const INITIAL_STATE = {
-  currentUser: initialUser,
-  dispatch: () => {},
-};
-
-// Create the context
-export const AuthContext = createContext(INITIAL_STATE);
-
-// Define the reducer
-const AuthReducer = (state, action) => {
+const authReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
       return {
         ...state,
-        currentUser: action.payload,
+        user: action.payload,
       };
     case "LOGOUT":
       return {
         ...state,
-        currentUser: null,
+        user: null,
       };
     default:
       return state;
   }
 };
 
-// Create the provider component
-export const AuthContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
+export const AuthProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(authReducer, { user: null });
 
   useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(state.currentUser));
-  }, [state.currentUser]);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch({ type: "LOGIN", payload: { id: user.uid, email: user.email, name: user.displayName } });
+      } else {
+        dispatch({ type: "LOGOUT" });
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser: state.currentUser, dispatch }}>
+    <AuthContext.Provider value={{ state, dispatch }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
+export default AuthContext;
