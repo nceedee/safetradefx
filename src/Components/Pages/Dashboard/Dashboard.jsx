@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { uid } from "../../stores/stores";
+import { uid } from "../../stores/stores"; // Ensure this is correctly imported and available
 import DashboardLayout from "../../Layout/DashboardLayout/DashboardLayout";
 import SideBar from "../../Layout/DashboardLayout/SideBar/SideBar";
 import BalanceCard from "../../Global/BalanceCard/BalanceCard";
@@ -15,10 +15,12 @@ import useUpdateInterestBalance from "../../Global/hook/useUpdateInterestBalance
 import useUpdateTotalEarn from "../../Global/hook/useUpdateTotalEarn";
 
 const Dashboard = () => {
-  const { currentBalance } = useUpdateMainBalance(uid.id);
-  const { currentBalance: earncurrentBalance } = useUpdateTotalEarn(uid.id);
-  const { interestCurrentBalance } = useUpdateInterestBalance( uid.id );
+  // Ensure uid and uid.id are defined before using them
+  const userId = uid?.id || ""; // Default to an empty string if uid or uid.id is not defined
 
+  const { currentBalance } = useUpdateMainBalance(userId);
+  const { currentBalance: earncurrentBalance } = useUpdateTotalEarn(userId);
+  const { interestCurrentBalance } = useUpdateInterestBalance(userId);
 
   // State for local storage data
   const [localEarnAmount, setLocalEarnAmount] = useState(null);
@@ -46,7 +48,7 @@ const Dashboard = () => {
           <div className="w-full">
             <div className="w-full flex flex-wrap gap-4">
               <BalanceCard
-                amount={`$${
+                amount={`${
                   currentBalance !== null
                     ? currentBalance.toLocaleString()
                     : "loading..."
@@ -56,7 +58,7 @@ const Dashboard = () => {
                 className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
               />
               <BalanceCard
-                amount={`$${
+                amount={`${
                   interestCurrentBalance !== null
                     ? interestCurrentBalance.toLocaleString()
                     : "loading..."
@@ -66,7 +68,7 @@ const Dashboard = () => {
                 className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
               />
               <BalanceCard
-                amount={`$${
+                amount={`${
                   currentBalance !== null
                     ? currentBalance.toLocaleString()
                     : "loading..."
@@ -76,7 +78,7 @@ const Dashboard = () => {
                 className="flex-1 min-w-[200px] md:min-w-[220px] lg:w-[200px] lg:h-[200px] flex items-center justify-center"
               />
               <BalanceCard
-                amount={`$${
+                amount={`${
                   earnAmount !== null
                     ? earnAmount.toLocaleString()
                     : "loading..."

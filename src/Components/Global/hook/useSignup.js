@@ -8,8 +8,12 @@ import { auth, db } from "../../config/firebase";
 
 export const useSignup = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors } } = useForm();
   const { dispatch } = useContext(AuthContext);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(null);
 
@@ -34,21 +38,24 @@ export const useSignup = () => {
       // Save user details to local storage
       localStorage.setItem("user", JSON.stringify(user));
 
-      if (auth.currentUser) {
-        await updateProfile(auth.currentUser, { displayName: formData.name });
-      } else {
-        throw new Error("User not authenticated.");
-      }
+      // Update user profile
+      await updateProfile(auth.currentUser, { displayName: formData.name });
 
+      // Save user data to Firestore
       await setDoc(doc(db, "users", userId), {
         email: user.email,
         displayName: user.name,
         userId: user.id,
       });
 
+      // Dispatch login action
       dispatch({ type: "LOGIN", payload: user });
-      navigate("/dashboard");
+
+      // Navigate to dashboard
+      navigate( "/dashboard" );
+      window.location.reload()
     } catch (error) {
+      console.error("Signup error:", error);
       setIsError(error.message || "Signup failed. Please try again.");
     } finally {
       setIsLoading(false);
