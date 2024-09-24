@@ -18,15 +18,16 @@ const SignupPageHeader = () => {
       window.googleTranslateElementInit = () => {
         if (!document.querySelector(".goog-te-combo")) {
           new window.google.translate.TranslateElement(
-            {
-              pageLanguage: "en",
-              includedLanguages: "en,es,fr,de,it,ja,zh-CN,ar,pt,ru,ko,hi",
-              layout:
-                window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-              autoDisplay: false,
-            },
-            "google_translate_element"
-          );
+						{
+							pageLanguage: "en",
+							includedLanguages:
+								"en,es,fr,de,it,ja,zh-CN,ar,pt,ru,ko,hi,fa,tr,id,vi",
+							layout:
+								window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+							autoDisplay: false,
+						},
+						"google_translate_element"
+					);
         }
       };
     };
