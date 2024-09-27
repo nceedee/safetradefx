@@ -39,7 +39,7 @@ export const SideBar = ({ children }) => {
               </div>
               {/* On larger screens, show text by default; on smaller screens, show based on toggle */}
               <span
-                className={`text-base ${isTextVisible ? "block" : "hidden"} md:block`}
+                className={`text-base ${isTextVisible ? "block" : "hidden"} lg:block`}
               >
                 {menu.text}
               </span>
