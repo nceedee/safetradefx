@@ -14,14 +14,22 @@ export const Referral = () => {
     if (user && user.name) {
       setReferrer(user.name);
       // Construct the referral link
-      const link = `https://www.safefx.com/referral?referrer=${user.name}`;
+      const link = `https://www.safefx.com/my-account?referrer=${user.name}`;
       setReferralLink(link);
     }
 
-    // Retrieve the referral name from local storage (if it was set previously)
-    const referralName = localStorage.getItem("referralname");
+    // Check for referral name in URL parameters when the user lands on the site
+    const urlParams = new URLSearchParams(window.location.search);
+    const referralName = urlParams.get("referrer");
+
     if (referralName) {
-      setReferrer(referralName);
+      localStorage.setItem("referralname", referralName);
+    }
+
+    // Retrieve the referral name from local storage
+    const savedReferralName = localStorage.getItem("referralname");
+    if (savedReferralName) {
+      setReferrer(savedReferralName);
     }
   }, []);
 
