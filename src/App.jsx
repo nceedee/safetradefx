@@ -1,20 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
-  Route,
   Routes,
+  Route,
   useLocation,
-  useNavigationType,
 } from "react-router-dom";
 import LandingPage from "./Components/Pages/LandingPage/LandingPage";
 import Signup from "./Components/Pages/LandingPage/Signup/Signup";
 import Login from "./Components/Pages/LandingPage/Login/Login";
 import { useAuth } from "./Components/Global/hook/useAuth";
 import LoadingModal from "./Components/Global/LoadingModal/LoadingModal";
-import {
-  LoadingProvider,
-  useLoading,
-} from "./Components/Context/LoadingContext";
+import { LoadingProvider, useLoading } from "./Components/Context/LoadingContext";
 import { Account } from "./Components/Pages/Dashboard/Account/Account";
 import { Invest } from "./Components/Pages/Dashboard/Invest/Invest";
 import { MyDeposits } from "./Components/Pages/Dashboard/MyDeposits/MyDeposits";
@@ -28,19 +24,24 @@ import ReferralForm from "./Components/Pages/Dashboard/ReferralForm/ReferralForm
 
 const AppContent = () => {
   const { RequireAuth } = useAuth();
-  const { isLoading } = useLoading();
+  const { isLoading, setIsLoading } = useLoading();
   const location = useLocation();
-  const navigationType = useNavigationType();
 
-  React.useEffect(() => {
-    if (navigationType === "PUSH") {
-      window.location.reload();
-    }
-  }, [location, navigationType]);
+  // Show loading on route change
+  useEffect(() => {
+    setIsLoading(true);  // Start loading on route change
+
+    // Simulate loading completion (could be data fetching or actual content loading)
+    const timer = setTimeout(() => {
+      setIsLoading(false); // Stop loading after 1 second (you can adjust based on your needs)
+    }, 1000);
+
+    return () => clearTimeout(timer); // Cleanup timeout on unmount
+  }, [location, setIsLoading]);
 
   return (
     <div className="font-montserrat">
-      {isLoading && <LoadingModal />}
+      {isLoading && <LoadingModal />} {/* Show the loading modal */}
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<Signup />} />
@@ -119,7 +120,7 @@ const AppContent = () => {
         />
 
         <Route
-          path="/referrer/" // emeka na here you go do  the routerfor referal =?:name 
+          path="/referrer/:name" // Dynamic route for referral form
           element={<ReferralForm />}
         />
       </Routes>
@@ -127,6 +128,7 @@ const AppContent = () => {
   );
 };
 
+// Main App component
 export default function App() {
   return (
     <LoadingProvider>
