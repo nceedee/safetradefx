@@ -64,7 +64,7 @@ export const TransactionHistory = () => {
 
           {/* Date Filter */}
           <div className="my-4">
-            <label htmlFor="date" className="block text-black mb-2">Filter by Date:</label>
+            <label htmlFor="date" className="block text-white mb-2">Filter by Date:</label>
             <input
               type="date"
               id="date"
