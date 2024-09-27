@@ -12,14 +12,14 @@ const StockCommision = () => {
           <p>
             20% commission means there’ll be markup on stocks & ETFs – no matter
             how much you invest. Invest in a large variety of stocks on
-            Fusionxace and experience unlimited trading volume.
+            Safe Trade Fx and experience unlimited trading volume.
           </p>
         </div>
         <div className="text-center">
           <h1 className="text-4xl">The global leader of profitable trading</h1>
           <p>
             Discover why millions of users from over 140 countries choose to
-            trade with Fusionxace
+            trade with Safe Trade Fx
           </p>
           <div className="flex lg:flex-row flex-col lg:space-y-0 space-y-8 lg:space-x-10 mt-10 space-x-0">
             <div className="flex flex-col items-center">

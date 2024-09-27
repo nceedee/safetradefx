@@ -10,7 +10,7 @@ const reviewsData = [
   {
     img: person1,
     comment:
-      "Easy, Fast And reliable. I got my profits immediately after trading. Fusionxace is Awesome!",
+      "Easy, Fast And reliable. I got my profits immediately after trading. Safe Trade FX is Awesome!",
     name: "David R. McNulty",
   },
   {
@@ -22,7 +22,7 @@ const reviewsData = [
   {
     img: person3,
     comment:
-      "Fusionxace is a fantastic trading platform, both from an ease of use and technical perspective.",
+      "Safe Trade FX is a fantastic trading platform, both from an ease of use and technical perspective.",
     name: "Smith M. Williams",
   },
 ];

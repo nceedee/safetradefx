@@ -1,27 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaBars } from "react-icons/fa"; // Import FaBars for the toggle button
 import { menuLink } from "./menuLink"; // Import your menuLink array
-import { Link } from "react-router-dom"; // Assuming you're using react-router for navigation
+import { Link, useLocation } from "react-router-dom"; // Using useLocation to detect route changes
 
 export const SideBar = ({ children }) => {
   const [isTextVisible, setIsTextVisible] = useState(false); // State to toggle text visibility
+  const location = useLocation(); // Detects current route
 
-  // Function to toggle the visibility of text
-  const toggleTextVisibility = () => {
-    setIsTextVisible((prev) => !prev);
-  };
+  // Reset text visibility when the route changes
+  useEffect(() => {
+    setIsTextVisible(false); // Hide text by default when the route changes
+  }, [location]);
+
+  
 
   return (
     <div className="flex h-auto">
       {/* Sidebar */}
-      <div className="bg-primary1 w-64 border-r-2 border-gray-700 border-[1px] flex flex-col">
+      <div className="bg-primary1 w-16 md:w-64 border-r-2 border-gray-700 border-[1px] flex flex-col">
         {/* Toggle Bar with FaBars icon */}
-        <div
-          className="flex items-center justify-center h-12 bg-gray-800 cursor-pointer"
-          onClick={toggleTextVisibility}
-        >
-          <FaBars className="text-white text-2xl" />
-        </div>
+        
 
         {menuLink.map((menu, index) => (
           <Link
@@ -30,13 +28,20 @@ export const SideBar = ({ children }) => {
             className="flex items-center text-white px-4 py-4 hover:bg-opacity-75 hover:bg-gray-700 transition-opacity"
           >
             <div className="text-2xl mr-3">{menu.icon}</div>
-            {isTextVisible && <span className="text-base">{menu.text}</span>}
+            {/* On larger screens, show text by default; on smaller screens, show based on toggle */}
+            <span
+              className={`text-base ${
+                isTextVisible ? "block" : "hidden"
+              } md:block`}
+            >
+              {menu.text}
+            </span>
           </Link>
         ))}
       </div>
 
       {/* Main content area where children components will render */}
-      <div className="flex-grow md:p-6 p-0 w-[80%]">{children}</div>
+      <div className="flex-grow lg:p-6 p-0 w-[80%]">{children}</div>
     </div>
   );
 };

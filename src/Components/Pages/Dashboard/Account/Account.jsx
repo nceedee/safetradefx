@@ -12,7 +12,7 @@ export const Account = () => {
   const cardRef = useRef(null); // Reference to the cards container
   const cards = [
     {
-      icon: <FaMoneyCheckAlt className="text-5xl md:text-3xl" />,
+      icon: <FaMoneyCheckAlt className="text-5xl lg:text-3xl" />,
       text: 'Earned',
       amount: '$0.00',
     },
