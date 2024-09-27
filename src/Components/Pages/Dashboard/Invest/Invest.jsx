@@ -33,47 +33,33 @@ export const Invest = () => {
 
   const plans = [
     {
-      planName: "Minor Program",
-      minDeposit: 70,
+      planName: "Starter Plan",
+      minDeposit: 50.0,
       maxDeposit: 999.0,
-      interestRate: 5.0,
-      duration: 24,
+      interestRate: 5,
+      duration: 20,
     },
     {
-      planName: "Mini Program",
-      minDeposit: 1000,
-      maxDeposit: 1499.0,
+      planName: "Mini Plan",
+      minDeposit: 250.0,
+      maxDeposit: 1500.0,
       interestRate: 7.3,
       duration: 24,
     },
     {
-      planName: "Professional Program",
+      planName: "Professional Plan",
       minDeposit: 1500.0,
-      maxDeposit: 2999.0,
+      maxDeposit: 3000.0,
       interestRate: 9.99,
-      duration: 24,
+      duration: 40,
     },
     {
-      planName: "Maximal Program",
+      planName: "Promo Plan",
       minDeposit: 3000.0,
-      maxDeposit: 9999.0,
-      interestRate: 9.0,
-      duration: 24,
-    },
-    {
-      planName: "Standard Program",
-      minDeposit: 10000.0,
-      maxDeposit: 49999.0,
-      interestRate: 10.0,
-      duration: 24,
-    },
-    {
-      planName: "Advanced Program",
-      minDeposit: 50000.0,
-      maxDeposit: "",
-      interestRate: 12.0,
-      duration: 24,
-    },
+      maxDeposit: 9000.0,
+      interestRate: 9,
+      duration: 10,
+    }
   ];
 
   const handlePlanChange = (e) => {
