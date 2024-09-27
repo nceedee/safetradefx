@@ -1,40 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { Header } from '../../../Layout/DashboardLayout/Header/Header';
 import { SideBar } from '../../../Layout/DashboardLayout/SideBar/SideBar';
-import { uid } from '../../../stores/stores'; // Assuming uid is available from this store
+import { usePost } from '../../../Global/hook/usePost'
+import { useGetWithId } from '../../../Global/hook/useGetWithId'; // Make sure the path is correct
+import { uid } from '../../../stores/stores';
 
 export const Wallets = () => {
   const [walletType, setWalletType] = useState('USDT');
   const [walletAddress, setWalletAddress] = useState('');
-  const [wallets, setWallets] = useState([]);
+  const { data: walletsData, error: fetchError, isLoading: isFetching } = useGetWithId(`wallets`, {
+    enabled: !!uid?.id // Only fetch if uid.id is available
+  });
 
-  // Load wallets for the current user from localStorage when the component mounts
-  useEffect(() => {
-    if (uid?.id) {
-      const storedWallets = localStorage.getItem(`wallets_${uid.id}`);
-      if (storedWallets) {
-        setWallets(JSON.parse(storedWallets)); // Load stored wallets
-      }
-    }
-  }, [uid?.id]); // Ensure this runs whenever `uid.id` changes
-
-  // Save wallets for the current user to localStorage whenever the wallets array changes
-  useEffect(() => {
-    if (uid?.id) {
-      localStorage.setItem(`wallets_${uid.id}`, JSON.stringify(wallets));
-    }
-  }, [wallets, uid?.id]); // Save wallets when `wallets` or `uid.id` changes
+  const { post: addWallet, del: deleteWallet } = usePost();
 
   // Handle form submission for adding a new wallet
-  const handleAddWallet = (e) => {
+  const handleAddWallet = async (e) => {
     e.preventDefault();
     if (walletAddress.trim() === '') {
       return alert('Please input a valid wallet address');
     }
 
-    // Add the new wallet to the list
+    // Prepare the new wallet object
     const newWallet = { type: walletType, address: walletAddress };
-    setWallets((prevWallets) => [...prevWallets, newWallet]);
+    
+    // Post the new wallet to the server
+    await addWallet(`wallets`, newWallet);
 
     // Reset form fields
     setWalletType('USDT');
@@ -48,15 +39,15 @@ export const Wallets = () => {
   };
 
   // Handle wallet deletion
-  const handleDeleteWallet = (addressToDelete) => {
-    const updatedWallets = wallets.filter(wallet => wallet.address !== addressToDelete);
-    setWallets(updatedWallets); // Update the state with the filtered wallets
+  const handleDeleteWallet = async (addressToDelete) => {
+    // Delete the wallet from the server
+    await deleteWallet(addressToDelete);
 
-    // Update localStorage to remove the deleted wallet
-    if (uid?.id) {
-      localStorage.setItem(`wallets_${uid.id}`, JSON.stringify(updatedWallets));
-    }
+    // Optionally, refetch the wallets or update local state
   };
+
+  if (isFetching) return <div>Loading wallets...</div>;
+  if (fetchError) return <div>Error fetching wallets: {fetchError.message}</div>;
 
   return (
     <div className="bg-secondary2 min-h-screen">
@@ -66,10 +57,7 @@ export const Wallets = () => {
           <h1 className="text-xl lg:text-2xl font-bold mb-4 text-white text-center">Add Wallets</h1>
 
           {/* Form for adding wallets */}
-          <form
-            onSubmit={handleAddWallet}
-            className="mb-6 max-w-full lg:max-w-2xl mx-auto"
-          >
+          <form onSubmit={handleAddWallet} className="mb-6 max-w-full lg:max-w-2xl mx-auto">
             <div className="mb-4">
               <label className="block text-gray-100 mb-2">Select Wallet Type</label>
               <select
@@ -106,13 +94,11 @@ export const Wallets = () => {
           {/* Display added wallets */}
           <div className="mt-6">
             <h2 className="text-lg lg:text-xl font-semibold mb-4 text-white">Added Wallets</h2>
-            {wallets.length === 0 ? (
-              <p className="text-white text-center">No wallets added yet.</p>
-            ) : (
+            {walletsData && walletsData.data ? (
               <ul className="space-y-4 lg:space-y-2">
-                {wallets.map((wallet, index) => (
+                {Object.entries(walletsData.data).map(([key, wallet]) => (
                   <li
-                    key={index}
+                    key={key}
                     className="flex flex-col lg:flex-row justify-between items-start lg:items-center p-2 border rounded bg-white max-w-full lg:max-w-2xl mx-auto"
                   >
                     <div className="mb-2 lg:mb-0 w-full lg:w-auto text-left lg:text-left">
@@ -126,16 +112,13 @@ export const Wallets = () => {
                       >
                         Copy
                       </button>
-                      <button
-                        onClick={() => handleDeleteWallet(wallet.address)}
-                        className="text-red-500 hover:underline mt-2 lg:mt-0"
-                      >
-                        Delete
-                      </button>
+                      
                     </div>
                   </li>
                 ))}
               </ul>
+            ) : (
+              <p className="text-white text-center">No wallets added yet.</p>
             )}
           </div>
         </div>

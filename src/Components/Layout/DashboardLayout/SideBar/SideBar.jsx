@@ -15,9 +15,9 @@ export const SideBar = ({ children }) => {
   
 
   return (
-    <div className="flex h-auto">
+    <div className="flex min-h-screen">
       {/* Sidebar */}
-      <div className="bg-primary1 w-16 md:w-64 border-r-2 border-gray-700 border-[1px] flex flex-col">
+      <div className="bg-primary1 w-16  lg:w-64 border-r-2 border-gray-700 border-[1px] flex flex-col">
         {/* Toggle Bar with FaBars icon */}
         
 
