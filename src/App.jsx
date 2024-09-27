@@ -24,6 +24,7 @@ import { TransactionHistory } from "./Components/Pages/Dashboard/TransactionHist
 import { Wallets } from "./Components/Pages/Dashboard/Wallets/Wallets";
 import { Settings } from "./Components/Pages/Dashboard/Settings/Settings";
 import { Referral } from "./Components/Pages/Dashboard/Referral/Referral";
+import ReferralForm from "./Components/Pages/Dashboard/ReferralForm/ReferralForm";
 
 const AppContent = () => {
   const { RequireAuth } = useAuth();
@@ -117,7 +118,10 @@ const AppContent = () => {
           }
         />
 
-       
+        <Route
+          path="/referrer/" // emeka na here you go do  the routerfor referal =?:name 
+          element={<ReferralForm />}
+        />
       </Routes>
     </div>
   );

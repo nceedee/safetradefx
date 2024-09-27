@@ -14,7 +14,7 @@ export const Referral = () => {
     if (user && user.name) {
       setReferrer(user.name);
       // Construct the referral link
-      const link = `https://www.safefx.com/my-account?referrer=${user.name}`;
+      const link = `https://www.safefx.com/referrer=${user.name}`;
       setReferralLink(link);
     }
 
