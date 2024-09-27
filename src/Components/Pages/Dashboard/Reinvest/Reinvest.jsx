@@ -176,18 +176,17 @@ export const Reinvest = () => {
                   Investment Information
                 </h3>
                 <ul className="flex flex-col gap-4">
-                  <li>Plan: {selectedPlan.planName}</li>
-                  <li>
-                    Profit: {selectedPlan.interestRate}% in{" "}
-                    {selectedPlan.duration * 24} hours
+                  <li className="font-bold">Plan: <span className="font-normal text-gray-200 font-mono">{selectedPlan.planName}</span></li>
+                  <li className="font-bold">
+                    Profit: <span className="font-normal text-gray-200 font-mono">{selectedPlan.interestRate}% in{" "}
+                    {selectedPlan.duration * 24} hours</span>
                   </li>
-                  <li>Principal Return: Yes</li>
-                  <li>Principal Withdraw: Not Available</li>
-                  <li>Credit Amount: ${investmentAmount}</li>
-                  <li>Deposit Fee: 0.00% + $0.00 (min. $0.00, max. $0.00)</li>
-                  <li>Debit Amount: ${investmentAmount}</li>
+                  <li className="font-bold">Principal Return: <span className="font-normal text-gray-200 font-mono">Yes</span></li>
+                  <li className="font-bold">Principal Withdraw: <span className="font-normal text-gray-200 font-mono">Not Available</span></li>
+                  <li className="font-bold">Credit Amount: <span className="font-normal text-gray-200 font-mono">${investmentAmount}</span></li>
+                  <li className="font-bold">Deposit Fee: <span className="font-normal text-gray-200 font-mono">0.00% + $0.00 (min. $0.00, max. $0.00)</span></li>
+                  <li className="font-bold">Debit Amount: <span className="font-normal text-gray-200 font-mono">${investmentAmount}</span></li>
                 </ul>
-
                 <label className="block mt-6 mb-2">Transaction Hash/ID:</label>
                 <input
                   type="text"
