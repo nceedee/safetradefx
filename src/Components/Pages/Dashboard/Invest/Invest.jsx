@@ -1,15 +1,226 @@
-import React from 'react'
-import { Header } from '../../../Layout/DashboardLayout/Header/Header'
-import {SideBar} from '../../../Layout/DashboardLayout/SideBar/SideBar';
-
+import React, { useState, useRef } from "react";
+import { Header } from "../../../Layout/DashboardLayout/Header/Header";
+import { SideBar } from "../../../Layout/DashboardLayout/SideBar/SideBar";
+import { InvestCard } from "./InvestCard/InvestCard";
 
 export const Invest = () => {
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [investmentAmount, setInvestmentAmount] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("USDT TRC20");
+  const [transactionHash, setTransactionHash] = useState("");
+  const [step, setStep] = useState(1);
+  const formRef = useRef(null);
+  const addresses = {
+    "USDT TRC20": "TAonHMVYCPELEcBKfmxGEfRC1wTEtUqHvK",
+    "Tron (TRX)": "TAonHMVYCPELEcBKfmxGEfRC1wTEtUqHvK",
+    Bitcoin: "bc1qd3fkjy40mgkrzp5znvq7athxd4dz0uf6gar8dw",
+    Ethereum: "0xAD14546bD843b6b288FF9543F6D055f96cdb06Bc",
+    BNB: "0xAD14546bD843b6b288FF9543F6D055f96cdb06Bc",
+  };
+
+  const handleCopy = (address) => {
+    navigator.clipboard
+      .writeText(address)
+      .then(() => {
+        alert("Address copied to clipboard!");
+      })
+      .catch((err) => {
+        console.error("Failed to copy: ", err);
+      });
+  };
+
+  const addressToDisplay = addresses[paymentMethod];
+
+  const plans = [
+    {
+      planName: "Minor Program",
+      minDeposit: 70,
+      maxDeposit: 999.0,
+      interestRate: 5.0,
+      duration: 24,
+    },
+    {
+      planName: "Mini Program",
+      minDeposit: 1000,
+      maxDeposit: 1499.0,
+      interestRate: 7.3,
+      duration: 24,
+    },
+    {
+      planName: "Professional Program",
+      minDeposit: 1500.0,
+      maxDeposit: 2999.0,
+      interestRate: 9.99,
+      duration: 24,
+    },
+    {
+      planName: "Maximal Program",
+      minDeposit: 3000.0,
+      maxDeposit: 9999.0,
+      interestRate: 9.0,
+      duration: 24,
+    },
+    {
+      planName: "Standard Program",
+      minDeposit: 10000.0,
+      maxDeposit: 49999.0,
+      interestRate: 10.0,
+      duration: 24,
+    },
+    {
+      planName: "Advanced Program",
+      minDeposit: 50000.0,
+      maxDeposit: "",
+      interestRate: 12.0,
+      duration: 24,
+    },
+  ];
+
+  const handlePlanChange = (e) => {
+    const selected = plans.find((plan) => plan.planName === e.target.value);
+    setSelectedPlan(selected);
+    setInvestmentAmount(selected.minDeposit); // Set default to minDeposit
+    setStep(1); // Reset step to first step
+
+    // Check if formRef exists before attempting to scroll
+    if (formRef.current) {
+      formRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleProceed = () => {
+    if (
+      investmentAmount < selectedPlan.minDeposit ||
+      investmentAmount > selectedPlan.maxDeposit
+    ) {
+      alert(
+        `Please enter an amount between ${selectedPlan.minDeposit} and ${selectedPlan.maxDeposit}.`
+      );
+      return;
+    }
+    setStep(2); // Move to the next step
+  };
+
+  const handleTransactionSubmit = () => {
+    alert(`Transaction hash submitted: ${transactionHash}`);
+  };
+
   return (
     <div className="bg-secondary2 min-h-screen">
       <Header />
       <SideBar>
-        hello
+        <section>
+          <div className="container p-4 mx-auto">
+            <h2 className="lg:text-2xl text-2xl font-bold text-white mb-8">
+              Choose Your Deposit Plan
+            </h2>
+            {/* Render 6 InvestCards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {plans.map((plan, index) => (
+                <InvestCard
+                  key={index}
+                  planName={plan.planName}
+                  minDeposit={plan.minDeposit}
+                  maxDeposit={plan.maxDeposit}
+                  interestRate={plan.interestRate}
+                  duration={plan.duration}
+                  isSelected={selectedPlan?.planName === plan.planName}
+                  onChange={handlePlanChange}
+                />
+              ))}
+            </div>
+
+            {/* Investment Form */}
+            {selectedPlan && (
+              <div
+                ref={formRef}
+                className="mt-12 p-6 bg-primary1 text-white rounded-lg shadow-lg"
+              >
+                <h3 className="text-xl font-bold mb-4">
+                  Selected Plan: {selectedPlan.planName}
+                </h3>
+                <label className="block mb-2">Enter Investment Amount:</label>
+                <input
+                  type="number"
+                  className="border p-2 text-black rounded w-full mb-4"
+                  value={investmentAmount}
+                  min={selectedPlan.minDeposit}
+                  max={selectedPlan.maxDeposit || undefined}
+                  onChange={(e) => setInvestmentAmount(e.target.value)}
+                />
+
+                <label className="block mb-2">Payment Method:</label>
+                <select
+                  value={paymentMethod}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                  className="border p-2 rounded w-full mb-4 text-black"
+                >
+                  <option value="USDT TRC20">USDT TRC20</option>
+                  <option value="Tron (TRX)">Tron (TRX)</option>
+                  <option value="Bitcoin">Bitcoin</option>
+                  <option value="Ethereum">Ethereum</option>
+                  <option value="BNB">BNB</option>
+                </select>
+
+                <button
+                  className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-lg"
+                  onClick={handleProceed}
+                >
+                  Proceed
+                </button>
+              </div>
+            )}
+
+            {/* Payment Step */}
+            {step === 2 && (
+              <div className="mt-12 p-6 bg-primary1 text-white rounded-lg shadow-lg">
+                <h3 className="text-xl font-bold mb-4">Payment Details</h3>
+                <p className="mb-4">
+                  To instantly fund your account, kindly deposit to the{" "}
+                  {paymentMethod} address below:
+                </p>
+                <p
+                  className="bg-secondary2 text-white p-4 rounded-lg mb-6 overflow-hidden text-ellipsis whitespace-nowrap cursor-pointer"
+                  onClick={() => handleCopy(addressToDisplay)}
+                >
+                  {addressToDisplay}
+                </p>
+
+                <h3 className="text-xl font-bold mb-4">
+                  Investment Information
+                </h3>
+                <ul className="flex flex-col gap-4">
+                  <li>Plan: {selectedPlan.planName}</li>
+                  <li>
+                    Profit: {selectedPlan.interestRate}% in{" "}
+                    {selectedPlan.duration * 24} hours
+                  </li>
+                  <li>Principal Return: Yes</li>
+                  <li>Principal Withdraw: Not Available</li>
+                  <li>Credit Amount: ${investmentAmount}</li>
+                  <li>Deposit Fee: 0.00% + $0.00 (min. $0.00, max. $0.00)</li>
+                  <li>Debit Amount: ${investmentAmount}</li>
+                </ul>
+
+                <label className="block mt-6 mb-2">Transaction Hash/ID:</label>
+                <input
+                  type="text"
+                  className="border p-2 rounded text-black w-full mb-4"
+                  value={transactionHash}
+                  onChange={(e) => setTransactionHash(e.target.value)}
+                />
+
+                <button
+                  className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-lg"
+                  onClick={handleTransactionSubmit}
+                >
+                  Submit Transaction
+                </button>
+              </div>
+            )}
+          </div>
+        </section>
       </SideBar>
     </div>
-  )
-}
+  );
+};

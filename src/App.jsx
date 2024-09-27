@@ -23,6 +23,7 @@ import { Withdraw } from "./Components/Pages/Dashboard/Withdraw/Withdraw";
 import { TransactionHistory } from "./Components/Pages/Dashboard/TransactionHistory/TransactionHistory";
 import { Wallets } from "./Components/Pages/Dashboard/Wallets/Wallets";
 import { Settings } from "./Components/Pages/Dashboard/Settings/Settings";
+import { Referral } from "./Components/Pages/Dashboard/Referral/Referral";
 
 const AppContent = () => {
   const { RequireAuth } = useAuth();
@@ -104,6 +105,14 @@ const AppContent = () => {
           element={
             <RequireAuth>
               <Settings />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/referral"
+          element={
+            <RequireAuth>
+              <Referral />
             </RequireAuth>
           }
         />
