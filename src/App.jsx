@@ -9,24 +9,20 @@ import {
 import LandingPage from "./Components/Pages/LandingPage/LandingPage";
 import Signup from "./Components/Pages/LandingPage/Signup/Signup";
 import Login from "./Components/Pages/LandingPage/Login/Login";
-import Dashboard from "./Components/Pages/Dashboard/Dashboard";
 import { useAuth } from "./Components/Global/hook/useAuth";
 import LoadingModal from "./Components/Global/LoadingModal/LoadingModal";
 import {
   LoadingProvider,
   useLoading,
 } from "./Components/Context/LoadingContext";
-import AddFund from "./Components/Pages/Dashboard/AddFund";
-import Badges from "./Components/Pages/Dashboard/Badges";
-import FundHistory from "./Components/Pages/Dashboard/FundHistory";
-import InvestHistory from "./Components/Pages/Dashboard/InvestHistory";
-import MyReferral from "./Components/Pages/Dashboard/MyReferral";
-import Payout from "./Components/Pages/Dashboard/Payout";
-import PayoutHistory from "./Components/Pages/Dashboard/PayoutHistory";
-import ReferralBonus from "./Components/Pages/Dashboard/ReferralBonus";
-import Transaction from "./Components/Pages/Dashboard/Transaction";
-import Transfer from "./Components/Pages/Dashboard/Transfer";
-import PlansDashboard from "./Components/Pages/Dashboard/PlansDashboard/PlansDashboard";
+import { Account } from "./Components/Pages/Dashboard/Account/Account";
+import { Invest } from "./Components/Pages/Dashboard/Invest/Invest";
+import { MyDeposits } from "./Components/Pages/Dashboard/MyDeposits/MyDeposits";
+import { Reinvest } from "./Components/Pages/Dashboard/Reinvest/Reinvest";
+import { Withdraw } from "./Components/Pages/Dashboard/Withdraw/Withdraw";
+import { TransactionHistory } from "./Components/Pages/Dashboard/TransactionHistory/TransactionHistory";
+import { Wallets } from "./Components/Pages/Dashboard/Wallets/Wallets";
+import { Settings } from "./Components/Pages/Dashboard/Settings/Settings";
 
 const AppContent = () => {
   const { RequireAuth } = useAuth();
@@ -48,102 +44,71 @@ const AppContent = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route
-          path="/dashboard"
+          path="/my-account"
           element={
             <RequireAuth>
-              <Dashboard />
+              <Account />
             </RequireAuth>
           }
         />
         <Route
-          path="/add-fund"
+          path="/invest"
           element={
             <RequireAuth>
-              <AddFund />
+              <Invest />
             </RequireAuth>
           }
         />
         <Route
-          path="/badges"
+          path="/my-deposits"
           element={
             <RequireAuth>
-              <Badges />
+              <MyDeposits />
             </RequireAuth>
           }
         />
         <Route
-          path="/fund-history"
+          path="/reinvest"
           element={
             <RequireAuth>
-              <FundHistory />
+              <Reinvest />
             </RequireAuth>
           }
         />
         <Route
-          path="/invest-history"
+          path="/withdraw"
           element={
             <RequireAuth>
-              <InvestHistory />
+              <Withdraw />
             </RequireAuth>
           }
         />
         <Route
-          path="/my-referral"
+          path="/transaction-history"
           element={
             <RequireAuth>
-              <MyReferral />
+              <TransactionHistory />
             </RequireAuth>
           }
         />
         <Route
-          path="/payout"
+          path="/wallets"
           element={
             <RequireAuth>
-              <Payout />
+              <Wallets />
             </RequireAuth>
           }
         />
         <Route
-          path="/payout-history"
+          path="/settings"
           element={
             <RequireAuth>
-              <PayoutHistory />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="/plan"
-          element={
-            <RequireAuth>
-              <PlansDashboard />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="/referral-bonus"
-          element={
-            <RequireAuth>
-              <ReferralBonus />
+              <Settings />
             </RequireAuth>
           }
         />
 
-        <Route
-          path="/transaction"
-          element={
-            <RequireAuth>
-              <Transaction />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="/transfer"
-          element={
-            <RequireAuth>
-              <Transfer />
-            </RequireAuth>
-          }
-        />
+       
       </Routes>
     </div>
   );

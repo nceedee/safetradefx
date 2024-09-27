@@ -52,7 +52,7 @@ export const useSignup = () => {
       dispatch({ type: "LOGIN", payload: user });
 
       // Navigate to dashboard
-      navigate( "/dashboard" );
+      navigate( "/my-account" );
       window.location.reload()
     } catch (error) {
       console.error("Signup error:", error);

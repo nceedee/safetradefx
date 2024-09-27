@@ -1,15 +1,13 @@
-import React from "react";
+import React from 'react';
 
-const BalanceCard = ({ icon, text, amount, className }) => {
+export const BalanceCard = ({ icon, text, amount }) => {
   return (
-    <div
-      className={`flex rounded-md flex-col space-y-8 p-4 bg-[#202b5d] ${className}`}
-    >
-      <div>{icon}</div>
-        <h1 className="text-[16px]">{text}</h1>
-        <p>{amount}</p>
+    <div className="bg-primary1 text-white md:gap-0 gap-2 rounded-lg shadow-lg p-4 w-full flex flex-col items-center text-center mx-2">
+      <div className="text-3xl text-white mb-2">{icon}</div>
+      <div className="bg-white text-black rounded-full md:px-4 px-6 py-1 text-1xl lg:text-sm font-bold mb-2">
+        {text}
+      </div>
+      <div className="md:text-xl text-2xl  font-semibold">{amount}</div>
     </div>
   );
 };
-
-export default BalanceCard;

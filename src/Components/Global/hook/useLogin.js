@@ -44,7 +44,7 @@ export const useLogin = () => {
         localStorage.setItem("user", JSON.stringify(user));
       }
 
-      navigate("/dashboard");
+      navigate("/my-account");
       window.location.reload();
     } catch (error) {
       setMessage(error.message);
