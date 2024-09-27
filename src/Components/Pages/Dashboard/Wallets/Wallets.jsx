@@ -46,8 +46,6 @@ export const Wallets = () => {
     // Optionally, refetch the wallets or update local state
   };
 
-  if (isFetching) return <div>Loading wallets...</div>;
-  if (fetchError) return <div>Error fetching wallets: {fetchError.message}</div>;
 
   return (
     <div className="bg-secondary2 min-h-screen">
