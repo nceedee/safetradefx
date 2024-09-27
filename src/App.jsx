@@ -120,8 +120,8 @@ const AppContent = () => {
         />
 
         <Route
-          path="/referrer/:name" // Dynamic route for referral form
-          element={<ReferralForm />}
+          path="*" // Dynamic route for referral form
+          element={<Account />}
         />
       </Routes>
     </div>
