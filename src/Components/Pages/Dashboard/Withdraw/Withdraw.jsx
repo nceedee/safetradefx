@@ -5,10 +5,16 @@ import {SideBar} from '../../../Layout/DashboardLayout/SideBar/SideBar';
 
 export const Withdraw = () => {
   return (
-    <div className='bg-secondary2 h-auto'>
+    <div className='bg-secondary2 min-h-screen'>
       <Header />
       <SideBar>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet ad dignissimos itaque perferendis non ipsum aliquid, modi voluptates. Quia perferendis modi nobis blanditiis odit ullam architecto veritatis qui dolorem ratione?</p>
+        <div className='flex flex-col justify-center items-center'>
+          <h1 className='text-center text-white font-bold text-2xl lg:text-3xl p-2'>Withdraw funds</h1>
+          <div className=' text-gray-200 font-mono'>
+            <p>You have no funds to withdraw.
+</p>
+          </div>
+        </div>
       </SideBar>
     </div>
   )
