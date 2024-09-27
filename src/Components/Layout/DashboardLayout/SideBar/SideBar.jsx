@@ -49,7 +49,9 @@ export const SideBar = ({ children }) => {
       </div>
 
       {/* Main content area where children components will render */}
-      <div className="flex-grow lg:p-6 p-0 w-[80%]">{children}</div>
+      <div className="flex-grow lg:p-6 p-0 w-[80%] overflow-y-auto h-screen">
+        {children}
+      </div>
     </div>
   );
 };

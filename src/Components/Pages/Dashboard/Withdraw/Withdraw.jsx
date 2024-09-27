@@ -95,7 +95,7 @@ export const Withdraw = () => {
     <div className="bg-secondary2 min-h-screen">
       <Header />
       <SideBar>
-        <div className="p-4 lg:p-8 bg-primary1">
+        <div className="p-4 m-4 lg:m-0 rounded-md lg:p-8 bg-primary1">
           <h1 className="text-xl lg:text-2xl font-bold mb-4 text-white text-center">Withdraw Funds</h1>
 
           {/* Show loading state */}
