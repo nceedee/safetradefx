@@ -8,11 +8,11 @@ import { uid } from '../../../stores/stores';
 export const Wallets = () => {
   const [walletType, setWalletType] = useState('USDT');
   const [walletAddress, setWalletAddress] = useState('');
-  const { data: walletsData, error: fetchError, isLoading: isFetching } = useGetWithId(`wallets`, {
+  const { data: walletsData } = useGetWithId(`wallets`, {
     enabled: !!uid?.id // Only fetch if uid.id is available
   });
 
-  const { post: addWallet, del: deleteWallet } = usePost();
+  const { post: addWallet } = usePost();
 
   // Handle form submission for adding a new wallet
   const handleAddWallet = async (e) => {
@@ -30,6 +30,7 @@ export const Wallets = () => {
     // Reset form fields
     setWalletType('USDT');
     setWalletAddress('');
+    window.location.reload()
   };
 
   // Handle copy to clipboard
@@ -38,13 +39,7 @@ export const Wallets = () => {
     alert(`Copied: ${walletAddress}`);
   };
 
-  // Handle wallet deletion
-  const handleDeleteWallet = async (addressToDelete) => {
-    // Delete the wallet from the server
-    await deleteWallet(addressToDelete);
-
-    // Optionally, refetch the wallets or update local state
-  };
+ 
 
 
   return (
