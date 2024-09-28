@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 
 const useUpdateWithdrawn = (uid) => {
   const [currentBalance, setCurrentBalance] = useState(0);
@@ -8,12 +7,21 @@ const useUpdateWithdrawn = (uid) => {
   const fetchCurrentBalance = async (uid) => {
     setLoading(true);
     try {
-      const response = await axios.get(
+      const response = await fetch(
         `https://tanstack-fetch-default-rtdb.firebaseio.com/withdrawn/${uid}.json`
       );
 
-      if (response.data) {
-        const transactions = Object.values(response.data);
+      // Check if the response is OK
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log(data); // Inspect the data structure
+
+      if (data) {
+        const transactions = Object.values(data);
+        console.log("Transactions: ", transactions); // Log the transactions to check
         const latestTransaction = transactions[transactions.length - 1];
         setCurrentBalance(latestTransaction.amount || 0);
       } else {
@@ -21,7 +29,7 @@ const useUpdateWithdrawn = (uid) => {
       }
     } catch (error) {
       console.error("Error fetching balance:", error);
-      setCurrentBalance(null); // Handle error state if necessary
+      setCurrentBalance(null);
     } finally {
       setLoading(false);
     }
