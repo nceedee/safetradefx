@@ -62,11 +62,7 @@ export const Referral = () => {
                 </button>
               </div>
             )}
-            {referrer && (
-              <p className="mt-2 text-white text-center">
-                You have been referred by {referrer}.
-              </p>
-            )}
+            
           </div>
         </div>
       </SideBar>

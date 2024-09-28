@@ -121,7 +121,11 @@ const AppContent = () => {
 
         <Route
           path="*" // Dynamic route for referral form
-          element={<Account />}
+          element={
+          <RequireAuth>
+              <Account />
+            </RequireAuth>
+        }
         />
       </Routes>
     </div>

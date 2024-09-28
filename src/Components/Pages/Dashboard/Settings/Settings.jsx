@@ -4,6 +4,7 @@ import { Header } from '../../../Layout/DashboardLayout/Header/Header';
 import { SideBar } from '../../../Layout/DashboardLayout/SideBar/SideBar';
 import { getAuth, updatePassword, EmailAuthProvider, reauthenticateWithCredential } from "firebase/auth";
 import { auth } from '../../../config/firebase';
+import LoadingModal  from '../../../Global/LoadingModal/LoadingModal'; 
 
 export const Settings = () => {
   const [walletType, setWalletType] = useState('USDT');
@@ -14,7 +15,8 @@ export const Settings = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  
+  const [loading, setLoading] = useState(false);  // State to control loading modal
+
   const firebaseUrl = 'https://tanstack-fetch-default-rtdb.firebaseio.com/wallets';
 
   // Fetch wallets data on component mount
@@ -36,11 +38,14 @@ export const Settings = () => {
     const currentUser = auth.currentUser;
     const credential = EmailAuthProvider.credential(currentUser.email, oldPassword);
 
+    setLoading(true);  // Show loading modal when password change starts
+
     try {
       await reauthenticateWithCredential(currentUser, credential);
 
       if (newPassword !== confirmPassword) {
         alert("New passwords do not match.");
+        setLoading(false);  // Hide loading modal on error
         return;
       }
 
@@ -52,6 +57,8 @@ export const Settings = () => {
     } catch (error) {
       console.error("Error changing password:", error);
       alert("Error changing password. Please check your old password and try again.");
+    } finally {
+      setLoading(false);  // Hide loading modal after process completes
     }
   };
 
@@ -141,11 +148,10 @@ export const Settings = () => {
 
   return (
     <div className="bg-secondary2 min-h-screen">
+      {loading && <LoadingModal />}  {/* Show loading modal when loading state is true */}
       <Header />
       <SideBar>
-        
-        
-        <div className="mb-6">
+        <div className="mb-6 p-4">
           <h3 className="text-md font-semibold text-white">Change Password</h3>
           <input
             type="password"
@@ -220,33 +226,33 @@ export const Settings = () => {
                   <li key={key} className="flex flex-col lg:flex-row justify-between items-start lg:items-center p-2 border rounded bg-white max-w-full lg:max-w-2xl mx-auto">
                     <div className="mb-2 lg:mb-0 w-full lg:w-auto text-left lg:text-left">
                       <p className="font-semibold">{wallet.type} Wallet</p>
-                      <p className="text-sm text-gray-700 break-all">{wallet.address}</p>
+                      <p className="text-sm">{wallet.address}</p>
                     </div>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex space-x-2">
+                      <button
+                        onClick={() => handleCopy(wallet.address)}
+                        className="bg-gray-300 text-black p-1 rounded"
+                      >
+                        Copy
+                      </button>
                       <button
                         onClick={() => handleEditWallet(key, wallet)}
-                        className="text-yellow-500 hover:underline mt-2 lg:mt-0"
+                        className="bg-green-500 text-white p-1 rounded"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => handleDeleteWallet(key)}
-                        className="text-red-500 hover:underline mt-2 lg:mt-0"
+                        className="bg-red-500 text-white p-1 rounded"
                       >
                         Delete
-                      </button>
-                      <button
-                        onClick={() => handleCopy(wallet.address)}
-                        className="text-blue-500 hover:underline mt-2 lg:mt-0"
-                      >
-                        Copy
                       </button>
                     </div>
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="text-white">No wallets found.</p>
+              <p className="text-white">No wallets available. Add a new wallet above.</p>
             )}
           </div>
         </div>
