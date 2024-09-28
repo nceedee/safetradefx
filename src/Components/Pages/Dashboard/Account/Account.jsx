@@ -9,7 +9,6 @@ import { Information } from './Information/Information';
 import DoughnutChart from './DoughnutChart/DoughnutChart';
 
 export const Account = () => {
-  const cardRef = useRef(null); // Reference to the cards container
   const cards = [
     {
       icon: <FaMoneyCheckAlt className="text-5xl lg:text-3xl" />,
@@ -33,38 +32,18 @@ export const Account = () => {
     },
   ];
 
-  // Function to scroll cards left
-  const scrollLeft = () => {
-    if (cardRef.current) {
-      cardRef.current.scrollBy({ left: -cardRef.current.offsetWidth, behavior: 'smooth' });
-    }
-  };
-
-  // Function to scroll cards right
-  const scrollRight = () => {
-    if (cardRef.current) {
-      cardRef.current.scrollBy({ left: cardRef.current.offsetWidth, behavior: 'smooth' });
-    }
-  };
-
   return (
     <div className="bg-secondary2 min-h-screen">
       <Header />
       <SideBar>
         <h1 className="lg:text-4xl font-bold mb-4 text-white text-2xl p-3 lg:p-0">Account</h1>
 
-        
-
-        {/* Cards section with horizontal scrolling */}
-        <div
-          ref={cardRef}
-          className="flex overflow-hidden py-4" // Use overflow-hidden to only show one card
-        >
-          {/* Map through the cards and display one at a time */}
+        {/* Cards section */}
+        <div className="flex flex-col lg:flex-row gap-4 py-4"> 
+          {/* Map through the cards and display them in a column or row based on screen size */}
           {cards.map((card, index) => (
-            <div className="flex-shrink-0 w-full lg:w-64 flex gap-4" key={index}>
+            <div className="flex-wrap w-[80%] m-auto lg:w-64" key={index}>
               <BalanceCard
-              
                 icon={card.icon}
                 text={card.text}
                 amount={card.amount}
@@ -72,18 +51,9 @@ export const Account = () => {
             </div>
           ))}
         </div>
-        {/* Arrow controls for scrolling */}
-        <div className="flex items-center justify-center  lg:hidden">
-          <button onClick={scrollLeft} className="bg-primary1 text-white p-2 rounded-l">
-            ◀
-          </button>
-          <button onClick={scrollRight} className="bg-primary1 text-white p-2 rounded-r">
-            ▶
-          </button>
-        </div>
 
         {/* Information and DoughnutChart section */}
-        <div className="flex flex-col mb-10 lg:flex-row lg:space-x-6 w-full ">
+        <div className="flex flex-col mb-10 lg:flex-row lg:space-x-6 w-full">
           {/* Information Section */}
           <div className="lg:w-[50%] w-full mb-6 lg:mb-0">
             <Information />
