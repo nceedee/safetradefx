@@ -64,7 +64,7 @@ export const Account = ({ uid }) => {
         {/* Information and DoughnutChart section */}
         <div className="flex flex-col mb-10 lg:flex-row lg:space-x-6 w-full">
           {/* Information Section */}
-          <div className="lg:w-[50%] w-full mb-6 lg:mb-0">
+          <div className="lg:w-[50%] w-full m-auto mb-6 lg:mb-0">
             <Information />
           </div>
 
