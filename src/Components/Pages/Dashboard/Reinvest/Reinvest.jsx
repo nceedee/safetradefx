@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import emailjs from "emailjs-com";
 import { Header } from "../../../Layout/DashboardLayout/Header/Header";
 import { SideBar } from "../../../Layout/DashboardLayout/SideBar/SideBar";
+import { getDatabase, ref, set } from "firebase/database"; // Import Firebase functions
 import { InvestCard } from "../Invest/InvestCard/InvestCard";
 
 export const Reinvest = () => {
@@ -12,9 +13,6 @@ export const Reinvest = () => {
   const [step, setStep] = useState(1);
   const formRef = useRef(null);
 
-    const user = JSON.parse(localStorage.getItem('user'));
-
-
   const addresses = {
     "USDT TRC20": "TAonHMVYCPELEcBKfmxGEfRC1wTEtUqHvK",
     "Tron (TRX)": "TAonHMVYCPELEcBKfmxGEfRC1wTEtUqHvK",
@@ -22,6 +20,8 @@ export const Reinvest = () => {
     Ethereum: "0xAD14546bD843b6b288FF9543F6D055f96cdb06Bc",
     BNB: "0xAD14546bD843b6b288FF9543F6D055f96cdb06Bc",
   };
+
+  const user = JSON.parse(localStorage.getItem('user'));
 
   const handleCopy = (address) => {
     navigator.clipboard
@@ -94,7 +94,7 @@ export const Reinvest = () => {
 
   const sendEmail = () => {
     const emailParams = {
-      amount: `${user.name} with email of ${user.email}  made a payment of ${investmentAmount} using ${paymentMethod}. The transaction hash for confirmation is ${transactionHash}. the plan user invested in is ${selectedPlan.planName}`,
+      amount: `${user.name} with email of ${user.email} made a payment of ${investmentAmount} using ${paymentMethod}. The transaction hash for confirmation is ${transactionHash}. The plan user invested in is ${selectedPlan.planName}`,
     };
 
     emailjs
@@ -115,9 +115,33 @@ export const Reinvest = () => {
       );
   };
 
+  const postInvestmentData = async () => {
+    const db = getDatabase();
+    const uid = user.id; // Retrieve the user ID (ensure it's stored in local storage)
+    
+    const investmentData = {
+      name: user.name,
+      amount: investmentAmount,
+      plan: selectedPlan.planName,
+      paymentMethod,
+      interestRate: selectedPlan.interestRate,
+      transactionHash, // Include transaction hash if needed
+    };
+
+    try {
+      // Set investment data to Firebase under the specified structure
+      await set(ref(db, `investmentPlan/${uid}`), investmentData);
+      alert("Investment data posted successfully!");
+    } catch (error) {
+      console.error("Error posting investment data:", error);
+      alert("There was an issue posting the investment data.");
+    }
+  };
+
   const handleTransactionSubmit = () => {
     alert(`Transaction hash submitted: ${transactionHash}`);
     sendEmail(); // Trigger the email sending
+    postInvestmentData(); // Post investment data to Firebase
   };
 
   return (
@@ -207,22 +231,27 @@ export const Reinvest = () => {
                 <ul className="flex flex-col gap-4">
                   <li className="font-bold">
                     Plan:{" "}
-                    <span className="font-normal text-gray-200 font-mono">
+                    <span className="font-normal text-gray-200">
                       {selectedPlan.planName}
                     </span>
                   </li>
                   <li className="font-bold">
-                    Profit:{" "}
-                    <span className="font-normal text-gray-200 font-mono">
-                      {(
-                        (investmentAmount * selectedPlan.interestRate) /
-                        100
-                      ).toFixed(2)}
+                    Amount:{" "}
+                    <span className="font-normal text-gray-200">
+                      {investmentAmount}
+                    </span>
+                  </li>
+                  <li className="font-bold">
+                    Payment Method:{" "}
+                    <span className="font-normal text-gray-200">
+                      {paymentMethod}
                     </span>
                   </li>
                 </ul>
 
-                <label className="block mb-2">Transaction Hash:</label>
+                <label className="block mt-4 mb-2">
+                  Transaction Hash:
+                </label>
                 <input
                   type="text"
                   className="border p-2 text-black rounded w-full mb-4"
@@ -244,5 +273,3 @@ export const Reinvest = () => {
     </div>
   );
 };
-
-
