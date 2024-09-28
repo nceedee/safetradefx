@@ -13,8 +13,6 @@ import RateDashboard from "./RateDashboard/RateDashboard";
 import VideoSide from "./VideoSide/VideoSide";
 import StockCommision from "./StockCommision/StockCommision";
 import MeetOurClient from "./MeetOurClient/MeetOurClient";
-import HavingDifficulties from "./HavingDifficulties/HavingDifficulties";
-import TradeWithConfidence from "./TradeWithConfidence/TradeWithConfidence";
 import Footer from "./Footer/Footer";
 import planVideo from "../../../Assets/Videos/plansvideo.mp4";
 
@@ -99,8 +97,6 @@ const LandingPageLayout = () => {
 
           <StockCommision />
           <MeetOurClient />
-          <HavingDifficulties />
-          <TradeWithConfidence />
           <div className="w-[70%] m-auto  h-0 lg:h-auto">
             <video controls className=" rounded-lg">
               <source src={planVideo} />

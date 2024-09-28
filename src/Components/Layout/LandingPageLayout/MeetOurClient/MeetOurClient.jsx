@@ -1,62 +1,61 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import office from "../../../../Assets/Images/office2.jpg";
-import { PiLineVerticalBold } from "react-icons/pi";
 import Reviews from "../Reviews/Reviews";
-import person1 from "../../../../Assets/Images/person1.jpeg";
-import person2 from "../../../../Assets/Images/person2.jpeg";
-import person3 from "../../../../Assets/Images/person3.jpeg";
+import safe1 from "../../../../Assets/Images/safe1.png";
+import safe2 from "../../../../Assets/Images/safe2.png";
+import safe3 from "../../../../Assets/Images/safe3.png";
+import safe4 from "../../../../Assets/Images/safe4.png";
+import safe5 from "../../../../Assets/Images/safe5.png";
+import safe6 from "../../../../Assets/Images/safe6.png";
+import safe7 from "../../../../Assets/Images/safe7.png";
+import safe8 from "../../../../Assets/Images/safe9.png";
+import { Link } from "react-router-dom";
 
 const reviewsData = [
   {
-    img: person1,
-    comment:
-      "Easy, Fast And reliable. I got my profits immediately after trading. Safe Trade FX is Awesome!",
-    name: "David R. McNulty",
+    img: safe1,
+    name: "Adrian Smith",
+    position: "POS Mining division manager",
   },
   {
-    img: person2,
-    comment:
-      "Great platform for starting traders. Great selection and transparent fee system!",
-    name: "Bryce C. Bailey",
+    img: safe2,
+    name: "Robert Baker",
+    position: "CEO",
   },
   {
-    img: person3,
-    comment:
-      "Safe Trade FX is a fantastic trading platform, both from an ease of use and technical perspective.",
-    name: "Smith M. Williams",
+    img: safe3,
+    name: "Kevin Morris",
+    position: "HR, PR and Marketing Director",
+  },
+  {
+    img: safe4,
+    name: "Alan Doyle",
+    position: "IPO Specialist",
+  },
+  {
+    img: safe5,
+    name: "Carl Ross",
+    position: "Start-ups projects' selection specialist",
+  },
+  {
+    img: safe6,
+    name: "Nicholas King",
+    position: "Managing director of development",
+  },
+  {
+    img: safe7,
+    name: "Daniel Taylor",
+    position: "Public Relations Manager",
+  },
+  {
+    img: safe8,
+    name: "Mark Brown",
+    position: "Offline business investment specialist",
   },
 ];
 
 const MeetOurClient = () => {
-  const [count, setCount] = useState(111);
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
-  const [animate, setAnimate] = useState(false);
-
-  // Counting effect
-  useEffect(() => {
-    if (count < 984) {
-      const interval = setInterval(() => {
-        setCount((prevCount) => prevCount + 1);
-      }, 10); // Adjust the speed of the count here
-
-      return () => clearInterval(interval);
-    }
-  }, [count]);
-
-  // Automatic review slide with animation
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setAnimate(true);
-      setTimeout(() => {
-        setCurrentReviewIndex(
-          (prevIndex) => (prevIndex + 1) % reviewsData.length
-        );
-        setAnimate(false);
-      }, 500); // Adjust to sync with the CSS animation duration
-    }, 5000); // Change every 5 seconds
-
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <div
@@ -67,33 +66,34 @@ const MeetOurClient = () => {
         backgroundSize: "cover",
       }}
     >
-      <div className="lg:w-[80%] w-[70%] m-auto">
+      <div className="lg:w-[80%] w-[90%] m-auto">
         <div className="text-center">
-          <h1 className="text-3xl font-bold">Meet Our Clients</h1>
-          <p>
-            We are only as <span className="text-1xl">GOOD</span> as our clients
-            say <span className="text-1xl">WE ARE.</span>
-          </p>
-        </div>
-        <div className="flex items-center mt-14 justify-center">
-          <PiLineVerticalBold className="text-yellow-500" />
-          <p className="font-bold">3,543,{count} Open Trades</p>
+          <h1 className="text-3xl font-bold">Our Team</h1>
+          <p>Company management and main fund's managers.</p>
+          <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"><Link to="/about-us">Read More About Us</Link></button>
         </div>
 
-        <div className="mt-20 overflow-hidden relative h-[400px] flex items-center justify-center">
-          <div
-            className={`transition-transform duration-500 ease-in-out ${
-              animate
-                ? "transform -translate-x-full opacity-0"
-                : "transform translate-x-0 opacity-100"
-            }`}
-            style={{ position: "absolute", width: "100%", height: "100%" }}
-          >
-            <Reviews
-              img={reviewsData[currentReviewIndex].img}
-              comment={reviewsData[currentReviewIndex].comment}
-              name={reviewsData[currentReviewIndex].name}
-            />
+        <div className="mt-20 flex flex-col items-center">
+          <div className="relative h-[400px] w-full flex items-center justify-center">
+            <div className="bg-white rounded-lg p-6 shadow-lg relative">
+              <Reviews
+                img={reviewsData[currentReviewIndex].img}
+                position={reviewsData[currentReviewIndex].position}
+                name={reviewsData[currentReviewIndex].name}
+              />
+            </div>
+          </div>
+
+          <div className="mt-4 flex justify-center space-x-2">
+            {reviewsData.map((_, index) => (
+              <div
+                key={index}
+                onClick={() => setCurrentReviewIndex(index)}
+                className={`cursor-pointer w-3 h-3 rounded-full border ${
+                  index === currentReviewIndex ? "bg-blue-500" : "bg-gray-300"
+                }`}
+              />
+            ))}
           </div>
         </div>
       </div>
