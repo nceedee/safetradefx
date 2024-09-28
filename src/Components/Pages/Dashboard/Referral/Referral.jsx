@@ -14,7 +14,7 @@ export const Referral = () => {
     if (user && user.name) {
       setReferrer(user.name);
       // Construct the referral link
-      const link = `https://www.safefx.com/referrer=${user.name}`;
+      const link = `https://www.safetfx.com/referrer=?${user.name}-wkrwq3e`;
       setReferralLink(link);
     }
 
@@ -62,11 +62,7 @@ export const Referral = () => {
                 </button>
               </div>
             )}
-            {referrer && (
-              <p className="mt-2 text-white text-center">
-                You have been referred by {referrer}.
-              </p>
-            )}
+            
           </div>
         </div>
       </SideBar>
