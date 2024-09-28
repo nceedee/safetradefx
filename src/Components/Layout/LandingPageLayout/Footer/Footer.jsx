@@ -5,6 +5,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Link } from "react-router-dom";
 import award from "../../../../Assets/Images/broker.png";
+import certificate from '../../../../Assets/Images/safetradefx_document.jpg' 
 
 const Footer = () => {
   return (
@@ -68,27 +69,10 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="border-t-[1px] border-gray-300 p-4">
-          <p className="text-gray-500">
-            <span className="font-bold">Risk Warning: </span>CFD and Spot Forex
-            trading both come with a high degree of risk. You must be prepared
-            to sustain a total loss of any funds deposited with us, as well as
-            any additional losses, charges, or other costs we incur in
-            recovering any payment from you. Given the possibility of losing
-            more than your entire investment, speculation in certain investments
-            should only be conducted with risk capital funds that if lost will
-            not significantly affect your personal or institution’s financial
-            well-being. Before deciding to trade the products offered by us, you
-            should carefully consider your objectives, financial situation,
-            needs and level of experience. You should also be aware of all the
-            risks associated with trading on margin. Please read our{" "}
-            <span className="text-red-500">Risk Disclosure document</span>
-          </p>
-          <p className="mt-8 text-gray-500">
-            © Copyright 2024 All Rights Reserved. Safe Trade FX, Uk,London. This
-            website is not directed at any jurisdiction and is not intended for
-            any use that would be contrary to local law or regulation.
-          </p>
+        
+        <div className="m-auto flex justify-center w-40 border-[4px] animate-pulse border-green-500 bg-blue-500 text-white font-bold p-4 rounded-sm">
+          <a href={certificate} target="_blank" rel="noopener noreferrer"><h4>SafeTradeFx Certificate</h4></a>
+        </div>
           <div className="p-6 mt-10 text-center flex flex-col items-center">
             <p className="text-gray-500">
               © 2024 Safe Trade FX - ALL RIGHTS RESERVED.
@@ -96,7 +80,6 @@ const Footer = () => {
             <img src={award} alt="award" className="w-[250px]" />
           </div>
         </div>
-      </div>
     </div>
   );
 };

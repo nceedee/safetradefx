@@ -21,6 +21,7 @@ import { Wallets } from "./Components/Pages/Dashboard/Wallets/Wallets";
 import { Settings } from "./Components/Pages/Dashboard/Settings/Settings";
 import { Referral } from "./Components/Pages/Dashboard/Referral/Referral";
 import ReferralForm from "./Components/Pages/Dashboard/ReferralForm/ReferralForm";
+import { About } from "./Components/Pages/LandingPage/About/About";
 
 const AppContent = () => {
   const { RequireAuth } = useAuth();
@@ -46,6 +47,7 @@ const AppContent = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/about-us" element={<About />} />
         <Route
           path="/my-account"
           element={
