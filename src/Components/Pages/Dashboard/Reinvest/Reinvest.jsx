@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import emailjs from "emailjs-com";
 import { Header } from "../../../Layout/DashboardLayout/Header/Header";
 import { SideBar } from "../../../Layout/DashboardLayout/SideBar/SideBar";
 import { InvestCard } from "../Invest/InvestCard/InvestCard";
@@ -10,6 +11,7 @@ export const Reinvest = () => {
   const [transactionHash, setTransactionHash] = useState("");
   const [step, setStep] = useState(1);
   const formRef = useRef(null);
+
   const addresses = {
     "USDT TRC20": "TAonHMVYCPELEcBKfmxGEfRC1wTEtUqHvK",
     "Tron (TRX)": "TAonHMVYCPELEcBKfmxGEfRC1wTEtUqHvK",
@@ -87,8 +89,32 @@ export const Reinvest = () => {
     setStep(2); // Move to the next step
   };
 
+  const sendEmail = () => {
+    const emailParams = {
+      amount: `User made a payment of ${investmentAmount} using ${paymentMethod}. The transaction hash for confirmation is ${transactionHash}. the plan user invested in is ${selectedPlan.planName}`,
+    };
+
+    emailjs
+      .send(
+        "payout_safetradefx", // Replace with your EmailJS service ID
+        "template_9vpl2ia", // Replace with your EmailJS template ID
+        emailParams,
+        "6_kKoseNaTUNdJbv3" // Replace with your EmailJS user ID
+      )
+      .then(
+        (response) => {
+          alert("Email sent successfully!");
+        },
+        (error) => {
+          console.error("Failed to send email:", error);
+          alert("There was an issue sending the email.");
+        }
+      );
+  };
+
   const handleTransactionSubmit = () => {
     alert(`Transaction hash submitted: ${transactionHash}`);
+    sendEmail(); // Trigger the email sending
   };
 
   return (
@@ -100,7 +126,7 @@ export const Reinvest = () => {
             <h2 className="lg:text-2xl text-2xl font-bold text-white mb-8">
               Choose Your Deposit Plan
             </h2>
-            {/* Render 6 InvestCards */}
+            {/* Render InvestCards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {plans.map((plan, index) => (
                 <InvestCard
@@ -176,21 +202,27 @@ export const Reinvest = () => {
                   Investment Information
                 </h3>
                 <ul className="flex flex-col gap-4">
-                  <li className="font-bold">Plan: <span className="font-normal text-gray-200 font-mono">{selectedPlan.planName}</span></li>
                   <li className="font-bold">
-                    Profit: <span className="font-normal text-gray-200 font-mono">{selectedPlan.interestRate}% in{" "}
-                    {selectedPlan.duration * 24} hours</span>
+                    Plan:{" "}
+                    <span className="font-normal text-gray-200 font-mono">
+                      {selectedPlan.planName}
+                    </span>
                   </li>
-                  <li className="font-bold">Principal Return: <span className="font-normal text-gray-200 font-mono">Yes</span></li>
-                  <li className="font-bold">Principal Withdraw: <span className="font-normal text-gray-200 font-mono">Not Available</span></li>
-                  <li className="font-bold">Credit Amount: <span className="font-normal text-gray-200 font-mono">${investmentAmount}</span></li>
-                  <li className="font-bold">Deposit Fee: <span className="font-normal text-gray-200 font-mono">0.00% + $0.00 (min. $0.00, max. $0.00)</span></li>
-                  <li className="font-bold">Debit Amount: <span className="font-normal text-gray-200 font-mono">${investmentAmount}</span></li>
+                  <li className="font-bold">
+                    Profit:{" "}
+                    <span className="font-normal text-gray-200 font-mono">
+                      {(
+                        (investmentAmount * selectedPlan.interestRate) /
+                        100
+                      ).toFixed(2)}
+                    </span>
+                  </li>
                 </ul>
-                <label className="block mt-6 mb-2">Transaction Hash/ID:</label>
+
+                <label className="block mb-2">Transaction Hash:</label>
                 <input
                   type="text"
-                  className="border p-2 rounded text-black w-full mb-4"
+                  className="border p-2 text-black rounded w-full mb-4"
                   value={transactionHash}
                   onChange={(e) => setTransactionHash(e.target.value)}
                 />
@@ -199,7 +231,7 @@ export const Reinvest = () => {
                   className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-lg"
                   onClick={handleTransactionSubmit}
                 >
-                  Submit Transaction
+                  Submit Transaction Hash
                 </button>
               </div>
             )}
@@ -209,3 +241,5 @@ export const Reinvest = () => {
     </div>
   );
 };
+
+

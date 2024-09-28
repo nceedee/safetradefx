@@ -1,33 +1,31 @@
-// Withdraw.jsx
 import React, { useState, useEffect } from 'react';
 import { Header } from '../../../Layout/DashboardLayout/Header/Header';
 import { SideBar } from '../../../Layout/DashboardLayout/SideBar/SideBar';
-import { uid } from '../../../stores/stores'; // Assuming uid is available from this store
-import { Link } from 'react-router-dom'; // Import Link for navigation
-import { useGetWithId } from '../../../Global/hook/useGetWithId'; // Import the hook to get data
-import Modal from './Modal/Modal'; // Import the modal component
+import { uid } from '../../../stores/stores'; 
+import { Link } from 'react-router-dom'; 
+import { useGetWithId } from '../../../Global/hook/useGetWithId'; 
+import Modal from './Modal/Modal'; 
+import emailjs from 'emailjs-com'; 
 
 export const Withdraw = () => {
   const [withdrawAmount, setWithdrawAmount] = useState('');
   const [selectedWallet, setSelectedWallet] = useState('');
-  const [walletType, setWalletType] = useState('USDT'); // Default wallet type
+  const [walletType, setWalletType] = useState('USDT'); 
   const [walletAddress, setWalletAddress] = useState('');
   const [wallets, setWallets] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
-  const [modalMessage, setModalMessage] = useState(''); // Modal message
+  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [modalMessage, setModalMessage] = useState(''); 
 
-  // Fetch wallets for the current user from Firebase
   const { data, error, isLoading } = useGetWithId(`wallets`, {
-    enabled: !!uid?.id, // Only run if uid.id is available
+    enabled: !!uid?.id, 
   });
 
   useEffect(() => {
     if (data?.data) {
-      setWallets(Object.values(data.data)); // Convert the fetched data to an array
+      setWallets(Object.values(data.data)); 
     }
   }, [data]);
 
-  // Function to post transaction details to Firebase
   const postTransaction = async (transactionDetails) => {
     try {
       const response = await fetch(`https://tanstack-fetch-default-rtdb.firebaseio.com/transactionHistory/${uid.id}.json`, {
@@ -45,15 +43,40 @@ export const Withdraw = () => {
       const result = await response.json();
       console.log('Transaction posted successfully:', result);
       setModalMessage('Transaction submitted successfully. Status: In Progress');
-      setIsModalOpen(true); // Open modal on success
+      setIsModalOpen(true);
+      sendEmail(transactionDetails); 
     } catch (error) {
       console.error('Error posting transaction:', error);
       setModalMessage('Error submitting transaction. Please try again.');
-      setIsModalOpen(true); // Open modal on error
+      setIsModalOpen(true); 
     }
   };
 
-  // Handle form submission for withdrawing
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  const sendEmail = (transactionDetails) => {
+    const templateParams = {
+      amount: `${user.name} with email of ${user.email} wants to withdraw ${transactionDetails.amount} ${transactionDetails.walletType} with address of ${transactionDetails.walletAddress}. UserId is ${user.id}`,
+    };
+
+    console.log('Sending email with params:', templateParams); // Log parameters being sent
+
+    emailjs.send(
+      'payout_safetradefx', 
+      'template_9vpl2ia', 
+      templateParams,
+      '6_kKoseNaTUNdJbv3' 
+    )
+    .then((response) => {
+      console.log('Email sent successfully:', response.status, response.text);
+    })
+    .catch((error) => {
+      console.error('Error sending email:', error);
+      setModalMessage('Error sending email. Please try again later.');
+      setIsModalOpen(true);
+    });
+  };
+
   const handleWithdraw = async (e) => {
     e.preventDefault();
     if (withdrawAmount.trim() === '' || isNaN(withdrawAmount) || Number(withdrawAmount) <= 0) {
@@ -66,7 +89,6 @@ export const Withdraw = () => {
       return alert('Please select or input a valid wallet address.');
     }
 
-    // Prepare transaction details
     const transactionDetails = {
       walletType: selectedWallet ? wallets.find(wallet => wallet.address === selectedWallet)?.type : walletType,
       amount: withdrawAmount,
@@ -75,20 +97,17 @@ export const Withdraw = () => {
       walletAddress: walletToUse,
     };
 
-    // Post transaction details
     await postTransaction(transactionDetails);
 
-    // Clear the input fields after submission
     setWithdrawAmount('');
     setSelectedWallet('');
     setWalletAddress('');
-    setWalletType('USDT'); // Reset to default wallet type if needed
+    setWalletType('USDT');
   };
 
-  // Handle wallet selection or input
   const handleWalletChange = (e) => {
     setSelectedWallet(e.target.value);
-    setWalletAddress(''); // Clear wallet address when a saved wallet is selected
+    setWalletAddress(''); 
   };
 
   return (
@@ -97,12 +116,8 @@ export const Withdraw = () => {
       <SideBar>
         <div className="p-4 m-4 lg:m-0 rounded-md lg:p-8 bg-primary1">
           <h1 className="text-xl lg:text-2xl font-bold mb-4 text-white text-center">Withdraw Funds</h1>
-
-          {/* Show loading state */}
           {isLoading && <p className="text-gray-100">Loading wallets...</p>}
           {error && <p className="text-red-500">Error loading wallets. Please try again.</p>}
-
-          {/* Form for withdrawing */}
           <form onSubmit={handleWithdraw} className="mb-6 max-w-full lg:max-w-2xl mx-auto">
             <div className="mb-4">
               <label className="block text-gray-100 mb-2">Withdrawal Amount</label>
@@ -115,7 +130,6 @@ export const Withdraw = () => {
               />
             </div>
 
-            {/* If saved wallets are available, allow selection */}
             {wallets.length > 0 ? (
               <div className="mb-4">
                 <label className="block text-gray-100 mb-2">Select Wallet</label>
@@ -133,7 +147,6 @@ export const Withdraw = () => {
                 </select>
               </div>
             ) : (
-              // If no saved wallets, show a message with a link to /wallets to add a wallet
               <div className="mb-4">
                 <p className="text-gray-100 mb-2">
                   No wallets found. Please{' '}
@@ -145,14 +158,13 @@ export const Withdraw = () => {
               </div>
             )}
 
-            {/* Wallet type selection */}
             <div className="mb-4">
               <label className="block text-gray-100 mb-2">Wallet Type</label>
               <select
                 value={walletType}
                 onChange={(e) => setWalletType(e.target.value)}
                 className="w-full lg:w-1/2 p-2 border rounded bg-white"
-                disabled={selectedWallet} // Disable if a wallet is selected
+                disabled={selectedWallet}
               >
                 <option value="USDT">USDT</option>
                 <option value="Bitcoin">Bitcoin</option>
@@ -169,7 +181,7 @@ export const Withdraw = () => {
                 onChange={(e) => setWalletAddress(e.target.value)}
                 className="w-full lg:w-1/2 p-2 border rounded bg-white"
                 placeholder="Enter wallet address"
-                disabled={selectedWallet} // Disable if a wallet is selected
+                disabled={selectedWallet}
               />
             </div>
 
@@ -182,7 +194,6 @@ export const Withdraw = () => {
             </button>
           </form>
 
-          {/* Modal for transaction status */}
           <Modal 
             isOpen={isModalOpen} 
             onClose={() => setIsModalOpen(false)} 
