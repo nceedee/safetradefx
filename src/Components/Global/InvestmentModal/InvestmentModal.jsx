@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import useUpdateMainBalance from "../hook/useUpdateMainBalance";
+import useUpdateMainBalance from "../hook/useUpdateInvested";
 import { uid } from "../../stores/stores";
 
 const InvestmentModal = ({ isOpen, onClose, investmentPlan }) => {

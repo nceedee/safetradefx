@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const useUpdateTotalPayout = (uid) => {
+const useUpdateWithdrawn = (uid) => {
   const [currentBalance, setCurrentBalance] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -9,7 +9,7 @@ const useUpdateTotalPayout = (uid) => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `https://tanstack-fetch-default-rtdb.firebaseio.com/totalPayout/${uid}.json`
+        `https://tanstack-fetch-default-rtdb.firebaseio.com/withdrawn/${uid}.json`
       );
 
       if (response.data) {
@@ -36,4 +36,4 @@ const useUpdateTotalPayout = (uid) => {
   return { currentBalance, loading };
 };
 
-export default useUpdateTotalPayout;
+export default useUpdateWithdrawn;

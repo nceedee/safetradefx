@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const useUpdateInterestBalance = (uid) => {
+const useUpdateEarned = (uid) => {
   const [interestCurrentBalance, setInterestCurrentBalance] = useState(0);
   const [InterestLoading, setInterestLoading] = useState(false);
 
@@ -9,7 +9,7 @@ const useUpdateInterestBalance = (uid) => {
     setInterestLoading(true);
     try {
       const response = await axios.get(
-        `https://tanstack-fetch-default-rtdb.firebaseio.com/interestbalance/${uid}.json`
+        `https://tanstack-fetch-default-rtdb.firebaseio.com/earned/${uid}.json`
       );
 
       if (response.data) {
@@ -36,4 +36,4 @@ const useUpdateInterestBalance = (uid) => {
   return { interestCurrentBalance, InterestLoading };
 };
 
-export default useUpdateInterestBalance;
+export default useUpdateEarned;
