@@ -20,6 +20,9 @@ export const Invest = () => {
     BNB: "0xAD14546bD843b6b288FF9543F6D055f96cdb06Bc",
   };
 
+    const user = JSON.parse(localStorage.getItem('user'));
+
+
   const handleCopy = (address) => {
     navigator.clipboard
       .writeText(address)
@@ -91,7 +94,7 @@ export const Invest = () => {
 
   const sendEmail = () => {
     const emailParams = {
-      amount: `User made a payment of ${investmentAmount} using ${paymentMethod}. The transaction hash for confirmation is ${transactionHash}. the plan user invested in is ${selectedPlan.planName}`,
+      amount: `${user.name} with email of ${user.email}  made a payment of ${investmentAmount} using ${paymentMethod}. The transaction hash for confirmation is ${transactionHash}. the plan user invested in is ${selectedPlan.planName}`,
     };
 
     emailjs

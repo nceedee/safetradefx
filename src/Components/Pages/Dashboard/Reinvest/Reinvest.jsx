@@ -12,6 +12,9 @@ export const Reinvest = () => {
   const [step, setStep] = useState(1);
   const formRef = useRef(null);
 
+    const user = JSON.parse(localStorage.getItem('user'));
+
+
   const addresses = {
     "USDT TRC20": "TAonHMVYCPELEcBKfmxGEfRC1wTEtUqHvK",
     "Tron (TRX)": "TAonHMVYCPELEcBKfmxGEfRC1wTEtUqHvK",
@@ -91,7 +94,7 @@ export const Reinvest = () => {
 
   const sendEmail = () => {
     const emailParams = {
-      amount: `User made a payment of ${investmentAmount} using ${paymentMethod}. The transaction hash for confirmation is ${transactionHash}. the plan user invested in is ${selectedPlan.planName}`,
+      amount: `${user.name} with email of ${user.email}  made a payment of ${investmentAmount} using ${paymentMethod}. The transaction hash for confirmation is ${transactionHash}. the plan user invested in is ${selectedPlan.planName}`,
     };
 
     emailjs
