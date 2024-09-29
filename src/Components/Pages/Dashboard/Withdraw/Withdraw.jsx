@@ -41,12 +41,12 @@ export const Withdraw = () => {
       }
 
       const result = await response.json();
-      console.log('Transaction posted successfully:', result);
+      // console.log('Transaction posted successfully:', result);
       setModalMessage('Transaction submitted successfully. Status: In Progress');
       setIsModalOpen(true);
       sendEmail(transactionDetails); 
     } catch (error) {
-      console.error('Error posting transaction:', error);
+      // console.error('Error posting transaction:', error);
       setModalMessage('Error submitting transaction. Please try again.');
       setIsModalOpen(true); 
     }
@@ -59,7 +59,7 @@ export const Withdraw = () => {
       amount: `${user.name} with email of ${user.email} wants to withdraw ${transactionDetails.amount} ${transactionDetails.walletType} with address of ${transactionDetails.walletAddress}. UserId is ${user.id}`,
     };
 
-    console.log('Sending email with params:', templateParams); // Log parameters being sent
+    // console.log('Sending email with params:', templateParams); // Log parameters being sent
 
     emailjs.send(
       'payout_safetradefx', 
@@ -68,10 +68,10 @@ export const Withdraw = () => {
       '6_kKoseNaTUNdJbv3' 
     )
     .then((response) => {
-      console.log('Email sent successfully:', response.status, response.text);
+      // console.log('Email sent successfully:', response.status, response.text);
     })
     .catch((error) => {
-      console.error('Error sending email:', error);
+      // console.error('Error sending email:', error);
       setModalMessage('Error sending email. Please try again later.');
       setIsModalOpen(true);
     });
