@@ -120,13 +120,14 @@ export const Invest = () => {
     const uid = user.id; // Retrieve the user ID (ensure it's stored in local storage)
     
     const investmentData = {
-      name: user.name,
-      amount: investmentAmount,
-      plan: selectedPlan.planName,
-      paymentMethod,
-      interestRate: selectedPlan.interestRate,
-      transactionHash, // Include transaction hash if needed
-    };
+			name: user.name,
+			amount: investmentAmount,
+			plan: selectedPlan.planName,
+			paymentMethod,
+			interestRate: selectedPlan.interestRate,
+			duration: selectedPlan.duration,
+			transactionHash, // Include transaction hash if needed
+		};
 
     try {
       // Set investment data to Firebase under the specified structure

@@ -1,8 +1,8 @@
-import React, { useState, useRef } from "react";
 import emailjs from "emailjs-com";
+import { getDatabase, ref, set } from "firebase/database"; // Import Firebase functions
+import React, { useRef, useState } from "react";
 import { Header } from "../../../Layout/DashboardLayout/Header/Header";
 import { SideBar } from "../../../Layout/DashboardLayout/SideBar/SideBar";
-import { getDatabase, ref, set } from "firebase/database"; // Import Firebase functions
 import { InvestCard } from "../Invest/InvestCard/InvestCard";
 
 export const Reinvest = () => {
@@ -124,6 +124,7 @@ export const Reinvest = () => {
       amount: investmentAmount,
       plan: selectedPlan.planName,
       paymentMethod,
+      duration: selectedPlan.duration,
       interestRate: selectedPlan.interestRate,
       transactionHash, // Include transaction hash if needed
     };

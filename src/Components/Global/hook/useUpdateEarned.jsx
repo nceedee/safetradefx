@@ -17,7 +17,7 @@ const useUpdateEarned = (uid) => {
 			}
 
 			const data = await response.json();
-			console.log(data); // Inspect the data structure
+			// console.log(data); // Inspect the data structure
 
 			if (data) {
 				const transactions = Object.values(data);

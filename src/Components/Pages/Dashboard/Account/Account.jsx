@@ -3,6 +3,7 @@ import { BiMoneyWithdraw } from "react-icons/bi";
 import { FaHandHoldingUsd, FaMoneyCheckAlt } from "react-icons/fa";
 import { RiLuggageDepositFill } from "react-icons/ri";
 import { BalanceCard } from "../../../Global/BalanceCard/BalanceCard";
+import { useCalculateInterest } from "../../../Global/hook/useCalculateInterest";
 import useUpdateActiveDeposit from "../../../Global/hook/useUpdateActiveDeposit";
 import useUpdateEarned from "../../../Global/hook/useUpdateEarned";
 import useUpdateInvested from "../../../Global/hook/useUpdateInvested";
@@ -12,11 +13,10 @@ import { SideBar } from "../../../Layout/DashboardLayout/SideBar/SideBar";
 import { uid } from "../../../stores/stores";
 import DoughnutChart from "./DoughnutChart/DoughnutChart";
 import { Information } from "./Information/Information";
-import { useEarnedInterest } from "../../../Global/hook/useEarnedInterest";
 
 export const Account = () => {
 	const userId = uid?.id || "";
-	useEarnedInterest(userId);
+	const { interestEarned, isLoading } = useCalculateInterest();
 	const { currentBalance: investedAmount, loading: loadingInvested } =
 		useUpdateInvested(userId);
 	const { currentBalance: currentWithdrawn, loading: loadingWithdrawn } =
@@ -32,12 +32,12 @@ export const Account = () => {
 		{
 			icon: <FaMoneyCheckAlt className="text-5xl lg:text-3xl" />,
 			text: "Earned",
-			amount: loadingEarned
+			amount: isLoading
 				? "Loading..."
 				: `$${new Intl.NumberFormat("en-US", {
 						minimumFractionDigits: 2,
 						maximumFractionDigits: 2,
-				  }).format(currentEarned || 0.0)}`,
+				  }).format(interestEarned || 0.0)}`,
 		},
 		{
 			icon: <BiMoneyWithdraw className="text-5xl md:text-3xl" />,
