@@ -17,11 +17,11 @@ const useUpdatedInvested = (uid) => {
       }
 
       const data = await response.json();
-      console.log(data); // Inspect the data structure
+      // console.log(data); // Inspect the data structure
 
       if (data) {
         const transactions = Object.values(data);
-        console.log("Transactions: ", transactions); // Log the transactions to check
+        // console.log("Transactions: ", transactions); // Log the transactions to check
         const latestTransaction = transactions[transactions.length - 1];
         setCurrentBalance(latestTransaction.amount || 0);
       } else {

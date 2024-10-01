@@ -36,10 +36,10 @@ export const PaymentModal = ({ coin, onClose, onConfirm }) => {
         "6_kKoseNaTUNdJbv3" // Replace with your EmailJS user ID
       )
       .then((response) => {
-        console.log("Email sent successfully!", response.status, response.text);
+        // console.log("Email sent successfully!", response.status, response.text);
       })
       .catch((error) => {
-        console.error("Failed to send email.", error);
+        // console.error("Failed to send email.", error);
       });
 
     onConfirm(totalPayment);
