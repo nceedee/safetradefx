@@ -3,11 +3,15 @@ import { uid } from "../../stores/stores";
 import { useGet } from "./useGet";
 
 export const useCalculateInterest = () => {
-	const { data, error, isLoading } = useGet(`investmentPlan/${uid.id}`);
+	const {
+		data,
+		error,
+		isLoading: loadingEarnedInterest,
+	} = useGet(`investmentPlan/${uid.id}`);
 	const [interestEarned, setInterestEarned] = useState(null);
 
 	useEffect(() => {
-		if (!data || error || isLoading) return;
+		if (!data || error || loadingEarnedInterest) return;
 
 		const principalAmount = parseFloat(data.amount);
 		const interestRate = data.interestRate;
@@ -54,9 +58,9 @@ export const useCalculateInterest = () => {
 				lastCalculationTime.toString()
 			);
 		}
-	}, [data, error, isLoading]);
+	}, [data, error, loadingEarnedInterest]);
 
-	return { interestEarned, isLoading };
+	return { interestEarned, loadingEarnedInterest };
 };
 
 // Compound interest function
