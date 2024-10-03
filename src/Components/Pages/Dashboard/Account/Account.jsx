@@ -5,6 +5,8 @@ import { RiLuggageDepositFill } from "react-icons/ri";
 import { BalanceCard } from "../../../Global/BalanceCard/BalanceCard";
 import { useCalculateInterest } from "../../../Global/hook/useCalculateInterest";
 import { useInvestmentSummary } from "../../../Global/hook/useInvestmentSummary";
+import useUpdateWithdrawn from "../../../Global/hook/useUpdateWithdrawn";
+import { useGetWithdrawalSummary } from "../../../Global/hook/useWithdrawnSummary";
 import { Header } from "../../../Layout/DashboardLayout/Header/Header";
 import { SideBar } from "../../../Layout/DashboardLayout/SideBar/SideBar";
 import { uid } from "../../../stores/stores";
@@ -13,12 +15,13 @@ import { Information } from "./Information/Information";
 
 export const Account = () => {
 	const userId = uid?.id || "";
+	const { currentBalance, loading } = useUpdateWithdrawn();
 	const { interestEarned, loadingEarnedInterest } = useCalculateInterest();
-	const {
-		walletBalance,
-		investedAmount,
-		isLoading
-	} = useInvestmentSummary(userId);
+	const { walletBalance, investedAmount, isLoading } =
+		useInvestmentSummary(userId);
+ 
+	const { isLoading: loadingWithdrawnAmount, totalAmount } =
+		useGetWithdrawalSummary();
 
 	const cards = [
 		{
@@ -34,13 +37,12 @@ export const Account = () => {
 		{
 			icon: <BiMoneyWithdraw className="text-5xl md:text-3xl" />,
 			text: "Withdrawn",
-			amount: 300,
-			// loadingWithdrawn
-			// ? "Loading..."
-			// : `$${new Intl.NumberFormat("en-US", {
-			// 		minimumFractionDigits: 2,
-			// 		maximumFractionDigits: 2,
-			//   }).format(currentWithdrawn || 0.0)}`,
+			amount: loadingWithdrawnAmount
+				? "Loading..."
+				: `$${new Intl.NumberFormat("en-US", {
+						minimumFractionDigits: 2,
+						maximumFractionDigits: 2,
+				  }).format(totalAmount || 0.0)}`,
 		},
 		{
 			icon: <FaHandHoldingUsd className="text-5xl md:text-3xl" />,

@@ -22,7 +22,7 @@ export const Reinvest = () => {
 	useEffect(() => {
 		if (isLoading) return;
 		setWalletBalance(data.amount);
-	}, [isLoading]);
+	}, [isLoading,data.amount]);
 
 	const addresses = {
 		"USDT TRC20": "TAonHMVYCPELEcBKfmxGEfRC1wTEtUqHvK",
