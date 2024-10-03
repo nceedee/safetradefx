@@ -23,7 +23,6 @@ export const Reinvest = () => {
 		if (isLoading) return;
 		setWalletBalance(data.amount);
 	}, [isLoading]);
-	console.log(walletBalance);
 
 	const addresses = {
 		"USDT TRC20": "TAonHMVYCPELEcBKfmxGEfRC1wTEtUqHvK",
@@ -164,7 +163,6 @@ export const Reinvest = () => {
 			await postInvestmentData(); // Post investment data to Firebase
 		}
 	};
-	//  updateWalletBalance(walletBalance)
 
 	return (
 		<div className="bg-secondary2 min-h-screen">
