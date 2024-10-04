@@ -4,8 +4,7 @@ import { FaHandHoldingUsd, FaMoneyCheckAlt } from "react-icons/fa";
 import { RiLuggageDepositFill } from "react-icons/ri";
 import { BalanceCard } from "../../../Global/BalanceCard/BalanceCard";
 import { useInterest } from "../../../Global/hook/useInterest";
-import { useInvestmentSummary } from "../../../Global/hook/useInvestmentSummary";
-import useUpdateWithdrawn from "../../../Global/hook/useUpdateWithdrawn";
+import { useTransactionManager } from "../../../Global/hook/useTransactionManager";
 import { useGetWithdrawalSummary } from "../../../Global/hook/useWithdrawnSummary";
 import { Header } from "../../../Layout/DashboardLayout/Header/Header";
 import { SideBar } from "../../../Layout/DashboardLayout/SideBar/SideBar";
@@ -15,10 +14,9 @@ import { Information } from "./Information/Information";
 
 export const Account = () => {
 	const userId = uid?.id || "";
-	const { currentBalance, loading } = useUpdateWithdrawn();
 	const { totalEarnedInterest, loading: loadingEarnedInterest } = useInterest();
 	const { walletBalance, investedAmount, isLoading } =
-		useInvestmentSummary(userId);
+		useTransactionManager(userId);
 
 	const { isLoading: loadingWithdrawnAmount, totalAmount } =
 		useGetWithdrawalSummary();

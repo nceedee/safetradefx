@@ -31,8 +31,6 @@ export const useGetWithdrawalSummary = () => {
 					const total = withdrawalsArray.reduce((acc, curr) => {
 						return acc + parseFloat(curr.amount); // Ensure the amount is treated as a number
 					}, 0);
-
-		 
 					setTotalAmount(total);
  
 				} else {
