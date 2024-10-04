@@ -3,11 +3,10 @@ import { BiMoneyWithdraw } from "react-icons/bi";
 import { FaHandHoldingUsd, FaMoneyCheckAlt } from "react-icons/fa";
 import { RiLuggageDepositFill } from "react-icons/ri";
 import { BalanceCard } from "../../../Global/BalanceCard/BalanceCard";
-import { useCalculateInterest } from "../../../Global/hook/useCalculateInterest";
-import useUpdateActiveDeposit from "../../../Global/hook/useUpdateActiveDeposit";
-import useUpdateEarned from "../../../Global/hook/useUpdateEarned";
-import useUpdateInvested from "../../../Global/hook/useUpdateInvested";
+import { useInterest } from "../../../Global/hook/useInterest";
+import { useInvestmentSummary } from "../../../Global/hook/useInvestmentSummary";
 import useUpdateWithdrawn from "../../../Global/hook/useUpdateWithdrawn";
+import { useGetWithdrawalSummary } from "../../../Global/hook/useWithdrawnSummary";
 import { Header } from "../../../Layout/DashboardLayout/Header/Header";
 import { SideBar } from "../../../Layout/DashboardLayout/SideBar/SideBar";
 import { uid } from "../../../stores/stores";
@@ -16,43 +15,39 @@ import { Information } from "./Information/Information";
 
 export const Account = () => {
 	const userId = uid?.id || "";
-	const { interestEarned, isLoading } = useCalculateInterest();
-	const { currentBalance: investedAmount, loading: loadingInvested } =
-		useUpdateInvested(userId);
-	const { currentBalance: currentWithdrawn, loading: loadingWithdrawn } =
-		useUpdateWithdrawn(userId);
-	const { currentBalance: currentEarned, loading: loadingEarned } =
-		useUpdateEarned(userId);
-	const {
-		currentBalance: currentActiveDeposit,
-		loading: loadingActiveDeposit,
-	} = useUpdateActiveDeposit(userId);
+	const { currentBalance, loading } = useUpdateWithdrawn();
+	const { totalEarnedInterest, loading: loadingEarnedInterest } = useInterest();
+	const { walletBalance, investedAmount, isLoading } =
+		useInvestmentSummary(userId);
+
+	const { isLoading: loadingWithdrawnAmount, totalAmount } =
+		useGetWithdrawalSummary();
 
 	const cards = [
 		{
 			icon: <FaMoneyCheckAlt className="text-5xl lg:text-3xl" />,
 			text: "Earned",
-			amount: isLoading
+			amount: loadingEarnedInterest
 				? "Loading..."
 				: `$${new Intl.NumberFormat("en-US", {
 						minimumFractionDigits: 2,
 						maximumFractionDigits: 2,
-				  }).format(interestEarned || 0.0)}`,
+				  }).format(totalEarnedInterest || 0.0)}`,
 		},
 		{
 			icon: <BiMoneyWithdraw className="text-5xl md:text-3xl" />,
 			text: "Withdrawn",
-			amount: loadingWithdrawn
+			amount: loadingWithdrawnAmount
 				? "Loading..."
 				: `$${new Intl.NumberFormat("en-US", {
 						minimumFractionDigits: 2,
 						maximumFractionDigits: 2,
-				  }).format(currentWithdrawn || 0.0)}`,
+				  }).format(totalAmount || 0.0)}`,
 		},
 		{
 			icon: <FaHandHoldingUsd className="text-5xl md:text-3xl" />,
 			text: "Invested",
-			amount: loadingInvested
+			amount: isLoading
 				? "Loading..."
 				: `$${new Intl.NumberFormat("en-US", {
 						minimumFractionDigits: 2,
@@ -62,12 +57,12 @@ export const Account = () => {
 		{
 			icon: <RiLuggageDepositFill className="text-5xl md:text-3xl" />,
 			text: "Active Deposits",
-			amount: loadingActiveDeposit
+			amount: isLoading
 				? "Loading..."
 				: `$${new Intl.NumberFormat("en-US", {
 						minimumFractionDigits: 2,
 						maximumFractionDigits: 2,
-				  }).format(currentActiveDeposit || 0.0)}`,
+				  }).format(walletBalance || 0.0)}`,
 		},
 	];
 

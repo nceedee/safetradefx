@@ -61,6 +61,7 @@ const useUpdateActiveDeposit = (uid) => {
   }, [uid]);
 
   return { currentBalance, loading };
+  console.log(currentBalance,'hey')
 };
 
 export default useUpdateActiveDeposit;
