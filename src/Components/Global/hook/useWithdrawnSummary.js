@@ -5,7 +5,6 @@ import { uid } from "../../stores/stores";
 
 export const useGetWithdrawalSummary = () => {
 	const [isLoading, setIsLoading] = useState(true);
-	const [withdrawals, setWithdrawals] = useState([]);
 	const [totalAmount, setTotalAmount] = useState(0); // For the sum of amounts
 
 	useEffect(() => {
@@ -33,12 +32,9 @@ export const useGetWithdrawalSummary = () => {
 						return acc + parseFloat(curr.amount); // Ensure the amount is treated as a number
 					}, 0);
 
-					// Set the state with the withdrawals array and total amount
-					setWithdrawals(withdrawalsArray);
+		 
 					setTotalAmount(total);
-
-					// Optionally, log the result to see the data structure
-					console.log(withdrawalsArray, total);
+ 
 				} else {
 					console.log("You haven't deposited yet");
 				}

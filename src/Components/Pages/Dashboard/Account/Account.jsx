@@ -3,7 +3,7 @@ import { BiMoneyWithdraw } from "react-icons/bi";
 import { FaHandHoldingUsd, FaMoneyCheckAlt } from "react-icons/fa";
 import { RiLuggageDepositFill } from "react-icons/ri";
 import { BalanceCard } from "../../../Global/BalanceCard/BalanceCard";
-import { useCalculateInterest } from "../../../Global/hook/useCalculateInterest";
+import { useInterest } from "../../../Global/hook/useInterest";
 import { useInvestmentSummary } from "../../../Global/hook/useInvestmentSummary";
 import useUpdateWithdrawn from "../../../Global/hook/useUpdateWithdrawn";
 import { useGetWithdrawalSummary } from "../../../Global/hook/useWithdrawnSummary";
@@ -16,10 +16,10 @@ import { Information } from "./Information/Information";
 export const Account = () => {
 	const userId = uid?.id || "";
 	const { currentBalance, loading } = useUpdateWithdrawn();
-	const { interestEarned, loadingEarnedInterest } = useCalculateInterest();
+	const { totalEarnedInterest, loading: loadingEarnedInterest } = useInterest();
 	const { walletBalance, investedAmount, isLoading } =
 		useInvestmentSummary(userId);
- 
+
 	const { isLoading: loadingWithdrawnAmount, totalAmount } =
 		useGetWithdrawalSummary();
 
@@ -32,7 +32,7 @@ export const Account = () => {
 				: `$${new Intl.NumberFormat("en-US", {
 						minimumFractionDigits: 2,
 						maximumFractionDigits: 2,
-				  }).format(interestEarned || 0.0)}`,
+				  }).format(totalEarnedInterest || 0.0)}`,
 		},
 		{
 			icon: <BiMoneyWithdraw className="text-5xl md:text-3xl" />,
