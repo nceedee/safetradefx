@@ -1,16 +1,14 @@
 import emailjs from "emailjs-com";
-import { getDatabase, ref, set } from "firebase/database"; // Import Firebase functions
+import { get, getDatabase, ref, set } from "firebase/database"; // Import Firebase functions
 import React, { useEffect, useRef, useState } from "react";
-import { useGet } from "../../../Global/hook/useGet";
-import { uid } from "../../../stores/stores";
-
+import { database } from "../../../config/firebase";
 import { updateWalletBalance } from "../../../Global/hook/useUpdateWalletBalance";
 import { Header } from "../../../Layout/DashboardLayout/Header/Header";
 import { SideBar } from "../../../Layout/DashboardLayout/SideBar/SideBar";
+import { uid } from "../../../stores/stores";
 import { InvestCard } from "../Invest/InvestCard/InvestCard";
 
 export const Reinvest = () => {
-	const { data, isLoading } = useGet(`invested/${uid.id}`);
 	const [selectedPlan, setSelectedPlan] = useState(null);
 	const [walletBalance, setWalletBalance] = useState(0);
 	const [investmentAmount, setInvestmentAmount] = useState("");
@@ -20,9 +18,25 @@ export const Reinvest = () => {
 	const formRef = useRef(null);
 
 	useEffect(() => {
-		if (isLoading) return;
-		setWalletBalance(data.amount); // eslint-disable-next-line 
-	}, [isLoading]);
+		const fetchData = async () => {
+			try {
+				const userIdPath = `/${uid.id}`;
+				const activeDepositRef = ref(database, `invested${userIdPath}`);
+
+				const activeDepositSnapshot = await get(activeDepositRef);
+
+				const activeDeposit = activeDepositSnapshot.exists()
+					? activeDepositSnapshot.val().amount
+					: 0;
+
+				setWalletBalance(activeDeposit);
+			} catch (error) {
+				console.error("Error fetching investment data:", error);
+			}
+		};
+
+		fetchData();
+	}, []);
 
 	const addresses = {
 		"USDT TRC20": "TAonHMVYCPELEcBKfmxGEfRC1wTEtUqHvK",
@@ -150,10 +164,7 @@ export const Reinvest = () => {
 		}
 	};
 
-
 	const handleTransactionSubmit = async () => {
-	if (isLoading) return;
-
 		if (walletBalance === 0 || walletBalance < investmentAmount) {
 			alert(`Insufficient Balance`);
 		} else {
@@ -287,5 +298,3 @@ export const Reinvest = () => {
 		</div>
 	);
 };
-
- 

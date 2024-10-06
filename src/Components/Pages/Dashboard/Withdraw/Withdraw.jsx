@@ -1,7 +1,8 @@
 import emailjs from "emailjs-com";
+import { get, ref } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useGet } from "../../../Global/hook/useGet";
+import { database } from "../../../config/firebase";
 import { useGetWithId } from "../../../Global/hook/useGetWithId";
 import { updateWalletBalance } from "../../../Global/hook/useUpdateWalletBalance";
 import { Header } from "../../../Layout/DashboardLayout/Header/Header";
@@ -10,9 +11,6 @@ import { uid } from "../../../stores/stores";
 import Modal from "./Modal/Modal";
 
 export const Withdraw = () => {
-	const { data: activeDeposit, isLoading: loadingActiveDeposit } = useGet(
-		`invested/${uid.id}`
-	);
 	const [withdrawAmount, setWithdrawAmount] = useState(0);
 	const [selectedWallet, setSelectedWallet] = useState("");
 	const [walletType, setWalletType] = useState("USDT");
@@ -23,9 +21,25 @@ export const Withdraw = () => {
 	const [walletBalance, setWalletBalance] = useState(0);
 
 	useEffect(() => {
-		if (loadingActiveDeposit) return;
-		setWalletBalance(activeDeposit.amount); // eslint-disable-next-line
-	}, [loadingActiveDeposit]);
+		const fetchData = async () => {
+			try {
+				const userIdPath = `/${uid.id}`;
+				const activeDepositRef = ref(database, `invested${userIdPath}`);
+
+				const activeDepositSnapshot = await get(activeDepositRef);
+
+				const activeDeposit = activeDepositSnapshot.exists()
+					? activeDepositSnapshot.val().amount
+					: 0;
+
+				setWalletBalance(activeDeposit);
+			} catch (error) {
+				console.error("Error fetching investment data:", error);
+			}
+		};
+
+		fetchData();
+	}, []);
 
 	const { data, error, isLoading } = useGetWithId(`wallets`, {
 		enabled: !!uid?.id,
@@ -55,7 +69,7 @@ export const Withdraw = () => {
 			}
 
 			const result = await response.json();
-			console.log('Transaction posted successfully:', result);
+			console.log("Transaction posted successfully:", result);
 			setModalMessage(
 				"Transaction submitted successfully. Status: In Progress"
 			);
