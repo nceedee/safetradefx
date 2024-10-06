@@ -1,6 +1,6 @@
-import { get, getDatabase, ref } from "firebase/database";
+import { get, ref, update } from "firebase/database";
 import { useEffect, useState } from "react";
-import { app } from "../../config/firebase";
+import { database as db } from "../../config/firebase";
 import { uid } from "../../stores/stores";
 
 export const useTransactionManager = () => {
@@ -12,7 +12,6 @@ export const useTransactionManager = () => {
 		const fetchData = async () => {
 			try {
 				setIsLoading(true);
-				const db = getDatabase(app);
 				const userIdPath = `/${uid.id}`;
 				const activeDepositRef = ref(db, `invested${userIdPath}`);
 				const investedAmountRef = ref(db, `investmentPlan${userIdPath}`);
@@ -38,6 +37,6 @@ export const useTransactionManager = () => {
 
 		fetchData();
 	}, []);
-
+ 
 	return { walletBalance, investedAmount, isLoading };
 };
