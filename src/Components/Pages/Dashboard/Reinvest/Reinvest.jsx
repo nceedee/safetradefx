@@ -1,300 +1,145 @@
+import React, { useState } from "react";
+import { Modal, Box, Button, Typography } from "@mui/material";
 import emailjs from "emailjs-com";
-import { get, getDatabase, ref, set } from "firebase/database"; // Import Firebase functions
-import React, { useEffect, useRef, useState } from "react";
-import { database } from "../../../config/firebase";
-import { updateWalletBalance } from "../../../Global/hook/useUpdateWalletBalance";
 import { Header } from "../../../Layout/DashboardLayout/Header/Header";
 import { SideBar } from "../../../Layout/DashboardLayout/SideBar/SideBar";
 import { uid } from "../../../stores/stores";
-import { InvestCard } from "../Invest/InvestCard/InvestCard";
+
+const addresses = {
+  "USDT TRC20": "TAonHMVYCPELEcBKfmxGEfRC1wTEtUqHvK",
+  "Tron (TRX)": "TAonHMVYCPELEcBKfmxGEfRC1wTEtUqHvK",
+  Bitcoin: "bc1qd3fkjy40mgkrzp5znvq7athxd4dz0uf6gar8dw",
+  Ethereum: "0xAD14546bD843b6b288FF9543F6D055f96cdb06Bc",
+  BNB: "0xAD14546bD843b6b288FF9543F6D055f96cdb06Bc",
+};
 
 export const Reinvest = () => {
-	const [selectedPlan, setSelectedPlan] = useState(null);
-	const [walletBalance, setWalletBalance] = useState(0);
-	const [investmentAmount, setInvestmentAmount] = useState("");
-	const [paymentMethod, setPaymentMethod] = useState("USDT TRC20");
-	const [transactionHash, setTransactionHash] = useState("");
-	const [step, setStep] = useState(1);
-	const formRef = useRef(null);
+  const [walletType, setWalletType] = useState("");
+  const [amount, setAmount] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  
+  const user = JSON.parse(localStorage.getItem("user"));
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const userIdPath = `/${uid.id}`;
-				const activeDepositRef = ref(database, `invested${userIdPath}`);
+  const handlePaymentDone = () => {
+    const transactionDetails = {
+      walletType,
+      walletAddress: addresses[walletType],
+      amount,
+    };
 
-				const activeDepositSnapshot = await get(activeDepositRef);
+    sendEmail(transactionDetails);
+  };
 
-				const activeDeposit = activeDepositSnapshot.exists()
-					? activeDepositSnapshot.val().amount
-					: 0;
+  const sendEmail = (transactionDetails) => {
+    const templateParams = {
+      amount: `${user.name} with email of ${user.email} made a deposit of ${transactionDetails.amount} ${transactionDetails.walletType} with address of ${transactionDetails.walletAddress}. UserId is ${uid}. Please confirm and deposit to the user copying the userid and pasting the amount.`,
+    };
 
-				setWalletBalance(activeDeposit);
-			} catch (error) {
-				console.error("Error fetching investment data:", error);
-			}
-		};
+    emailjs
+      .send(
+        "payout_safetradefx",
+        "template_9vpl2ia",
+        templateParams,
+        "6_kKoseNaTUNdJbv3"
+      )
+      .then((response) => {
+        console.log("Email sent successfully:", response.status, response.text);
+        setModalMessage("Your deposit will be looked into.");
+        setIsModalOpen(true);
+      })
+      .catch((error) => {
+        console.error("Error sending email:", error);
+        setModalMessage("Error sending email. Please try again later.");
+        setIsModalOpen(true);
+      });
+  };
 
-		fetchData();
-	}, []);
+  return (
+    <div className="bg-secondary2 min-h-screen">
+      <Header />
+      <SideBar>
+        <div className="p-8">
+          <h2 className="text-2xl font-semibold mb-6">Deposit Form</h2>
+          <form className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Select Wallet
+              </label>
+              <select
+                value={walletType}
+                onChange={(e) => setWalletType(e.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              >
+                <option value="">-- Select Wallet --</option>
+                {Object.keys(addresses).map((key) => (
+                  <option key={key} value={key}>
+                    {key}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-	const addresses = {
-		"USDT TRC20": "TAonHMVYCPELEcBKfmxGEfRC1wTEtUqHvK",
-		"Tron (TRX)": "TAonHMVYCPELEcBKfmxGEfRC1wTEtUqHvK",
-		Bitcoin: "bc1qd3fkjy40mgkrzp5znvq7athxd4dz0uf6gar8dw",
-		Ethereum: "0xAD14546bD843b6b288FF9543F6D055f96cdb06Bc",
-		BNB: "0xAD14546bD843b6b288FF9543F6D055f96cdb06Bc",
-	};
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Deposit Amount
+              </label>
+              <input
+                type="number"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
 
-	const user = JSON.parse(localStorage.getItem("user"));
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handlePaymentDone}
+              className="w-full"
+            >
+              Payment Done
+            </Button>
+          </form>
+        </div>
+      </SideBar>
 
-	const handleCopy = (address) => {
-		navigator.clipboard
-			.writeText(address)
-			.then(() => {
-				alert("Address copied to clipboard!");
-			})
-			.catch((err) => {
-				console.error("Failed to copy: ", err);
-			});
-	};
-
-	const addressToDisplay = addresses[paymentMethod];
-
-	const plans = [
-		{
-			planName: "Starter Plan",
-			minDeposit: 50.0,
-			maxDeposit: 999.0,
-			interestRate: 5,
-			duration: 20,
-		},
-		{
-			planName: "Mini Plan",
-			minDeposit: 250.0,
-			maxDeposit: 1500.0,
-			interestRate: 7.3,
-			duration: 24,
-		},
-		{
-			planName: "Professional Plan",
-			minDeposit: 1500.0,
-			maxDeposit: 3000.0,
-			interestRate: 9.99,
-			duration: 40,
-		},
-		{
-			planName: "Promo Plan",
-			minDeposit: 3000.0,
-			maxDeposit: 9000.0,
-			interestRate: 9,
-			duration: 10,
-		},
-	];
-
-	const handlePlanChange = (e) => {
-		const selected = plans.find((plan) => plan.planName === e.target.value);
-		setSelectedPlan(selected);
-		setInvestmentAmount(selected.minDeposit); // Set default to minDeposit
-		setStep(1); // Reset step to first step
-
-		// Check if formRef exists before attempting to scroll
-		if (formRef.current) {
-			formRef.current.scrollIntoView({ behavior: "smooth" });
-		}
-	};
-
-	const handleProceed = () => {
-		if (
-			investmentAmount < selectedPlan.minDeposit ||
-			investmentAmount > selectedPlan.maxDeposit
-		) {
-			alert(
-				`Please enter an amount between ${selectedPlan.minDeposit} and ${selectedPlan.maxDeposit}.`
-			);
-			return;
-		}
-		setStep(2); // Move to the next step
-	};
-
-	const sendEmail = () => {
-		const emailParams = {
-			amount: `${user.name} with email of ${user.email} made a payment of ${investmentAmount} using ${paymentMethod}. The transaction hash for confirmation is ${transactionHash}. The plan user invested in is ${selectedPlan.planName}`,
-		};
-
-		emailjs
-			.send(
-				"payout_safetradefx", // Replace with your EmailJS service ID
-				"template_9vpl2ia", // Replace with your EmailJS template ID
-				emailParams,
-				"6_kKoseNaTUNdJbv3" // Replace with your EmailJS user ID
-			)
-			.then(
-				(response) => {
-					alert("Email sent successfully!");
-				},
-				(error) => {
-					console.error("Failed to send email:", error);
-					alert("There was an issue sending the email.");
-				}
-			);
-	};
-
-	const postInvestmentData = async () => {
-		const db = getDatabase();
-		const uid = user.id; // Retrieve the user ID (ensure it's stored in local storage)
-
-		const investmentData = {
-			name: user.name,
-			amount: investmentAmount,
-			plan: selectedPlan.planName,
-			paymentMethod,
-			duration: selectedPlan.duration,
-			interestRate: selectedPlan.interestRate,
-			transactionHash, // Include transaction hash if needed
-		};
-
-		try {
-			// Set investment data to Firebase under the specified structure
-			await set(ref(db, `investmentPlan/${uid}`), investmentData);
-			alert("Investment data posted successfully!");
-		} catch (error) {
-			console.error("Error posting investment data:", error);
-			alert("There was an issue posting the investment data.");
-		}
-	};
-
-	const handleTransactionSubmit = async () => {
-		if (walletBalance === 0 || walletBalance < investmentAmount) {
-			alert(`Insufficient Balance`);
-		} else {
-			const updatedWalletBalance = walletBalance - Number(investmentAmount);
-			await updateWalletBalance(updatedWalletBalance);
-			alert(`Transaction hash submitted: ${transactionHash}`);
-			sendEmail(); // Trigger the email sending
-			await postInvestmentData(); // Post investment data to Firebase
-		}
-	};
-
-	return (
-		<div className="bg-secondary2 min-h-screen">
-			<Header />
-			<SideBar>
-				<section>
-					<div className="container p-4 mx-auto">
-						<h2 className="lg:text-2xl text-2xl font-bold text-white mb-8">
-							Choose Your Deposit Plan
-						</h2>
-						{/* Render InvestCards */}
-						<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-							{plans.map((plan, index) => (
-								<InvestCard
-									key={index}
-									planName={plan.planName}
-									minDeposit={plan.minDeposit}
-									maxDeposit={plan.maxDeposit}
-									interestRate={plan.interestRate}
-									duration={plan.duration}
-									isSelected={selectedPlan?.planName === plan.planName}
-									onChange={handlePlanChange}
-								/>
-							))}
-						</div>
-
-						{/* Investment Form */}
-						{selectedPlan && (
-							<div
-								ref={formRef}
-								className="mt-12 p-6 bg-primary1 text-white rounded-lg shadow-lg">
-								<h3 className="text-xl font-bold mb-4">
-									Selected Plan: {selectedPlan.planName}
-								</h3>
-								<label className="block mb-2">Enter Investment Amount:</label>
-								<input
-									type="number"
-									className="border p-2 text-black rounded w-full mb-4"
-									value={investmentAmount}
-									min={selectedPlan.minDeposit}
-									max={selectedPlan.maxDeposit || undefined}
-									onChange={(e) => setInvestmentAmount(e.target.value)}
-								/>
-
-								<label className="block mb-2">Payment Method:</label>
-								<select
-									value={paymentMethod}
-									onChange={(e) => setPaymentMethod(e.target.value)}
-									className="border p-2 rounded w-full mb-4 text-black">
-									<option value="USDT TRC20">USDT TRC20</option>
-									<option value="Tron (TRX)">Tron (TRX)</option>
-									<option value="Bitcoin">Bitcoin</option>
-									<option value="Ethereum">Ethereum</option>
-									<option value="BNB">BNB</option>
-								</select>
-
-								<button
-									className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-lg"
-									onClick={handleProceed}>
-									Proceed
-								</button>
-							</div>
-						)}
-
-						{/* Payment Step */}
-						{step === 2 && (
-							<div className="mt-12 p-6 bg-primary1 text-white rounded-lg shadow-lg">
-								<h3 className="text-xl font-bold mb-4">Payment Details</h3>
-								<p className="mb-4">
-									To instantly fund your account, kindly deposit to the{" "}
-									{paymentMethod} address below:
-								</p>
-								<p
-									className="bg-secondary2 text-white p-4 rounded-lg mb-6 overflow-hidden text-ellipsis whitespace-nowrap cursor-pointer"
-									onClick={() => handleCopy(addressToDisplay)}>
-									{addressToDisplay}
-								</p>
-
-								<h3 className="text-xl font-bold mb-4">
-									Investment Information
-								</h3>
-								<ul className="flex flex-col gap-4">
-									<li className="font-bold">
-										Plan:{" "}
-										<span className="font-normal text-gray-200">
-											{selectedPlan.planName}
-										</span>
-									</li>
-									<li className="font-bold">
-										Amount:{" "}
-										<span className="font-normal text-gray-200">
-											{investmentAmount}
-										</span>
-									</li>
-									<li className="font-bold">
-										Payment Method:{" "}
-										<span className="font-normal text-gray-200">
-											{paymentMethod}
-										</span>
-									</li>
-								</ul>
-
-								<label className="block mt-4 mb-2">Transaction Hash:</label>
-								<input
-									type="text"
-									className="border p-2 text-black rounded w-full mb-4"
-									value={transactionHash}
-									onChange={(e) => setTransactionHash(e.target.value)}
-								/>
-
-								<button
-									className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-lg"
-									onClick={handleTransactionSubmit}>
-									Submit Transaction Hash
-								</button>
-							</div>
-						)}
-					</div>
-				</section>
-			</SideBar>
-		</div>
-	);
+      {/* Modal */}
+      <Modal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 400,
+            bgcolor: 'background.paper',
+            borderRadius: '8px',
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography id="modal-title" variant="h6" component="h2">
+            Deposit Confirmation
+          </Typography>
+          <Typography id="modal-description" sx={{ mt: 2 }}>
+            {modalMessage}
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setIsModalOpen(false)}
+            sx={{ mt: 2 }}
+          >
+            Close
+          </Button>
+        </Box>
+      </Modal>
+    </div>
+  );
 };
