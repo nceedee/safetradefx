@@ -73,7 +73,7 @@ const AppContent = () => {
           }
         />
         <Route
-          path="/reinvest"
+          path="/deposit"
           element={
             <RequireAuth>
               <Reinvest />
