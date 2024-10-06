@@ -18,6 +18,7 @@ export const Reinvest = () => {
   const [amount, setAmount] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const [copied, setCopied] = useState(false);
   
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -55,6 +56,12 @@ export const Reinvest = () => {
       });
   };
 
+  const handleCopy = () => {
+    navigator.clipboard.writeText(addresses[walletType]);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000); // Reset the copy state after 2 seconds
+  };
+
   return (
     <div className="bg-secondary2 min-h-screen">
       <Header />
@@ -62,6 +69,7 @@ export const Reinvest = () => {
         <div className="p-8">
           <h2 className="text-2xl font-semibold mb-6">Deposit Form</h2>
           <form className="space-y-4">
+            {/* Wallet selection */}
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Select Wallet
@@ -80,6 +88,32 @@ export const Reinvest = () => {
               </select>
             </div>
 
+            {/* Display wallet address */}
+            {walletType && (
+              <div className="mt-4">
+                <label className="block text-sm font-medium text-gray-700">
+                  Wallet Address
+                </label>
+                <div className="flex items-center space-x-4 mt-2">
+                  <input
+                    type="text"
+                    value={addresses[walletType]}
+                    readOnly
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={handleCopy}
+                    className="ml-2"
+                  >
+                    {copied ? "Copied" : "Copy"}
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {/* Deposit amount */}
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Deposit Amount
@@ -92,11 +126,12 @@ export const Reinvest = () => {
               />
             </div>
 
+            {/* Payment done button */}
             <Button
               variant="contained"
               color="primary"
               onClick={handlePaymentDone}
-              className="w-full"
+              className="w-full mt-4"
             >
               Payment Done
             </Button>
@@ -143,3 +178,4 @@ export const Reinvest = () => {
     </div>
   );
 };
+
