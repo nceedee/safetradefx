@@ -46,7 +46,7 @@ export const Header = () => {
 					<GoogleTranslate />
 
 					<div className="hidden md:flex gap-2">
-						<Link to="/invest">
+						<Link to="/deposit">
 							<button className="bg-green-500 font-bold hover:opacity-[.6] text-sm p-2 px-4 rounded-3xl">
 								Deposit
 							</button>
