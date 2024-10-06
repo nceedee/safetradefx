@@ -13,8 +13,6 @@ export const Invest = () => {
 	const [walletBalance, setWalletBalance] = useState(0);
 	const [investmentAmount, setInvestmentAmount] = useState("");
 	const [paymentMethod, setPaymentMethod] = useState("USDT TRC20");
-	const [transactionHash, setTransactionHash] = useState("");
-	const [step, setStep] = useState(1);
 	const formRef = useRef(null);
 
 	useEffect(() => {
@@ -96,7 +94,6 @@ export const Invest = () => {
 		const selected = plans.find((plan) => plan.planName === e.target.value);
 		setSelectedPlan(selected);
 		setInvestmentAmount(selected.minDeposit); // Set default to minDeposit
-		setStep(1); // Reset step to first step
 
 		// Check if formRef exists before attempting to scroll
 		if (formRef.current) {
@@ -104,22 +101,9 @@ export const Invest = () => {
 		}
 	};
 
-	const handleProceed = () => {
-		if (
-			investmentAmount < selectedPlan.minDeposit ||
-			investmentAmount > selectedPlan.maxDeposit
-		) {
-			alert(
-				`Please enter an amount between ${selectedPlan.minDeposit} and ${selectedPlan.maxDeposit}.`
-			);
-			return;
-		}
-		setStep(2); // Move to the next step
-	};
-
 	const sendEmail = () => {
 		const emailParams = {
-			amount: `${user.name} with email of ${user.email} made a payment of ${investmentAmount} using ${paymentMethod}. The transaction hash for confirmation is ${transactionHash}. The plan user invested in is ${selectedPlan.planName}`,
+			amount: `${user.name} with email of ${user.email} made a payment of ${investmentAmount} using ${paymentMethod}. The plan user invested in is ${selectedPlan.planName}`,
 		};
 
 		emailjs
@@ -151,7 +135,6 @@ export const Invest = () => {
 			paymentMethod,
 			duration: selectedPlan.duration,
 			interestRate: selectedPlan.interestRate,
-			transactionHash, // Include transaction hash if needed
 		};
 
 		try {
@@ -164,13 +147,17 @@ export const Invest = () => {
 		}
 	};
 
-	const handleTransactionSubmit = async () => {
+	const handleProceed = async () => {
+		if (investmentAmount < selectedPlan.minDeposit || investmentAmount > selectedPlan.maxDeposit) {
+			alert(`Please enter an amount between ${selectedPlan.minDeposit} and ${selectedPlan.maxDeposit}.`);
+			return;
+		}
+
 		if (walletBalance === 0 || walletBalance < investmentAmount) {
 			alert(`Insufficient Balance`);
 		} else {
 			const updatedWalletBalance = walletBalance - Number(investmentAmount);
 			await updateWalletBalance(updatedWalletBalance);
-			alert(`Transaction hash submitted: ${transactionHash}`);
 			sendEmail(); // Trigger the email sending
 			await postInvestmentData(); // Post investment data to Firebase
 		}
@@ -234,67 +221,6 @@ export const Invest = () => {
 								<button
 									className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-lg"
 									onClick={handleProceed}>
-									Proceed
+									Submit Investment
 								</button>
-							</div>
-						)}
-
-						{/* Payment Step */}
-						{step === 2 && (
-							<div className="mt-12 p-6 bg-primary1 text-white rounded-lg shadow-lg">
-								<h3 className="text-xl font-bold mb-4">Payment Details</h3>
-								<p className="mb-4">
-									To instantly fund your account, kindly deposit to the{" "}
-									{paymentMethod} address below:
-								</p>
-								<p
-									className="bg-secondary2 text-white p-4 rounded-lg mb-6 overflow-hidden text-ellipsis whitespace-nowrap cursor-pointer"
-									onClick={() => handleCopy(addressToDisplay)}>
-									{addressToDisplay}
-								</p>
-
-								<h3 className="text-xl font-bold mb-4">
-									Investment Information
-								</h3>
-								<ul className="flex flex-col gap-4">
-									<li className="font-bold">
-										Plan:{" "}
-										<span className="font-normal text-gray-200">
-											{selectedPlan.planName}
-										</span>
-									</li>
-									<li className="font-bold">
-										Amount:{" "}
-										<span className="font-normal text-gray-200">
-											{investmentAmount}
-										</span>
-									</li>
-									<li className="font-bold">
-										Payment Method:{" "}
-										<span className="font-normal text-gray-200">
-											{paymentMethod}
-										</span>
-									</li>
-								</ul>
-
-								<label className="block mt-4 mb-2">Transaction Hash:</label>
-								<input
-									type="text"
-									className="border p-2 text-black rounded w-full mb-4"
-									value={transactionHash}
-									onChange={(e) => setTransactionHash(e.target.value)}
-								/>
-
-								<button
-									className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-lg"
-									onClick={handleTransactionSubmit}>
-									Submit Transaction Hash
-								</button>
-							</div>
-						)}
-					</div>
-				</section>
-			</SideBar>
-		</div>
-	);
-};
+							</
