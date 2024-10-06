@@ -1,8 +1,7 @@
-import { get, getDatabase, ref, set } from "firebase/database";
+import { get, getDatabase, ref } from "firebase/database";
 import { useEffect, useState } from "react";
 import { app } from "../../config/firebase";
 import { uid } from "../../stores/stores";
-import { calculateTotal } from "./calculateTotal";
 
 export const useTransactionManager = () => {
 	const [walletBalance, setWalletBalance] = useState(0);
@@ -15,36 +14,20 @@ export const useTransactionManager = () => {
 				setIsLoading(true);
 				const db = getDatabase(app);
 				const userIdPath = `/${uid.id}`;
-				const activeDepositRef = ref(db, `activeDeposit${userIdPath}`);
+				const activeDepositRef = ref(db, `invested${userIdPath}`);
 				const investedAmountRef = ref(db, `investmentPlan${userIdPath}`);
-				const mainBalanceRef = ref(db, `mainBalance${userIdPath}`);
 
-				const [
-					activeDepositSnapshot,
-					investedAmountSnapshot,
-					mainBalanceSnapshot,
-				] = await Promise.all([
-					get(activeDepositRef),
-					get(investedAmountRef),
-					get(mainBalanceRef),
-				]);
+				const [activeDepositSnapshot, investedAmountSnapshot] =
+					await Promise.all([get(activeDepositRef), get(investedAmountRef)]);
 
-				const totalDeposits = activeDepositSnapshot.exists()
-					? calculateTotal(activeDepositSnapshot.val())
+				const activeDeposit = activeDepositSnapshot.exists()
+					? activeDepositSnapshot.val().amount
 					: 0;
 
 				const currentInvestedAmount = investedAmountSnapshot.exists()
 					? Number(investedAmountSnapshot.val().amount)
 					: 0;
-
-				const mainBalance = mainBalanceSnapshot.exists()
-					? mainBalanceSnapshot.val().balance
-					: totalDeposits;
-
-				if (!mainBalanceSnapshot.exists())
-					await set(mainBalanceRef, { balance: totalDeposits });
-
-				setWalletBalance(mainBalance);
+				setWalletBalance(activeDeposit);
 				setInvestedAmount(currentInvestedAmount);
 			} catch (error) {
 				console.error("Error fetching investment data:", error);

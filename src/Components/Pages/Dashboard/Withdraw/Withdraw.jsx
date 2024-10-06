@@ -11,7 +11,7 @@ import Modal from "./Modal/Modal";
 
 export const Withdraw = () => {
 	const { data: activeDeposit, isLoading: loadingActiveDeposit } = useGet(
-		`mainBalance/${uid.id}`
+		`invested/${uid.id}`
 	);
 	const [withdrawAmount, setWithdrawAmount] = useState(0);
 	const [selectedWallet, setSelectedWallet] = useState("");
@@ -24,7 +24,7 @@ export const Withdraw = () => {
 
 	useEffect(() => {
 		if (loadingActiveDeposit) return;
-		setWalletBalance(activeDeposit.balance); // eslint-disable-next-line
+		setWalletBalance(activeDeposit.amount); // eslint-disable-next-line
 	}, [loadingActiveDeposit]);
 
 	const { data, error, isLoading } = useGetWithId(`wallets`, {

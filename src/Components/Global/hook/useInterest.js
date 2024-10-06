@@ -1,7 +1,7 @@
 import { get, ref, set, update } from "firebase/database";
 import { useEffect, useState } from "react";
 import { database } from "../../config/firebase";
-import { uid } from "../../stores/stores"; // Assuming this holds the user ID
+import { uid } from "../../stores/stores"; 
 
 export const useInterest = () => {
 	const [lastUpdated, setLastUpdated] = useState(Date.now());
