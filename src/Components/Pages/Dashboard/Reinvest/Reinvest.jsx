@@ -34,7 +34,7 @@ export const Reinvest = () => {
 
   const sendEmail = (transactionDetails) => {
     const templateParams = {
-      amount: `${user.name} with email of ${user.email} made a deposit of ${transactionDetails.amount} ${transactionDetails.walletType} with address of ${transactionDetails.walletAddress}. UserId is ${uid}. Please confirm and deposit to the user copying the userid and pasting the amount.`,
+      amount: `${user.name} with email of ${user.email} made a deposit of ${transactionDetails.amount} ${transactionDetails.walletType} with address of ${transactionDetails.walletAddress}. UserId is ${user.id}. Please confirm and deposit to the user copying the userid and pasting the amount.`,
     };
 
     emailjs
