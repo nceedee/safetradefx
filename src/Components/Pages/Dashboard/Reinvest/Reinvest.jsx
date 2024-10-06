@@ -10,7 +10,7 @@ import { SideBar } from "../../../Layout/DashboardLayout/SideBar/SideBar";
 import { InvestCard } from "../Invest/InvestCard/InvestCard";
 
 export const Reinvest = () => {
-	const { data, isLoading } = useGet(`mainBalance/${uid.id}`);
+	const { data, isLoading } = useGet(`invested/${uid.id}`);
 	const [selectedPlan, setSelectedPlan] = useState(null);
 	const [walletBalance, setWalletBalance] = useState(0);
 	const [investmentAmount, setInvestmentAmount] = useState("");
@@ -21,7 +21,7 @@ export const Reinvest = () => {
 
 	useEffect(() => {
 		if (isLoading) return;
-		setWalletBalance(data.balance); // eslint-disable-next-line 
+		setWalletBalance(data.amount); // eslint-disable-next-line 
 	}, [isLoading]);
 
 	const addresses = {
