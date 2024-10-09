@@ -19,10 +19,12 @@ export const useInterest = () => {
 
 				if (snapshot.exists()) {
 					const data = snapshot.val();
-					setPrincipal(data.amount);
-					setRate(data.interestRate);
-					setHoursToUpdate(data.duration);
-					setLastUpdated(data.lastUpdated || Date.now());
+					console.log(data);
+
+					setPrincipal(data.amount || 0); // Default to 0 if undefined
+					setRate(data.interestRate || 0); // Default to 0 if undefined
+					setHoursToUpdate(data.duration || 1); // Default to 1 hour if undefined
+					setLastUpdated(data.timeInvested || Date.now()); // Default to current time if undefined
 				} else {
 					console.error("User hasn't invested yet");
 				}
@@ -32,7 +34,7 @@ export const useInterest = () => {
 
 				if (totalInterestSnapshot.exists()) {
 					setTotalEarnedInterest(
-						totalInterestSnapshot.val().totalEarnedInterest
+						totalInterestSnapshot.val().totalEarnedInterest || 0
 					);
 				} else {
 					await set(totalInterestRef, { totalEarnedInterest: 0 });
@@ -59,13 +61,15 @@ export const useInterest = () => {
 					const newPrincipal = principal * Math.pow(1 + rate / 100, periods);
 					const interestEarned = newPrincipal - principal;
 
+					// Round to two decimal places to avoid floating point inaccuracies
+					const roundedInterestEarned = Math.round(interestEarned * 100) / 100;
 					const updatedTotalEarnedInterest =
-						totalEarnedInterest + interestEarned;
+						totalEarnedInterest + roundedInterestEarned;
 
 					try {
 						// Update only the earned interest, not the principal itself
 						const dbRef = ref(database, `investmentPlan/${uid.id}`);
-						await update(dbRef, { lastUpdated: now });
+						await update(dbRef, { timeInvested: now });
 
 						const totalInterestRef = ref(database, `totalEarn/${uid.id}`);
 						await update(totalInterestRef, {
