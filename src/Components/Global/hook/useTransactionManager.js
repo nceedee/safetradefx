@@ -1,4 +1,4 @@
-import { get, ref, update } from "firebase/database";
+import { get, ref } from "firebase/database";
 import { useEffect, useState } from "react";
 import { database as db } from "../../config/firebase";
 import { uid } from "../../stores/stores";
@@ -37,6 +37,6 @@ export const useTransactionManager = () => {
 
 		fetchData();
 	}, []);
- 
+
 	return { walletBalance, investedAmount, isLoading };
 };
