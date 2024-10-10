@@ -19,7 +19,6 @@ export const useInterest = () => {
 
 				if (snapshot.exists()) {
 					const data = snapshot.val();
-					console.log(data);
 
 					setPrincipal(data.amount || 0); // Default to 0 if undefined
 					setRate(data.interestRate || 0); // Default to 0 if undefined
