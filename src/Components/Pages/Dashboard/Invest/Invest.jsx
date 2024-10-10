@@ -149,6 +149,7 @@ export const Invest = () => {
 			amount: investmentAmount,
 			plan: selectedPlan.planName,
 			paymentMethod,
+			timeInvested: Date.now(),
 			duration: selectedPlan.duration,
 			interestRate: selectedPlan.interestRate,
 			transactionHash, // Include transaction hash if needed
@@ -242,7 +243,6 @@ export const Invest = () => {
 						{/* Payment Step */}
 						{step === 2 && (
 							<div className="mt-12 p-6 bg-primary1 text-white rounded-lg shadow-lg">
-								
 								<ul className="flex flex-col gap-4">
 									<li className="font-bold">
 										Plan:{" "}
@@ -250,8 +250,6 @@ export const Invest = () => {
 											{selectedPlan.planName}
 										</span>
 									</li>
-									
-									
 								</ul>
 
 								<label className="block mt-4 mb-2">Transaction Hash:</label>
@@ -261,7 +259,6 @@ export const Invest = () => {
 									value={`${investmentAmount} about to be invested`}
 									onChange={(e) => setTransactionHash(e.target.value)}
 									disabled
-									
 								/>
 
 								<button
